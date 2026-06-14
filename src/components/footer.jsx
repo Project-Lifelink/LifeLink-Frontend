@@ -93,33 +93,33 @@ const Footer = () => {
 
             <ul className="space-y-3 text-gray-600">
               <li>
-                <a href="#home" className="hover:text-red-600 transition">
+                <a href="/" className="hover:text-red-600 transition">
                   Home
                 </a>
               </li>
 
               <li>
-                <a href="#about" className="hover:text-red-600 transition">
+                <HashLink smooth to="#about" className="hover:text-red-600 transition">
                   About Us
-                </a>
+                </HashLink>
               </li>
 
               <li>
-                <a href="#features" className="hover:text-red-600 transition">
+                <HashLink smooth to="#features" className="hover:text-red-600 transition">
                   Features
-                </a>
+                </HashLink>
               </li>
 
               <li>
-                <a href="#how-it-works" className="hover:text-red-600 transition">
+                <HashLink smooth to="#howitworks" className="hover:text-red-600 transition">
                   How It Works
-                </a>
+                </HashLink>
               </li>
 
-              <li>
-                <a href="#contact" className="hover:text-red-600 transition">
+              <li>  
+                <HashLink smooth to="#contact" className="hover:text-red-600 transition">
                   Contact
-                </a>
+                </HashLink>
               </li>
             </ul>
           </div>
