@@ -12,11 +12,13 @@ import Howitworks from './howitworks.jsx'
 import Features from './features.jsx'
 import Donateblood from './donateblood.jsx'
 import Requestblood from './requestblood.jsx'
+import Navbar from '../components/navbar.jsx'
 // import Footer from '../components/footer.jsx'
 
 const home = () => {
     return (
         <>
+        <Navbar />
             <div className="h-screen">
                 <section>
                     <div className="flex m-5 flex-col md:flex-row">
@@ -91,8 +93,9 @@ const home = () => {
             <About />
             <Features />
             <Howitworks />
-            <Donateblood />
+            {/* <Donateblood /> */}
             <Requestblood />
+            <a href="/profile" className = "border-1 px-5 py-2">ProfileSection</a>
             
         </>
     )
