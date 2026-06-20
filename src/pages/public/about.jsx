@@ -11,7 +11,7 @@ import {
   Activity,
 } from "lucide-react";
 
-import aboutlifelink from '../assets/aboutlifelink.png'
+import aboutlifelink from '../../assets/images/aboutlifelink.png'
 import { motion } from 'framer-motion'
 
 const About = () => {

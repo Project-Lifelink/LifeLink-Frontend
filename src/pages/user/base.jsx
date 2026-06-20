@@ -14,8 +14,9 @@ import Dashboard from './dashboard.jsx'
 import Mydonations from './mydonations.jsx'
 import Notifications from './notifications.jsx'
 import RequestBlood from './requestblood.jsx'
-import featureimage from '../../assets/dashboardimage.png'
+import featureimage from '../../assets/images/dashboardimage.png'
 import ExploreHospitals from './explorehospitals.jsx'
+import { motion } from 'framer-motion'
 
 
 const Base = () => {
@@ -25,7 +26,10 @@ const Base = () => {
         <>
             <div className="flex gap-4">
 
-                <div className="ml-8 mt-5 hidden md:block md:stick">
+                <motion.div className="ml-8 mt-5 hidden md:block md:stick"
+                initial = {{opacity: 0}}
+                whileInView = {{opacity: 1}}
+                transition={{duration:0.5}}>
                     {hide ? <button onClick={() => { setHide(false) }} className=" absolute hover:cursor-pointer">{">>>"}</button> : <div className="flex flex-col gap-10 min-w-2/7 border-r-1 border-gray-300">
                         <div>
                             <a href="/profile" className="text-4xl font-bold">
@@ -57,8 +61,8 @@ const Base = () => {
                         </div>
                     </div>}
 
-                </div>
-                <div className="h-screen overflow-scroll" >
+                </motion.div>
+                <div className="h-screen overflow-hidden" >
                     <Dashboard className="w-6/7" />
                     <ExploreHospitals />
                     <RequestBlood />

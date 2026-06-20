@@ -10,7 +10,7 @@ import {
     MapPin,
     MoreHorizontal,
 } from "lucide-react";
-import feature from '../assets/features.png'
+import feature from '../../assets/images/features.png'
 import { motion } from 'framer-motion'
 
 const Features = () => {

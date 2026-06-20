@@ -10,7 +10,7 @@ import {
   Quote,
   HeartHandshake,
 } from "lucide-react";
-import Navbar from '../navbar.jsx'
+import Navbar from '../../components/layout/navbar.jsx'
 import { useState } from 'react'
 
 export default function LoginPage() {

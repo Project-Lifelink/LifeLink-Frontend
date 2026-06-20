@@ -13,12 +13,16 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { HashLink } from 'react-router-hash-link'
+import { motion } from 'framer-motion'
 
 export default function DashboardContent() {
   return (
     <div id="dashboard" className="flex-1 bg-gray-50 min-h-screen ">
       {/* Top Navbar */}
-      <div className="bg-white border-b px-8 max-w-full py-5 flex items-center justify-between">
+      <motion.div className="bg-white border-b px-8 max-w-full py-5 flex items-center justify-between"
+      initial = {{opacity: 0, y: 20}}
+      whileInView = {{opacity: 1, y: 0}}
+      transition = {{duration: 0.5}}>
         
 
         <div className="flex items-center gap-6">
@@ -34,11 +38,14 @@ export default function DashboardContent() {
             <p className="font-medium">User Name</p>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       <div className="p-8">
         {/* Profile Section */}
-        <div className="grid lg:grid-cols-4 gap-6">
+        <motion.div className="grid lg:grid-cols-4 gap-6"
+        initial = {{opacity: 0, y: 30}}
+        whileInView = {{opacity: 1, y: 0}}
+        transition = {{duration: 0.5}}>
           {/* Profile Card */}
           <div className="lg:col-span-3 bg-white rounded-3xl p-8 shadow-sm">
             <div className="flex flex-col lg:flex-row justify-between gap-8">
@@ -125,10 +132,13 @@ export default function DashboardContent() {
               Donate Now
             </a>
           </div>
-        </div>
+        </motion.div>
 
         {/* Stats */}
-        <div className="grid lg:grid-cols-4 gap-6 mt-8">
+        <motion.div className="grid lg:grid-cols-4 gap-6 mt-8"
+        initial = {{opacity: 0, y: 20}}
+        whileInView={{opacity: 1,y: 0}}
+        transition={{duration: 0.5}}>
           <div className="bg-white p-6 rounded-2xl">
             <Heart className="text-red-600" />
             <h2 className="text-4xl font-bold mt-3">3</h2>
@@ -154,12 +164,15 @@ export default function DashboardContent() {
             </h2>
             <p>Keep helping and inspiring!</p>
           </div>
-        </div>
+        </motion.div>
 
         {/* Activity Section */}
         <div className="grid lg:grid-cols-3 gap-6 mt-8">
           {/* Recent Activity */}
-          <div className="lg:col-span-2 bg-white rounded-3xl p-6">
+          <motion.div className="lg:col-span-2 bg-white rounded-3xl p-6"
+          initial = {{opacity: 0, y: 20}}
+          whileInView={{opacity: 1, y: 0}}
+          transition={{duration: 0.5}}>
             <h2 className="text-2xl font-bold mb-6">
               Recent Activity
             </h2>
@@ -183,7 +196,7 @@ export default function DashboardContent() {
 
               </div>
             ))}
-          </div>
+          </motion.div>
 
           {/* Quick Actions */}
           {/* <div className="bg-white rounded-3xl p-6">

@@ -1,5 +1,5 @@
 import React from 'react'
-import lifelinkimage from '../assets/lifelink.png'
+import lifelinkimage from '../../assets/images/lifelink.png'
 import { HashLink } from 'react-router-hash-link'
 import { User } from 'lucide-react'
 import { UsersRound } from 'lucide-react'
@@ -12,9 +12,9 @@ import Howitworks from './howitworks.jsx'
 import Features from './features.jsx'
 import Donateblood from './donateblood.jsx'
 import Requestblood from './requestblood.jsx'
-import Navbar from '../components/navbar.jsx'
-import Footer from '../components/footer.jsx'
-import BloodRequests from '../components/requests.jsx'
+import Navbar from '../../components/layout/navbar.jsx'
+import Footer from '../../components/layout/footer.jsx'
+import BloodRequests from '../../components/requests.jsx'
 // import Footer from '../components/footer.jsx'
 
 const home = () => {
@@ -42,8 +42,8 @@ const home = () => {
                                 </p>
                             </div>
                             <div className="md:ml-12 m-5 flex gap-10">
-                                <HashLink smooth to="#donateblood" className="bg-red-600 transition-all px-4 duration-200 text-white md:px-12 hover:bg-white hover:text-black hover:border-1 font-semibold rounded-xl  md:py-4 "> DonateBlood </HashLink>
-                                <HashLink smooth to="#requestblood" className="md:px-10 md:py-4 transition-all px-4 duration-200  rounded-xl hover:bg-gray-100 hover:border-1 font-semibold bg-gray-200 ">RequestBlood</HashLink>
+                                <HashLink smooth to = "/login" className="bg-red-600 transition-all px-4 duration-200 text-white md:px-12 hover:bg-white hover:text-black hover:border-1 font-semibold rounded-xl  md:py-4 "> DonateBlood </HashLink>
+                                <HashLink smooth to="/login" className="md:px-10 md:py-4 transition-all px-4 duration-200  rounded-xl hover:bg-gray-100 hover:border-1 font-semibold bg-gray-200 ">RequestBlood</HashLink>
                             </div>
                             <div className='hidden md:flex md:ml-12 mt-7 '>
                                 <UsersRound /><UsersRound /><UsersRound /><p>100+users</p>

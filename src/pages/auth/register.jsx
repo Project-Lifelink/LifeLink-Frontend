@@ -14,7 +14,7 @@ import {
   ArrowRight,
   ChevronDown
 } from 'lucide-react';
-import Navbar from '../navbar.jsx'
+import Navbar from '../../components/layout/navbar.jsx'
 
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
