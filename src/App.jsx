@@ -13,6 +13,7 @@ import Profile from './pages/user/base.jsx'
 import Requests from './components/requests.jsx'
 import HospitalRegister from './pages/auth/hospitalregistration.jsx'
 import HospitalLogin from './pages/auth/hospitallogin.jsx'
+import Hospital from './pages/hospital/base.jsx'
 
 const App = () => {
   return (
@@ -32,6 +33,7 @@ const App = () => {
         <Route path = '/requests' element = {<Requests />} />
         <Route path = '/hospitalregistration' element = {<HospitalRegister />} />
         <Route path = '/hospitallogin' element = {<HospitalLogin />} />
+        <Route path = '/hospital' element = {<Hospital />} />
       </Routes>
 
     </>
