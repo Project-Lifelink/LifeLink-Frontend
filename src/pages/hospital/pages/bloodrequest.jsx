@@ -28,14 +28,14 @@ export default function requestblood() {
   const [longitude , setLongitude] = useState(0);
   const [latitude, setLatitude] = useState(0);
   const [geohash_64_bits , setGeohash_64_bits] = useState("");
-  console.log(patient_name)
-  console.log(guardian_name)
-  console.log(phone)
-  console.log(additional_phone)
-  console.log(blood_group)
-  console.log(age)
-  console.log(sex)
-  console.log(quantity)
+  // console.log(patient_name)
+  // console.log(guardian_name)
+  // console.log(phone)
+  // console.log(additional_phone)
+  // console.log(blood_group)
+  // console.log(age)
+  // console.log(sex)
+  // console.log(quantity)
 
 
   const handleSubmit = async (e) => {

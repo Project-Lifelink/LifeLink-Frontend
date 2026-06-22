@@ -9,7 +9,7 @@ import {
   Activity,
   Plus,
 } from "lucide-react";
-import{ HashLink }from 'react-router-hash-link'
+import { HashLink } from 'react-router-hash-link'
 
 import { useSelector } from 'react-redux'
 import { useState, useEffect } from 'react'
@@ -18,12 +18,50 @@ import { useNavigate } from "react-router-dom";
 
 export default function HospitalDashboard() {
   const navigate = useNavigate();
-  //comment this to aviod unnecessary navigation to login 
+
+  const id = localStorage.getItem("id");
+
+  async function getdata() {
+
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/v1/hospital/${id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            // Authorization: `Bearer ${token}`, // if JWT auth is used
+          },
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to fetch hospital data");
+      }
+
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+
+  }
+
+
+
   useEffect(() => {
-    if(!user) navigate('/hospitallogin')
-  },[])
+    // if(!user) navigate('/hospitallogin')
+
+
+    getdata();
+
+
+
+  }, [])
   const user = useSelector((state) => state.auth.user)
-  
+
+
   console.log(user)
 
   const hospitalname = user?.name || "not found";
@@ -104,7 +142,7 @@ export default function HospitalDashboard() {
         </div>
 
         <HashLink className="flex items-center gap-2 hover:cursor-pointer bg-red-600 hover:bg-red-700 text-white px-5 py-3 rounded-xl font-medium">
-         
+
           Active Blood Requests
         </HashLink>
       </div>

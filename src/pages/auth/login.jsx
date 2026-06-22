@@ -48,12 +48,14 @@ export default function LoginPage() {
 
       const data = await response.json();
       console.log(data)
+      alert("request created")
 
       if (!response.ok) {
         throw new Error(data.message || "Something went wrong");
       }
       else {
         localStorage.setItem("token",data.access_token);
+        
         navigate("/profile")
       }
 

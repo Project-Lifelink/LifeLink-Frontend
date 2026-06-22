@@ -229,7 +229,7 @@ const HospitalSidebar = () => {
                     </div>
                 )}
             </aside>
-            <div className="h-screen">
+            <div className="h-screen md:overflow-hidden">
 
                 <Dashboard />
                 <BloodRequest />

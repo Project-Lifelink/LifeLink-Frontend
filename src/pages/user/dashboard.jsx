@@ -85,7 +85,7 @@ export default function DashboardContent() {
                   <div className="flex gap-6 text-gray-500 mt-3">
                     <div className="flex items-center gap-2">
                       <MapPin size={16} />
-                      Jaipur, Rajasthan
+                      Your Location
                     </div>
 
 

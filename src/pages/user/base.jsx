@@ -62,7 +62,7 @@ const Base = () => {
                     </div>}
 
                 </motion.div>
-                <div className="h-screen overflow-hidden" >
+                <div className="h-screen md:overflow-hidden" >
                     <Dashboard className="w-6/7" />
                     <ExploreHospitals />
                     <RequestBlood />
