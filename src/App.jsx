@@ -13,8 +13,9 @@ import Profile from './pages/user/base.jsx'
 import Requests from './components/requests.jsx'
 import HospitalRegister from './pages/auth/hospitalregistration.jsx'
 import HospitalLogin from './pages/auth/hospitallogin.jsx'
-import Hospital from './pages/hospital/base.jsx'
 
+
+//use side page
 import Dashboard from './pages/user/dashboard.jsx'
 import Mydonations from './pages/user/mydonations.jsx'
 import Notifications from './pages/user/notifications.jsx'
@@ -24,6 +25,21 @@ import ExploreHospitals from './pages/user/explorehospitals.jsx'
 import ActiveRequests from './pages/user/activerequest.jsx'
 import HelpandSupport from './pages/user/helpandsupport.jsx'
 import Community from './pages/user/community.jsx'
+
+
+//hospital side page
+import Hospital from './pages/hospital/base.jsx'
+import DashboardHospital from './pages/hospital/pages/dashboard.jsx'
+import RequestBloodHospital from './pages/hospital/pages/bloodrequest.jsx'
+import NotificationsHospital from './pages/hospital/pages/notification.jsx'
+import ActiveRequestsHospital from './pages/hospital/pages/activerequests.jsx'
+import HelpandSupportHospital from './pages/hospital/pages/helpsupport.jsx'
+import CommunityHospital from './pages/hospital/pages/community.jsx'
+import DonorVerification from './pages/hospital/pages/donorverification.jsx'
+import RequestHistory from './pages/hospital/pages/requesthistory.jsx'
+
+
+
 
 
 const App = () => {
@@ -46,8 +62,10 @@ const App = () => {
         <Route path='/hospital' element={<Hospital />} />
 
 
+{/* these are the routes for user side page  */}
         <Route path="/profile/" element={<Profile />}>
-          <Route path = "dashboard" element={<Dashboard />} />
+          <Route index element={<Dashboard />} />
+          <Route path='dashboard' element={<Dashboard />} />
           <Route path="explorehospitals" element={<ExploreHospitals />} />
           <Route path="requestblood" element={<RequestBlood />} />
           <Route path="mydonations" element={<Mydonations />} />
@@ -55,8 +73,23 @@ const App = () => {
           <Route path="activerequests" element={<ActiveRequests />} />
           <Route path="helpandsupport" element={<HelpandSupport />} />
           <Route path="community" element={<Community />} />
+          {/* <Route path="requesthistory" element={<RequestHistory />} /> */}
         </Route>
 
+
+        {/* these are the routes for hospital side page  */}
+        <Route path="/hospital/" element={<Hospital />}>
+          <Route index element={<DashboardHospital />} />
+          <Route path='dashboard' element={<DashboardHospital />} />
+          <Route path="requestblood" element={<RequestBloodHospital />} />
+          <Route path="notifications" element={<NotificationsHospital />} />
+          <Route path="activerequest" element={<ActiveRequestsHospital />} />
+          <Route path="helpandsupport" element={<HelpandSupportHospital />} />
+          <Route path="community" element={<CommunityHospital />} />
+          <Route path="donorverification" element={<DonorVerification />} />
+          <Route path="requesthistory" element={<RequestHistory />} />
+          {/* <Route path="requesthistory" element={<RequestHistory />} /> */}
+        </Route>
       </Routes>
 
     </>

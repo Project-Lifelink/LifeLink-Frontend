@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
     LayoutDashboard,
     Droplets,
@@ -17,17 +17,20 @@ import {
     ChevronLeft,
     ChevronRight,
     Headset,
+    User2,
 } from "lucide-react";
 import Dashboard from './pages/dashboard.jsx'
 import ActiveRequest from './pages/activerequests.jsx'
-import { HashLink } from 'react-router-hash-link'
+import { Link } from 'react-router-dom'
 import BloodRequest from './pages/bloodrequest.jsx';
-import BloodStock from './pages/bloodstock.jsx';
 import Donorverification from './pages/donorverification.jsx';
 import HelpandSupport from "./pages/helpsupport.jsx";
 import Notification from "./pages/notification.jsx";
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
+import { Outlet } from "react-router-dom";
+
+import { useSelector } from 'react-redux';
 
 
 const HospitalSidebar = () => {
@@ -37,9 +40,16 @@ const HospitalSidebar = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    async function getrequest(id,token){
-        try{
-                const res = await fetch(`/api/v1/hospitals/${id}`, {
+    const user = useSelector((state) => state.auth.user)
+
+    useEffect(() => {
+        if(!user) navigate("/hospitallogin");
+        getrequest();
+    }, [])
+
+    async function getrequest(id, token) {
+        try {
+            const res = await fetch(`/api/v1/hospitals/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -50,15 +60,15 @@ const HospitalSidebar = () => {
                         user,
                     }));
                 });
-                data = await res.json();
-                console.log("get request made")
-                console.log(data)
-                
+            data = await res.json();
+            console.log("get request made")
+            console.log(data)
 
 
-            } catch(error){
-                console.log( "error occured in fetching",error);
-            }
+
+        } catch (error) {
+            console.log("error occured in fetching", error);
+        }
 
     }
 
@@ -66,11 +76,11 @@ const HospitalSidebar = () => {
         const id = localStorage.getItem("id");
         const token = localStorage.getItem("token");
 
-        if (id&&token) {
+        if (id && token) {
             getrequest(id);
 
         }
-        else{
+        else {
             navigate('/hospitallogin');
         }
     }, []);
@@ -79,18 +89,18 @@ const HospitalSidebar = () => {
         {
             name: "Dashboard",
             icon: LayoutDashboard,
-            link: "#dashboard",
+            link: "dashboard",
         },
         {
             name: "Raise Blood Request",
             icon: Droplets,
-            link: "#requestblood",
+            link: "requestblood",
         },
         {
             name: "Active Requests",
             icon: ClipboardList,
             badge: 0,
-            link: "#activerequest",
+            link: "activerequest",
         },
         {
             name: "Request History",
@@ -100,23 +110,24 @@ const HospitalSidebar = () => {
         {
             name: "Donor Verification",
             icon: ShieldCheck,
-            link: "#donorverification"
+            link: "donorverification"
         },
         {
             name: "Notifications",
             icon: Bell,
             badge: 0,
-            link: "#notifications"
-        },
-        {
-            name: "Blood Stock",
-            icon: Package,
-            link: "bloodstock"
+            link: "notifications"
         },
         {
             name: "Help & Support",
             icon: CircleHelp,
             link: "helpandsupport"
+        },
+
+        {
+            name: "Community",
+            icon: User2,
+            link: "community"
         },
     ];
 
@@ -165,7 +176,7 @@ const HospitalSidebar = () => {
 
                             return (
                                 <li key={item.name}>
-                                    <HashLink smooth to={item.link}
+                                    <Link to={item.link}
                                         onClick={() => setActive(item.name)}
                                         className={`w-full flex items-center justify-between hover:cursor-pointer rounded-xl px-4 py-3 transition-all duration-200 ${active === item.name
                                             ? "bg-red-600 text-white shadow-md"
@@ -193,7 +204,7 @@ const HospitalSidebar = () => {
                       {item.badge}
                       </span>
                   )} */}
-                                    </HashLink>
+                                    </Link>
                                 </li>
                             );
                         })}
@@ -229,11 +240,11 @@ const HospitalSidebar = () => {
                     </div>
                 )}
             </aside>
-            <div className="h-screen md:overflow-hidden">
-
-                <Dashboard />
+            <div className="h-screen flex-1">
+                <Outlet />
+                {/* <Dashboard />
                 <BloodRequest />
-                <ActiveRequest />
+                <ActiveRequest /> */}
             </div>
 
         </div>

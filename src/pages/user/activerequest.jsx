@@ -7,6 +7,7 @@ import {
     CheckCircle,
     Filter,
 } from "lucide-react";
+import { Link } from 'react-router-dom'
 
 export default function BloodRequestsPage() {
     const [requests, setRequests] = useState([]);
@@ -76,13 +77,13 @@ export default function BloodRequestsPage() {
                         </p>
                     </div>
 
-                    <button className="bg-red-600 hover:bg-red-700 text-white px-5 py-3 rounded-xl font-medium">
+                    <Link to = "../requestblood" className="bg-red-600 hover:bg-red-700 transition flex items-center text-white px-5 py-3 rounded-xl font-medium">
                         + New Request
-                    </button>
+                    </Link>
                 </div>
 
                 {/* Filters */}
-                <div className="bg-white rounded-2xl border p-5 mb-6 shadow-sm">
+                <div className="bg-white rounded-2xl shadow-[0_0_20px_rgba(0,0,0,0.14)] p-5 mb-6">
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                         <div className="relative">
                             <Search
@@ -115,7 +116,7 @@ export default function BloodRequestsPage() {
                             <option>Matched</option>
                         </select>
 
-                        <button className="flex justify-center items-center gap-2 border rounded-lg">
+                        <button className="flex justify-center items-center gap-2 shadow-[0_0_20px_rgba(0,0,0,0.14)] rounded-lg">
                             <Filter size={18} />
                             Apply Filters
                         </button>
@@ -127,7 +128,7 @@ export default function BloodRequestsPage() {
                     {requests.map((request) => (
                         <div
                             key={request.id}
-                            className={`bg-white rounded-2xl border p-6 shadow-sm ${request.status === "Emergency"
+                            className={`bg-white rounded-2xl shadow-[0_0_20px_rgba(0,0,0,0.14)] p-6 ${request.status === "Emergency"
                                     ? "border-red-400"
                                     : ""
                                 }`}

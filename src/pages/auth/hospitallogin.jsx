@@ -22,15 +22,18 @@ export default function HospitalLogin() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false)
+  const [loading , setLoading] = useState(false);
 
   const [email , setEmail] = useState("");
   const [password , setPassword] = useState("");
+
 
     const loginuser = async () => {
   
       
   
       try {
+        setLoading(true);
         const response = await fetch(
           `${import.meta.env.VITE_API_URL}/api/v1/login/`,
   
@@ -50,7 +53,9 @@ export default function HospitalLogin() {
         console.log(data)
   
         if (!response.ok) {
+          setLoading(false)
           throw new Error(data.message || "Something went wrong");
+          
         }
         else {
           localStorage.setItem("token",data.access_token);
@@ -75,6 +80,8 @@ export default function HospitalLogin() {
         return data;
       } catch (error) {
         console.error("Error:", error.message);
+        alert("login failed" , error.message)
+        setLoading(false);
         throw error;
       }
     };
@@ -240,7 +247,9 @@ export default function HospitalLogin() {
                 </div>
                 <div className="flex justify-center mt-3 ">
 
-                  <button type="Submit" className="text-center bg-gray-200 px-5 py-2 rounded-xl hover:bg-gray-300 hover:w-25 hover:cursor-pointer">Submit</button>
+                  <button disabled = {loading} type="Submit" className="text-center bg-gray-200 px-5 py-2 rounded-xl hover:bg-gray-300 hover:scale-x-110 hover:cursor-pointer">
+                    {(loading)?"Logging in...":"Login"}
+                  </button>
                 </div>
                 <div className="relative flex py-2 items-center">
                   <div className="flex-grow border-t border-gray-100"></div>

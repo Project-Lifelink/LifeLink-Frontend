@@ -39,7 +39,7 @@
     return (
       <div id="dashboard" className="flex-col bg-gray-50 ">
         {/* Top Navbar */}
-        <motion.div className="bg-white border-b px-8 py-5 flex items-center justify-between"
+        <motion.div className="bg-white px-8 py-5 flex items-center justify-between"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}>
@@ -67,7 +67,7 @@
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}>
             {/* Profile Card */}
-            <div className="lg:col-span-3 bg-white rounded-3xl p-8 shadow-sm">
+            <div className="lg:col-span-3 bg-white rounded-3xl p-8 shadow-[0_0_20px_rgba(0,0,0,0.14)]">
               <div className="flex flex-col lg:flex-row justify-between gap-8">
                 <div className="flex gap-6">
                   <User className="h-30 w-30" />
@@ -137,7 +137,7 @@
             </div>
 
             {/* Donate Card */}
-            <div className="bg-red-600 text-white rounded-3xl p-8 flex flex-col justify-between">
+            <div className="bg-red-600 text-white rounded-3xl p-8 flex flex-col justify-between shadow-[0_0_20px_rgba(0,0,0,0.14)]">
               <div>
                 <h2 className="text-3xl font-bold">
                   Be a Lifesaver
@@ -159,25 +159,25 @@
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}>
-            <div className="bg-white p-6 rounded-2xl">
+            <div className="bg-white p-6 rounded-2xl shadow-xl">
               <Heart className="text-red-600" />
               <h2 className="text-4xl font-bold mt-3">{totaldonation}</h2>
               <p>Total Donations</p>
             </div>
 
-            <div className="bg-white p-6 rounded-2xl">
+            <div className="bg-white p-6 rounded-2xl shadow-[0_0_20px_rgba(0,0,0,0.14)]">
               <Users className="text-blue-600" />
               <h2 className="text-4xl font-bold mt-3">0</h2>
               <p>Total Requests</p>
             </div>
 
-            <div className="bg-white p-6 rounded-2xl">
+            <div className="bg-white p-6 rounded-2xl shadow-[0_0_20px_rgba(0,0,0,0.14)]">
               <ShieldCheck className="text-green-600" />
               <h2 className="text-4xl font-bold mt-3">100%</h2>
               <p>Profile Strength</p>
             </div>
 
-            <div className="bg-white p-6 rounded-2xl">
+            <div className="bg-white p-6 rounded-2xl shadow-[0_0_20px_rgba(0,0,0,0.14)]">
               <Award className="text-yellow-500" />
               <h2 className="font-bold text-xl mt-3">
                 Top Donor

@@ -141,8 +141,9 @@ const Base = () => {
                     {!collapsed && (
                         <div className="px-4 py-4 hidden md:flex">
                             <div className="rounded-2xl shadow-2xl bg-gray-50 p-4">
-                                <div className="flex gap-3">
+                                <div className="flex-col gap-3">
                                     <img src={featureimage} alt="" />
+                                    <p className='text-sm font-bold text-gray-500 text-center'>Donate Blood and Save Life and Become reason for someone's life</p>
                                 </div>
                             </div>
                         </div>

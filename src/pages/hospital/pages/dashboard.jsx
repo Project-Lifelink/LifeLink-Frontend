@@ -141,10 +141,10 @@ export default function HospitalDashboard() {
           </p>
         </div>
 
-        <HashLink className="flex items-center gap-2 hover:cursor-pointer bg-red-600 hover:bg-red-700 text-white px-5 py-3 rounded-xl font-medium">
+        {/* <HashLink to={} className="flex items-center gap-2 hover:cursor-pointer bg-red-600 hover:bg-red-700 text-white px-5 py-3 rounded-xl font-medium">
 
           Active Blood Requests
-        </HashLink>
+        </HashLink> */}
       </div>
 
       {/* Stats */}

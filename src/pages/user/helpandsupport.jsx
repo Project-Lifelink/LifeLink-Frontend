@@ -7,6 +7,7 @@ import {
   AlertCircle,
   Send,
 } from "lucide-react";
+import { Link } from 'react-router-dom'
 
 export default function HelpSupport() {
   return (
@@ -69,10 +70,13 @@ export default function HelpSupport() {
           <p className="text-gray-500 mt-2">
             Chat instantly with our support team.
           </p>
+          <div className = "mt-5">
 
-          <button className="mt-4 bg-blue-600 text-white px-4 py-2 rounded-xl">
-            Start Chat
-          </button>
+
+            <Link to="../community" className="bg-blue-600 text-white px-4 py-2 rounded-xl">
+              Start Chat
+            </Link>
+          </div>
         </div>
       </div>
 
@@ -143,6 +147,7 @@ export default function HelpSupport() {
           <button
             type="submit"
             className="bg-red-600 text-white px-6 py-3 rounded-xl flex items-center gap-2 hover:cursor-pointer"
+            onClick={alert("hey currently this feature is not available")}
           >
             Submit Report
             <Send size={18} />

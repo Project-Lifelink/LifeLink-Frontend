@@ -28,20 +28,23 @@ export default function requestblood() {
   const [longitude , setLongitude] = useState(0);
   const [latitude, setLatitude] = useState(0);
   const [geohash_64_bits , setGeohash_64_bits] = useState("");
-  console.log(patient_name)
-  console.log(guardian_name)
-  console.log(phone)
-  console.log(additional_phone)
-  console.log(blood_group)
-  console.log(age)
-  console.log(sex)
-  console.log(quantity)
+
+  const [makingrequest , setMakingrequest] = useState(false)
+  // console.log(patient_name)
+  // console.log(guardian_name)
+  // console.log(phone)
+  // console.log(additional_phone)
+  // console.log(blood_group)
+  // console.log(age)
+  // console.log(sex)
+  // console.log(quantity)
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
+      setMakingrequest(true);
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/api/v1/blood-requests`,
         {
@@ -75,12 +78,14 @@ export default function requestblood() {
       alert("Request created successfully");
     } catch (error) {
       console.error(error);
+      setMakingrequest(false);
+      alert("blood request not made due to some error");
     }
   };
 
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4 md:p-8 font-sans" id='requestblood'>
+    <div className="min-h-screen bg-gray-50 overflow-scroll flex items-center justify-center p-4 md:p-8 font-sans" id='requestblood'>
       <div className="max-w-6xl w-full bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden flex flex-col md:flex-row">
 
         {/* LEFT SIDE: Information & Instructions */}
@@ -308,8 +313,8 @@ export default function requestblood() {
               type="submit"
               className="w-full bg-red-600 hover:cursor-pointer hover:bg-red-700 text-white font-semibold py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-colors shadow-md shadow-red-600/10 active:scale-[0.99] transform pt-4"
             >
-              <span>Make Blood Request</span>
-              <ArrowRight className="w-4 h-4" />
+              <span>{(makingrequest)?"Creating new Blood Request.....":"Make Blood Request "}</span>
+             {(makingrequest)?"": <ArrowRight className="w-4 h-4" />}
             </button>
 
           </form>
