@@ -18,9 +18,15 @@ import Navbar from '../../components/layout/navbar.jsx'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
 
+import { useDispatch } from 'react-redux'
+import { loginSuccess } from "../../redux/slices/authslice.js";
+import { useNavigate } from "react-router-dom"
+
 const HospitalRegister = () => {
 
 
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
 
   const [name, setName] = useState("");
@@ -40,9 +46,13 @@ const HospitalRegister = () => {
   const [geohash_64_bits, setGeohash_64_bits] = useState("");
   const [password, setPassword] = useState("");
 
+  const [hidden , setHidden] = useState(true);
+
+
 
   const registerUser = async () => {
 
+    
     try {
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/api/v1/hospitals/`,
@@ -79,8 +89,26 @@ const HospitalRegister = () => {
       if (!response.ok) {
         throw new Error(data.message || "Something went wrong");
       }
+      else {
+        localStorage.setItem("token", data.access_token);
+        localStorage.setItem("id", data.id)
+        navigate("/hospital")
+      }
+      try {
+
+        dispatch(
+          loginSuccess({
+            user: data,
+            token: data.access_token,
+            role: "hospital",
+          })
+        );
+      } catch (error) {
+        console.log("error occured in redux from dipatch function ", error);
+      }
 
       return data;
+
     } catch (error) {
       console.error("Error:", error.message);
       throw error;
@@ -288,12 +316,16 @@ const HospitalRegister = () => {
                 </div>
               </div>
               <div className="grid md:grid-cols-2 gap-5">
-
-                <Input
-                  icon={<MapPin size={18} />}
-                  placeholder="Hospital Address"
-                />
                 <div className="flex items-center border rounded-xl px-4 py-3 gap-3">
+                  <MapPin size = {18} />
+                  <input
+                    type="text"
+                    placeholder="Hospital Address"
+                    className="w-full outline-none"
+                    onChange={(e) => setAddress(e.target.value)}
+                  />
+                </div>
+                <div className="flex items-center border rounded-xl px-4 py-3 gap-3"> 
 
                   <input
                     type="text"
@@ -337,21 +369,21 @@ const HospitalRegister = () => {
                 <div className="flex items-center border rounded-xl px-4 py-3 gap-3">
                   <Lock size={18} />
                   <input
-                    type="password"
+                    type={(hidden)?"password":"text"}
                     placeholder="Password"
                     className="w-full outline-none"
                     onChange={(e) => setPassword(e.target.value)}
                   />
-                  <Eye size={18} />
+                  <Eye size={18} onClick={() => setHidden(!hidden)} />
                 </div>
                 <div className="flex items-center border rounded-xl px-4 py-3 gap-3">
                   <Lock size={18} />
                   <input
-                    type="password"
+                    type={(hidden)?"password":"text"}
                     placeholder="Confirm Password"
                     className="w-full outline-none"
                   />
-                  <Eye size={18} />
+                  <Eye size={18} onClick={() => setHidden(!hidden)} />
                 </div>
               </div>
 

@@ -41,7 +41,7 @@ export default function HospitalDashboard() {
         throw new Error(data.message || "Failed to fetch hospital data");
       }
 
-      console.log(data);
+      console.log("data by get request in hospital",data);
     } catch (error) {
       console.error(error);
     }

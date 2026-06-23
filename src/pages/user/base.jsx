@@ -4,71 +4,153 @@ import {
     Search,
     Droplet,
     MessageSquareCheck,
-    Bell
+    Bell,
+    User2,
+    LayoutDashboard,
+    ChevronLeft, ChevronRight, Droplets, ClipboardList, History, ShieldCheck, Package, CircleHelp
 } from 'lucide-react'
-// import features from '../'
-import { HashLink } from 'react-router-hash-link'
+import { Route, Routes } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import { button } from 'framer-motion/client'
+import { Outlet } from 'react-router-dom'
 import Dashboard from './dashboard.jsx'
 import Mydonations from './mydonations.jsx'
 import Notifications from './notifications.jsx'
 import RequestBlood from './requestblood.jsx'
 import featureimage from '../../assets/images/dashboardimage.png'
 import ExploreHospitals from './explorehospitals.jsx'
+import Community from './community.jsx'
 import { motion } from 'framer-motion'
+
 
 
 const Base = () => {
 
     const [hide, setHide] = useState(false);
+    const [collapsed, setCollapsed] = useState(false);
+    const [active, setActive] = useState("Dashboard");
+
+    const menuItems = [
+        {
+            name: "Dashboard",
+            icon: LayoutDashboard,
+            link: "/profile/dashboard",
+        },
+        {
+            name: "Raise Blood Request",
+            icon: Droplets,
+            link: "/profile/requestblood",
+        },
+        {
+            name: "Active Requests",
+            icon: ClipboardList,
+            badge: 0,
+            link: "/profile/activerequests",
+        },
+        {
+            name: "Notifications",
+            icon: Bell,
+            badge: 0,
+            link: "/profile/notifications"
+        },
+        {
+            name: "Help & Support",
+            icon: CircleHelp,
+            link: "/profile/helpandsupport"
+        },
+        {
+            name: "Community",
+            icon: User2,
+            link: "/profile/community"
+        }
+    ];
+
+
     return (
         <>
-            <div className="flex gap-4">
+            <div className="flex gap-0">
 
-                <motion.div className="ml-8 mt-5 hidden md:block md:stick"
-                initial = {{opacity: 0}}
-                whileInView = {{opacity: 1}}
-                transition={{duration:0.5}}>
-                    {hide ? <button onClick={() => { setHide(false) }} className=" absolute hover:cursor-pointer">{">>>"}</button> : <div className="flex flex-col gap-10 min-w-2/7 border-r-1 border-gray-300">
-                        <div>
-                            <a href="/profile" className="text-4xl font-bold">
-                                Life<span className="text-red-700">Link</span>
-                            </a>
-                            <button onClick={() => { setHide(true) }} className="hover:cursor-pointer absolute">{"<<<"}</button>
+                <aside
+                    className={`h-screen bg-white  border-r  flex-row border-gray-200 flex md:flex-col transition-all duration-300 ${collapsed ? "w-20" : "w-62"
 
-                    x    </div>
-                        <div className="flex flex-col gap-1 w-0 md:w-50">
-                            <Home className="absolute text-gray-600 top-30 left-10" />
-                            <HashLink smooth to="#dashboard" className="pl-12 py-5 text-gray-600 hover:bg-gray-200 active:bg-red-400 active:text-white rounded-xl transition-all">Dashboard</HashLink>
-                            <Search className="absolute text-gray-600 top-47 left-10" />
-                            <HashLink smooth to="#explorehospitals" className=" pl-12 py-5 text-gray-600 hover:bg-gray-200 active:bg-red-400 active:text-white rounded-xl transition-all">Explore Hospitals</HashLink>
-                            <Droplet className="absolute text-gray-600 top-64 ml-2 ft-10" />
-                            <HashLink smooth to="#requestblood" className=" pl-12 py-5 text-gray-600 hover:bg-gray-200 active:bg-red-400 active:text-white rounded-xl transition-all">Request Blood</HashLink>
-                            <MessageSquareCheck className="absolute text-gray-600 top-81.5 left-10" />
-                            <HashLink smooth to="#mydonations" className=" pl-12 py-5 text-gray-600 hover:bg-gray-200 active:bg-red-400 active:text-white rounded-xl transition-all">My Donations</HashLink>
-                            <Bell className="absolute text-gray-600 top-98.5 left-10" />
-                            <HashLink smooth to="#notifications" className=" pl-12 py-5 text-gray-600 hover:bg-gray-200 active:bg-red-400 active:text-white rounded-xl transition-all">Notifications</HashLink>
-                        </div>
-                        <div className = "flex flex-col">
-                            <div>
-                                <img src={featureimage} className="h-40" alt="" />
+
+                        }`}
+                >
+                    {/* Logo */}
+                    <div className=" hidden md:h-20 px-5 md:flex items-center justify-between border-b mb-1">
+                        <div className="flex items-center gap-3">
+                            <div className="bg-red-600 p-2 rounded-lg">
+                                <Droplets className="w-5 h-5 text-white fill-white" />
                             </div>
-                            <div>
-                                <h1 className = "text-lg font-bold">Every Drop Counts</h1>
-                                <p className = "text-xs">Thank You for being a live saver</p>
+
+                            {!collapsed && (
+                                <h1 className="text-2xl font-bold text-gray-900">
+                                    <span className="text-red-600">Life</span>Link
+                                </h1>
+                            )}
+                        </div>
+
+                        <button
+                            onClick={() => setCollapsed(!collapsed)}
+                            className="p-1 rounded hover:bg-gray-100"
+                        >
+                            {collapsed ? (
+                                <ChevronRight size={18} />
+                            ) : (
+                                <ChevronLeft size={18} />
+                            )}
+                        </button>
+                    </div>
+
+
+
+                    {/* Navigation */}
+                    <div className="flex-1 px-3">
+                        <ul className="space-y-1">
+                            {menuItems.map((item) => {
+                                const Icon = item.icon;
+
+                                return (
+                                    <li key={item.name}>
+                                        <Link to={item.link}
+                                            onClick={() => setActive(item.name)}
+                                            className={`w-full flex items-center justify-between hover:cursor-pointer rounded-xl px-4 py-3 transition-all duration-200 ${active === item.name
+                                                ? "bg-red-600 text-white shadow-md"
+                                                : "text-gray-600 hover:bg-red-50 hover:text-red-600"
+                                                }`}
+                                        >
+                                            <div className="flex items-center gap-3">
+                                                <Icon size={20} />
+
+                                                {!collapsed && (
+                                                    <span className="font-medium text-sm">
+                                                        {item.name}
+                                                    </span>
+                                                )}
+                                            </div>
+
+                                        </Link>
+                                    </li>
+                                );
+                            })}
+                        </ul>
+                    </div>
+
+                    {/* Hospital Card */}
+                    {!collapsed && (
+                        <div className="px-4 py-4 hidden md:flex">
+                            <div className="rounded-2xl shadow-2xl bg-gray-50 p-4">
+                                <div className="flex gap-3">
+                                    <img src={featureimage} alt="" />
+                                </div>
                             </div>
                         </div>
-                    </div>}
-
-                </motion.div>
-                <div className="h-screen md:overflow-hidden" >
-                    <Dashboard className="w-6/7" />
-                    <ExploreHospitals />
-                    <RequestBlood />
-                    <Mydonations />
-                    <Notifications />
-                </div>
+                    )}
+        </aside >
+            <div className="h-screen flex-1" >
+                <Outlet />
+            </div>
             </div >
         </>
     )
