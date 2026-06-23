@@ -41,7 +41,7 @@ export default function HospitalDashboard() {
         throw new Error(data.message || "Failed to fetch hospital data");
       }
 
-      console.log("data by get request in hospital",data);
+      console.log("data by get request in hospital", data);
     } catch (error) {
       console.error(error);
     }
@@ -52,7 +52,7 @@ export default function HospitalDashboard() {
   const user = useSelector((state) => state.auth.user)
 
   useEffect(() => {
-    if(!user) navigate('/hospitallogin')
+    // if (!user) navigate('/hospitallogin')
 
 
     getdata();
@@ -94,16 +94,16 @@ export default function HospitalDashboard() {
     },
   ];
 
-  const bloodInventory = [
-    { group: "A+", units: 42 },
-    { group: "A-", units: 14 },
-    { group: "B+", units: 37 },
-    { group: "B-", units: 11 },
-    { group: "AB+", units: 19 },
-    { group: "AB-", units: 5 },
-    { group: "O+", units: 58 },
-    { group: "O-", units: 8 },
-  ];
+const bloodInventory = [
+  { group: "A+", units: 45, capacity: 100 },
+  { group: "A-", units: 20, capacity: 100 },
+  { group: "B+", units: 70, capacity: 100 },
+  { group: "B-", units: 15, capacity: 100 },
+  { group: "AB+", units: 55, capacity: 100 },
+  { group: "AB-", units: 10, capacity: 100 },
+  { group: "O+", units: 90, capacity: 100 },
+  { group: "O-", units: 35, capacity: 100 },
+];
 
   const recentRequests = [
     {
@@ -186,22 +186,38 @@ export default function HospitalDashboard() {
               Blood Availability
             </h2>
 
-            <div className="space-y-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 p-10 py-5 gap-5">
               {bloodInventory.map((blood, index) => (
                 <div
                   key={index}
-                  className="flex items-center justify-center gap-20"
+                  className="bg-white rounded-xl shadow-[0_0_15px_rgba(0,0,0,0.14)] p-5"
                 >
-                  <span className="font-medium">
-                    {blood.group}
-                  </span>
+                  <div className="flex justify-between items-center mb-3">
+                    <h2 className="text-2xl font-bold text-red-600">
+                      {blood.group}
+                    </h2>
 
-                  <span className="text-red-600 font-semibold">
-                    {blood.units} Units
-                  </span>
+                    <span className="font-semibold">
+                      {blood.units} Units
+                    </span>
+                  </div>
+
+                  <div className="w-full bg-gray-200 h-3 rounded-full overflow-hidden">
+                    <div
+                      className="bg-red-500 h-full transition-all duration-500"
+                      style={{
+                        width: `${(blood.units / blood.capacity) * 100}%`,
+                      }}
+                    />
+                  </div>
+
+                  <p className="mt-2 text-sm text-gray-500">
+                    Capacity: {blood.capacity} Units
+                  </p>
                 </div>
               ))}
             </div>
+
           </div>
         </div>
 

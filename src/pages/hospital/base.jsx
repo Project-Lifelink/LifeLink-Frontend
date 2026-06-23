@@ -43,7 +43,7 @@ const HospitalSidebar = () => {
     const user = useSelector((state) => state.auth.user)
 
     useEffect(() => {
-        if(!user) navigate("/hospitallogin");
+        // if(!user) navigate("/hospitallogin");
         getrequest();
     }, [])
 
@@ -135,7 +135,7 @@ const HospitalSidebar = () => {
         <div className="flex h-screen">
 
             <aside
-                className={`h-screen bg-white  border-r  flex-row border-gray-200 flex md:flex-col transition-all duration-300 ${collapsed ? "w-20" : "w-65"
+                className={`h-screen bg-white  border-r  flex-row border-gray-200 w-20 flex md:flex-col transition-all duration-300 ${collapsed ? "w-20" : "w-65"
 
 
                     }`}
