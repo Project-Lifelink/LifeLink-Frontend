@@ -22,88 +22,88 @@ export default function HospitalLogin() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false)
-  const [loading , setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const [email , setEmail] = useState("");
-  const [password , setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
 
-    const loginuser = async () => {
-  
-      
-  
-      try {
-        setLoading(true);
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/v1/login/`,
-  
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              email,
-              password
-            }),
-          }
-        );
-  
-        const data = await response.json();
-        console.log(data)
-  
-        if (!response.ok) {
-          setLoading(false)
-          throw new Error(data.message || "Something went wrong");
-          
+  const loginuser = async () => {
+
+
+
+    try {
+      setLoading(true);
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/v1/login/`,
+
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            password
+          }),
         }
-        else {
-          localStorage.setItem("token",data.access_token);
-          localStorage.setItem("id",data.user.user_id)
-          navigate("/hospital")
-        }
-  
-  
-        try{
-  
-          dispatch(
-            loginSuccess({
-              user: data.user,
-              token: data.access_token,
-              role: "hospital",
-            })
-          );
-        } catch(error){
-          console.log("error occured in redux from dipatch function ",error);
-        }
-  
-        return data;
-      } catch (error) {
-        console.error("Error:", error.message);
-        alert("login failed" , error.message)
-        setLoading(false);
-        throw error;
+      );
+
+      const data = await response.json();
+      console.log(data)
+
+      if (!response.ok) {
+        setLoading(false)
+        throw new Error(data.message || "Something went wrong");
+
       }
-    };
-  
-  
+      else {
+        localStorage.setItem("token", data.access_token);
+        localStorage.setItem("id", data.user.user_id)
+        navigate("/hospital")
+      }
+
+
+      try {
+
+        dispatch(
+          loginSuccess({
+            user: data.user,
+            token: data.access_token,
+            role: "hospital",
+          })
+        );
+      } catch (error) {
+        console.log("error occured in redux from dipatch function ", error);
+      }
+
+      return data;
+    } catch (error) {
+      console.error("Error:", error.message);
+      alert("login failed", error.message)
+      setLoading(false);
+      throw error;
+    }
+  };
+
+
 
 
   function handleSubmit(e) {
     e.preventDefault();
     loginuser();
-    alert("request sent")
     console.log("login from submitted")
 
   }
   return (
-    <>
+    <div className="scrollbar-none overflow-auto h-screen">
       <Navbar />
+      {(loading) ? <p className="text-2xl font-extrabold text-center w-screen absolute">Loggin you in...</p> : ""}
       <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6 shadow-2xl border-gray-200">
         <div>
 
         </div>
-        <div className="w-full max-w-7xl bg-white rounded-3xl shadow-sm overflow-hidden grid lg:grid-cols-2">
+        <div className="w-full max-w-7xl bg-white rounded-3xl shadow-sm overflow-hidden flex flex-col-reverse md:flex-row">
 
           {/* Left Side */}
           <div className="p-10 lg:p-14 flex flex-col justify-between bg-gradient-to-br from-white to-red-50">
@@ -175,7 +175,7 @@ export default function HospitalLogin() {
               </div>
             </div>
 
-            <div className="flex justify-center items-center py-10">
+            {/* <div className="flex justify-center items-center py-10">
               <div className="relative">
 
                 <div className="absolute inset-0 bg-red-200 blur-3xl opacity-40 rounded-full scale-150"></div>
@@ -192,9 +192,9 @@ export default function HospitalLogin() {
                 <div className="absolute top-20 -left-10 w-6 h-6 rounded-full bg-red-400 animate-pulse"></div>
 
               </div>
-            </div>
+            </div> */}
 
-            <div className="bg-red-50 rounded-2xl p-6 mt-8">
+            <div className="bg-red-50 rounded-2xl pt-10">
               <div className="flex gap-4">
                 <Quote className="text-red-600" size={30} />
                 <p className="text-gray-700 text-lg">
@@ -206,22 +206,41 @@ export default function HospitalLogin() {
           </div>
 
           {/* Right Side */}
-          <div className="flex md:pt-40 justify-center p-10">
+          <div className="flex justify-center p-10">
             <div className="w-full max-w-md">
+              <div className="flex justify-center items-center py-10">
+                <div className="relative">
+
+                  <div className="absolute inset-0 bg-red-200 blur-3xl opacity-40 rounded-full scale-150"></div>
+
+                  <div className="relative w-30 h-30 rounded-full bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center shadow-2xl">
+                    <HeartHandshake
+                      size={60}
+                      className="text-white"
+                    />
+                  </div>
+
+                  <div className="absolute -top-4 -right-6 w-10 h-10 rounded-full bg-red-300 animate-pulse"></div>
+                  <div className="absolute bottom-0 -left-8 w-8 h-8 rounded-full bg-red-200 animate-pulse"></div>
+                  <div className="absolute top-20 -left-10 w-6 h-6 rounded-full bg-red-400 animate-pulse"></div>
+
+                </div>
+              </div>
               <div className="mb-10">
                 <h1 className="text-4xl text-center mb-3 font-bold ">Welcome to LifeLink</h1>
                 <p className="text-center text-2xl">Login to your <span className="text-red-600 font-bold">LifeLink</span> Account</p>
               </div>
+
               {/* Login Form*/}
               <form onSubmit={handleSubmit}>
                 <div>
-                  <label className="block text-xs font-bold text-gray-700 mb-1.5">Hospital Name</label>
+                  <label className="block text-xs font-bold text-gray-700 mb-1.5">Hospital Email</label>
                   <div className="relative">
                     <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
                     <input
                       type="email"
                       placeholder="Enter your email address"
-                      onChange={(e) => {setEmail(e.target.value)}}
+                      onChange={(e) => { setEmail(e.target.value) }}
                       className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 transition-colors placeholder:text-gray-400"
                     />
                   </div>
@@ -233,7 +252,7 @@ export default function HospitalLogin() {
                     <input
                       type={showPassword ? "text" : "password"}
                       placeholder="Create a strong password"
-                      onChange={(e) => {setPassword(e.target.value)}}
+                      onChange={(e) => { setPassword(e.target.value) }}
                       className="w-full pl-10 pr-10 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 transition-colors placeholder:text-gray-400"
                     />
                     <button
@@ -247,8 +266,8 @@ export default function HospitalLogin() {
                 </div>
                 <div className="flex justify-center mt-3 ">
 
-                  <button disabled = {loading} type="Submit" className="text-center bg-gray-200 px-5 py-2 rounded-xl hover:bg-gray-300 hover:scale-x-110 hover:cursor-pointer">
-                    {(loading)?"Logging in...":"Login"}
+                  <button disabled={loading} type="Submit" className="text-center bg-gray-200 px-5 py-2 rounded-xl hover:bg-gray-300 hover:scale-x-110 hover:cursor-pointer">
+                    {(loading) ? "Logging in..." : "Login"}
                   </button>
                 </div>
                 <div className="relative flex py-2 items-center">
@@ -264,6 +283,6 @@ export default function HospitalLogin() {
 
         </div>
       </div>
-    </>
+    </div>
   );
 }

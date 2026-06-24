@@ -69,10 +69,10 @@ const Base = () => {
 
     return (
         <>
-            <div className="flex gap-0">
+            <div className="flex gap-0 flex-col md:flex-row">
 
                 <aside
-                    className={`h-screen bg-white  border-r  flex-row border-gray-200 flex md:flex-col transition-all duration-300 ${collapsed ? "w-20" : "w-62"
+                    className={` bg-white border-r flex border-gray-200 md:flex md:flex-col transition-all duration-300 md:${collapsed ? "w-20" : "w-65"
 
 
                         }`}
@@ -107,7 +107,7 @@ const Base = () => {
 
                     {/* Navigation */}
                     <div className="flex-1 px-3">
-                        <ul className="space-y-1">
+                        <ul className="space-y-1 flex flex-wrap md:flex-col">
                             {menuItems.map((item) => {
                                 const Icon = item.icon;
 
@@ -130,6 +130,17 @@ const Base = () => {
                                                 )}
                                             </div>
 
+                                            {/* {!collapsed && item.badge && (
+                                    <span
+                                      className={`min-w-[22px] h-[22px] flex items-center justify-center text-xs rounded-full ${
+                                        active === item.name
+                                        ? "bg-white text-red-600"
+                                          : "bg-red-600 text-white"
+                                      }`}
+                                      >
+                                      {item.badge}
+                                      </span>
+                                  )} */}
                                         </Link>
                                     </li>
                                 );
@@ -137,21 +148,38 @@ const Base = () => {
                         </ul>
                     </div>
 
-                    {/* Hospital Card */}
+                    {/* Hospital Card
                     {!collapsed && (
                         <div className="px-4 py-4 hidden md:flex">
                             <div className="rounded-2xl shadow-2xl bg-gray-50 p-4">
-                                <div className="flex-col gap-3">
-                                    <img src={featureimage} alt="" />
-                                    <p className='text-sm font-bold text-gray-500 text-center'>Donate Blood and Save Life and Become reason for someone's life</p>
+                                <div className="flex gap-3">
+                                    <img
+                                        src="https://cdn-icons-png.flaticon.com/512/2967/2967350.png"
+                                        alt="hospital"
+                                        className="w-14 h-14 object-contain"
+                                    />
+
+                                    <div>
+                                        <h3 className="font-semibold text-gray-900">
+                                            Hospital Name
+                                        </h3>
+
+                                        <p className="text-sm text-gray-500">
+                                            UP
+                                        </p>
+
+                                        <span className="inline-flex items-center mt-2 rounded-full bg-red-50 text-red-600 text-xs font-medium px-2 py-1">
+                                            Verified Hospital
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    )}
-        </aside >
-            <div className="h-screen flex-1" >
-                <Outlet />
-            </div>
+                    )} */}
+                </aside>
+                <div className="flex-1" >
+                    <Outlet />
+                </div>
             </div >
         </>
     )

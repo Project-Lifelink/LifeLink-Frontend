@@ -132,10 +132,10 @@ const HospitalSidebar = () => {
     ];
 
     return (
-        <div className="flex h-screen">
+        <div className='flex flex-col md:flex-row h-screen'>
 
             <aside
-                className={`h-screen bg-white  border-r  flex-row border-gray-200 w-20 flex md:flex-col transition-all duration-300 ${collapsed ? "w-20" : "w-65"
+                className={`h-screen bg-white border-r flex border-gray-200 md:flex md:flex-col transition-all duration-300 md:${collapsed ? "w-20" : "w-65"
 
 
                     }`}
@@ -170,7 +170,7 @@ const HospitalSidebar = () => {
 
                 {/* Navigation */}
                 <div className="flex-1 px-3">
-                    <ul className="space-y-1">
+                    <ul className="space-y-1 flex flex-wrap md:flex-col">
                         {menuItems.map((item) => {
                             const Icon = item.icon;
 

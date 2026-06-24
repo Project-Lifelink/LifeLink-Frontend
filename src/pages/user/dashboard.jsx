@@ -46,14 +46,14 @@
 
 
           <div className="flex items-center gap-6">
-            <HashLink smooth to="#notifications" className="relative hover:cursor-pointer">
+            {/* <HashLink smooth to="#notifications" className="relative hover:cursor-pointer">
               <Bell />
               <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs h-5 w-5 rounded-full flex items-center justify-center">
 
               </span>
-            </HashLink>
+            </HashLink> */}
 
-            <div className="flex items-center gap-3">
+            <div className="hidden md:flex items-center gap-3">
               <User />
               <p className="font-medium">{username}</p>
             </div>
@@ -159,7 +159,7 @@
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}>
-            <div className="bg-white p-6 rounded-2xl shadow-xl">
+            <div className="bg-white p-6 rounded-2xl shadow-[0_0_20px_rgba(0,0,0,0.14)]">
               <Heart className="text-red-600" />
               <h2 className="text-4xl font-bold mt-3">{totaldonation}</h2>
               <p>Total Donations</p>

@@ -11,7 +11,7 @@ const Navbar = () => {
             whileInView = {{opacity: 1 , y: 0}}
             transition = {{duration: 0.3}}>
                 <nav>
-                    <div className="flex-col flex md:flex-row p-5 justify-between w-full ">
+                    <div className="flex flex-row p-5 justify-between w-full ">
                         <div><a href = "/" className="font-bold text-2xl">Life<span className="text-red-600">Link</span></a></div>
                         <div className = "hidden md:flex flex-col md:flex-row gap-7 transition-all duration-300">
                             <HashLink className = "hover:text-[19px] hover:border-b-1 transition-all duration-200" smooth to = "/#home" >Home</HashLink>

@@ -21,6 +21,7 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { loginSuccess } from "../../redux/slices/authslice.js";
 import { useNavigate } from "react-router-dom"
+import { div } from "framer-motion/client";
 
 const HospitalRegister = () => {
 
@@ -46,14 +47,17 @@ const HospitalRegister = () => {
   const [geohash_64_bits, setGeohash_64_bits] = useState("");
   const [password, setPassword] = useState("");
 
-  const [hidden , setHidden] = useState(true);
+  const [loading, setLoading] = useState(false);
+
+  const [hidden, setHidden] = useState(true);
 
 
 
   const registerUser = async () => {
 
-    
+
     try {
+      setLoading(true);
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/api/v1/hospitals/`,
 
@@ -87,12 +91,16 @@ const HospitalRegister = () => {
       console.log(data)
 
       if (!response.ok) {
+        setLoading(false);
         throw new Error(data.message || "Something went wrong");
+
       }
       else {
         localStorage.setItem("token", data.access_token);
         localStorage.setItem("id", data.id)
+        setLoading(false);
         navigate("/hospital")
+
       }
       try {
 
@@ -125,9 +133,16 @@ const HospitalRegister = () => {
 
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6 pt-0 shadow-sm">
+    <div className=" scrollbar-none overflow-auto h-screen bg-gray-50 p-6 pt-0 shadow-sm">
       <Navbar />
-      <div className="max-w-7xl mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden">
+      {(loading) ?
+        <div className="absolute text-2xl text-center z-1 font-extrabold">
+
+          {/* <p >Registering to Server....</p> */}
+        </div>
+
+        : ""}
+      <div className="max-w-7xl mx-auto bg-white rounded-3xl shadow-2xl scale-90 overflow-hidden">
         <div className="grid lg:grid-cols-2">
 
           {/* LEFT SECTION */}
@@ -317,7 +332,7 @@ const HospitalRegister = () => {
               </div>
               <div className="grid md:grid-cols-2 gap-5">
                 <div className="flex items-center border rounded-xl px-4 py-3 gap-3">
-                  <MapPin size = {18} />
+                  <MapPin size={18} />
                   <input
                     type="text"
                     placeholder="Hospital Address"
@@ -325,7 +340,7 @@ const HospitalRegister = () => {
                     onChange={(e) => setAddress(e.target.value)}
                   />
                 </div>
-                <div className="flex items-center border rounded-xl px-4 py-3 gap-3"> 
+                <div className="flex items-center border rounded-xl px-4 py-3 gap-3">
 
                   <input
                     type="text"
@@ -369,7 +384,7 @@ const HospitalRegister = () => {
                 <div className="flex items-center border rounded-xl px-4 py-3 gap-3">
                   <Lock size={18} />
                   <input
-                    type={(hidden)?"password":"text"}
+                    type={(hidden) ? "password" : "text"}
                     placeholder="Password"
                     className="w-full outline-none"
                     onChange={(e) => setPassword(e.target.value)}
@@ -379,7 +394,7 @@ const HospitalRegister = () => {
                 <div className="flex items-center border rounded-xl px-4 py-3 gap-3">
                   <Lock size={18} />
                   <input
-                    type={(hidden)?"password":"text"}
+                    type={(hidden) ? "password" : "text"}
                     placeholder="Confirm Password"
                     className="w-full outline-none"
                   />
@@ -397,9 +412,9 @@ const HospitalRegister = () => {
                 </div>
               </div>
 
-              <button type="Submit" className="w-full bg-red-600 hover:cursor-pointer hover:bg-red-700 text-white py-4 rounded-xl flex justify-center items-center gap-2 font-semibold">
-                Register Hospital
-                <ArrowRight size={18} />
+              <button disabled={loading} type="Submit" className="w-full bg-red-600 hover:cursor-pointer hover:bg-red-700 text-white py-4 rounded-xl flex justify-center items-center gap-2 font-semibold">
+                {(loading) ? "Registering to server....." : "Register Hospital"}
+                {(loading) ? "" : <ArrowRight size={18} />}
               </button>
             </form>
           </div>
@@ -408,28 +423,5 @@ const HospitalRegister = () => {
     </div>
   );
 };
-
-const Input = ({ icon, placeholder }) => (
-  <div className="flex items-center border rounded-xl px-4 py-3 gap-3">
-    {icon}
-    <input
-      type="text"
-      placeholder={placeholder}
-      className="w-full outline-none"
-    />
-  </div>
-);
-
-const PasswordInput = ({ placeholder }) => (
-  <div className="flex items-center border rounded-xl px-4 py-3 gap-3">
-    <Lock size={18} />
-    <input
-      type="password"
-      placeholder={placeholder}
-      className="w-full outline-none"
-    />
-    <Eye size={18} />
-  </div>
-);
 
 export default HospitalRegister;

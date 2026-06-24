@@ -24,13 +24,15 @@ export default function LoginPage() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [logging, setLoggin] = useState(false);
+  const [logging, setLogging] = useState(false);
 
   const loginuser = async () => {
 
-    
+
 
     try {
+      console.log("api called");
+      setLogging(true)
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/api/v1/login/`,
 
@@ -45,22 +47,21 @@ export default function LoginPage() {
           }),
         }
       );
-
+      await console.log("api calling done")
       const data = await response.json();
       console.log(data)
-      alert("request created")
 
       if (!response.ok) {
         throw new Error(data.message || "Something went wrong");
       }
       else {
-        localStorage.setItem("token",data.access_token);
-        
+        localStorage.setItem("token", data.access_token);
+
         navigate("/profile")
       }
 
 
-      try{
+      try {
 
         dispatch(
           loginSuccess({
@@ -69,8 +70,9 @@ export default function LoginPage() {
             role: "user",
           })
         );
-      } catch(error){
-        console.log("error occured in redux from dipatch function ",error);
+      } catch (error) {
+        console.log("error occured in redux from dipatch function ", error);
+        setLogging(false);
       }
 
       return data;
@@ -92,16 +94,21 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   function handleSubmit(e) {
     e.preventDefault();
+    console.log("request sent")
     loginuser();
   }
   return (
-    <>
+    <div className="overflow-auto scrollbar-none max-h-screen">
       <Navbar />
+      {(logging) ?
+        <p className="absolute text-2xl font-extrabold text-center w-screen">
+          Logging You in......
+        </p> : ""}
       <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6 shadow-2xl border-gray-200">
         <div>
 
         </div>
-        <div className="w-full max-w-7xl bg-white rounded-3xl shadow-sm overflow-hidden grid lg:grid-cols-2">
+        <div className="w-full max-w-7xl bg-white rounded-3xl shadow-[0_0_20px_rgba(0,0,0,0.14)] overflow-hidden flex flex-col-reverse lg:flex-row">
 
           {/* Left Side */}
           <div className="p-10 lg:p-14 flex flex-col justify-between bg-gradient-to-br from-white to-red-50">
@@ -173,24 +180,7 @@ export default function LoginPage() {
               </div>
             </div>
 
-            <div className="flex justify-center items-center py-10">
-              <div className="relative">
 
-                <div className="absolute inset-0 bg-red-200 blur-3xl opacity-40 rounded-full scale-150"></div>
-
-                <div className="relative w-30 h-30 rounded-full bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center shadow-2xl">
-                  <HeartHandshake
-                    size={60}
-                    className="text-white"
-                  />
-                </div>
-
-                <div className="absolute -top-4 -right-6 w-10 h-10 rounded-full bg-red-300 animate-pulse"></div>
-                <div className="absolute bottom-0 -left-8 w-8 h-8 rounded-full bg-red-200 animate-pulse"></div>
-                <div className="absolute top-20 -left-10 w-6 h-6 rounded-full bg-red-400 animate-pulse"></div>
-
-              </div>
-            </div>
 
             <div className="bg-red-50 rounded-2xl p-6 mt-8">
               <div className="flex gap-4">
@@ -204,8 +194,26 @@ export default function LoginPage() {
           </div>
 
           {/* Right Side */}
-          <div className="flex md:pt-40 justify-center p-10">
+          <div className="flex md:pt-10 justify-center p-10">
             <div className="w-full max-w-md">
+              <div className="flex justify-center items-center py-10">
+                <div className="relative">
+
+                  <div className="absolute inset-0 bg-red-200 blur-3xl opacity-40 rounded-full scale-150"></div>
+
+                  <div className="relative w-30 h-30 rounded-full bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center shadow-2xl">
+                    <HeartHandshake
+                      size={60}
+                      className="text-white"
+                    />
+                  </div>
+
+                  <div className="absolute -top-4 -right-6 w-10 h-10 rounded-full bg-red-300 animate-pulse"></div>
+                  <div className="absolute bottom-0 -left-8 w-8 h-8 rounded-full bg-red-200 animate-pulse"></div>
+                  <div className="absolute top-20 -left-10 w-6 h-6 rounded-full bg-red-400 animate-pulse"></div>
+
+                </div>
+              </div>
               <div className="mb-10">
                 <h1 className="text-4xl text-center mb-3 font-bold ">Welcome to LifeLink</h1>
                 <p className="text-center text-2xl">Login to your <span className="text-red-600 font-bold">LifeLink</span> Account</p>
@@ -240,7 +248,7 @@ export default function LoginPage() {
                         setShowPassword(!showPassword)
                         setLoggin(true);
                       }}
-                      
+
                       className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
                     >
                       {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -250,9 +258,9 @@ export default function LoginPage() {
                 <div className="flex justify-center mt-3 ">
 
                   <button type="Submit"
-                  className="text-center bg-gray-200 px-5 py-2 rounded-xl hover:bg-gray-300 hover:w-25 hover:cursor-pointer"
-                   
-                    >Submit</button>
+                    disabled={logging}
+                    className="text-center bg-gray-200 px-5 py-2 rounded-xl hover:bg-gray-300 hover:w-35 hover:cursor-pointer"
+                  >{(logging) ? "Logging in" : "Login"}</button>
                 </div>
                 <div className="relative flex py-2 items-center">
                   <div className="flex-grow border-t border-gray-100"></div>
@@ -267,6 +275,6 @@ export default function LoginPage() {
 
         </div>
       </div>
-    </>
+    </div>
   );
 }

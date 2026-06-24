@@ -18,7 +18,7 @@ const About = () => {
   return (
     <motion.section
       id="about"
-      className="bg-[#f8f8f8] min-h-screen py-20 px-6 md:px-16"
+      className="bg-[#f8f8f8] py-20 px-6 md:px-16"
       
     >
       {/* Heading */}

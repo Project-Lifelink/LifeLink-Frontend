@@ -18,6 +18,8 @@ import {
 } from 'lucide-react';
 import Navbar from '../../components/layout/navbar.jsx'
 import { useNavigate } from 'react-router-dom'
+import { TbFlagSearch } from 'react-icons/tb';
+import { p } from 'framer-motion/client';
 
 export default function RegisterPage() {
 
@@ -31,11 +33,14 @@ export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  const [registering,setRegistering] = useState(false);
+
   const navigate = useNavigate();
 
   const registerUser = async () => {
     
     try {
+      setRegistering(true);
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/api/v1/register/`,
 
@@ -61,14 +66,19 @@ export default function RegisterPage() {
 
       if (!response.ok) {
         throw new Error(data.message || "Something went wrong");
+        setRegistering(false)
       }
       else {
+        alert("Account Created")
         navigate('/login')
       }
 
       return data;
     } catch (error) {
       console.error("Error:", error.message);
+      
+        alert("registration failed due to some error")
+      setRegistering(false);
       throw error;
     }
   };
@@ -87,10 +97,13 @@ export default function RegisterPage() {
   // console.log(age);
 
   return (
-    <>
+    <div className = "overflow-auto scrollbar-none max-h-screen">
       <Navbar />
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4 md:p-8 font-sans">
-        <div className="max-w-6xl w-full bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden flex flex-col md:flex-row">
+      {
+        (registering)? <p className='text-2xl absolute font-extrabold top-30 text-center w-screen'>Creating Your Account.....</p>: ""
+      }
+      <div className=" bg-gray-50 flex items-center justify-center p-4 md:p-8 font-sans">
+        <div className="max-w-6xl w-full bg-white rounded-3xl shadow-[0_0_20px_rgba(0,0,0,0.14)] overflow-hidden flex flex-col-reverse md:flex-row">
 
           <div className="w-full md:w-1/2 p-8 lg:p-12 flex flex-col justify-between bg-gradient-to-br from-white to-red-50/20">
 
@@ -341,10 +354,11 @@ export default function RegisterPage() {
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-colors shadow-md shadow-red-600/10 active:scale-[0.99] transform"
+                disabled = {registering}
+                className="w-full bg-red-600 hover:cursor-pointer hover:bg-red-700 text-white font-semibold py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-colors shadow-md shadow-red-600/10 active:scale-[0.99] transform"
               >
-                <span>Create Account</span>
-                <ArrowRight className="w-4 h-4" />
+                <span>{(registering)?"Creating your account.....":"Create your account"}</span>
+               {(!registering)? <ArrowRight className="w-4 h-4" /> : ""}
               </button>
 
               {/* Login Footer */}
@@ -361,6 +375,6 @@ export default function RegisterPage() {
 
         </div>
       </div>
-    </>
+    </div>
   );
 }

@@ -21,7 +21,7 @@ const home = () => {
     return (
         <>
             <Navbar />
-            <div className="h-screen">
+            <div className=" mt-30 ml-10 md:mt-0 h-screen">
                 <section>
                     <div className="flex m-5 flex-col md:flex-row">
 
@@ -92,6 +92,7 @@ const home = () => {
                     </div>
                 </section>
             </div>
+            
             <About />
             <Features />
             <Howitworks />

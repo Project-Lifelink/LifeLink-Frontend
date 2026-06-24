@@ -181,7 +181,7 @@ const bloodInventory = [
         {/* Left Section */}
         <div className="xl:col-span-2 space-y-6">
           {/* Blood Availability */}
-          <div className="bg-white rounded-2xl p-6 hover:scale-102 transition-all shadow-[0_0_30px_rgba(0,0,0,0.15)]">
+          <div className="bg-white rounded-2xl p-6  transition-all shadow-[0_0_30px_rgba(0,0,0,0.15)]">
             <h2 className="font-semibold mb-4">
               Blood Availability
             </h2>
@@ -190,7 +190,7 @@ const bloodInventory = [
               {bloodInventory.map((blood, index) => (
                 <div
                   key={index}
-                  className="bg-white rounded-xl shadow-[0_0_15px_rgba(0,0,0,0.14)] p-5"
+                  className="bg-white rounded-xl hover:scale-105 transition-all shadow-[0_0_10px_rgba(0,0,0,0.14)] p-5"
                 >
                   <div className="flex justify-between items-center mb-3">
                     <h2 className="text-2xl font-bold text-red-600">
