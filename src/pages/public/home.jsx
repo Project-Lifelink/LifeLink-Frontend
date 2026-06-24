@@ -21,7 +21,7 @@ const home = () => {
     return (
         <>
             <Navbar />
-            <div className=" mt-15 md:mt-0 h-screen">
+            <div className=" mt-5 md:mt-0 h-screen">
                 <section>
                     <div className="flex m-5 flex-col md:flex-row">
 
