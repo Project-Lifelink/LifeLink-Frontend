@@ -18,8 +18,8 @@ const Navbar = () => {
                             <HashLink className = "hover:text-[19px] hover:border-b-1 transition-all duration-200" smooth to = "#about" >About</HashLink>
                             <HashLink className = "hover:text-[19px] hover:border-b-1 transition-all duration-200" smooth to = "/#howitworks" >How it Works</HashLink>
                             <HashLink className = "hover:text-[19px] hover:border-b-1 transition-all duration-200" smooth to = "/#features" >Features</HashLink>
-                            <HashLink className = "hover:text-[19px] hover:border-b-1 transition-all duration-200" smooth to = "/hospitalregistration" >HospitalRegistration</HashLink>
-                            <HashLink className = "hover:text-[19px] hover:border-b-1 transition-all duration-200" smooth to = "/hospitallogin" >HostpitalLogin </HashLink>
+                            {/* <HashLink className = "hover:text-[19px] hover:border-b-1 transition-all duration-200" smooth to = "/hospitalregistration" >HospitalRegistration</HashLink> */}
+                            {/* <HashLink className = "hover:text-[19px] hover:border-b-1 transition-all duration-200" smooth to = "/hospitallogin" >HostpitalLogin </HashLink> */}
                         </div>
                         <div className = "flex gap-2 justify-between ">
                             <HashLink smooth to = "/login" className = "px-7 hover:bg-gray-100 border-1 rounded-xl py-3 transition-all duration-200 border-gray-200 bg-gray-200">Login</HashLink>

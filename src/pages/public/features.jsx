@@ -136,13 +136,13 @@ const Features = () => {
                         ))}
                     </div>
 
-                    <motion.div className="relative flex justify-center items-center"
+                    <motion.div className="relative hidden md:flex justify-center  items-center"
                         initial={{ y: 30, opacitiy: 0 }}
                         whileInView={{ y: 0, opacity: 1 }}
                         transition={{ duration: 0.5 }}
                     >
 
-                        <motion.img src={feature} alt="" className="h-0 md:h-100 rounded-full "
+                        <motion.img src={feature} alt="" className="h-100 rounded-full "
 
                         />
 
