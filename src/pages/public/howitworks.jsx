@@ -159,12 +159,12 @@ export default function HowItWorks() {
       </motion.div>
 
       {/* Steps */}
-      <motion.div className="relative grid grid-cols-1 md:grid-cols-5 gap-8 text-center"
+      <motion.div className="relative grid grid-cols-2 md:grid-cols-5  gap-8 text-center"
       initial = {{opacitiy: 0, y: 30}}
       whileInView = {{opacity: 1, y: 0}}
       transition = {{duration: 0.5}}>
         {steps.map((step, idx) => (
-          <div key={step.id} className="relative">
+          <div key={step.id} className="relative min-w-55">
             {/* connector line */}
             {idx !== steps.length - 1 && (
               <div className="hidden md:block absolute top-10 right-[-50%] w-full h-[2px] bg-gray-200" />
