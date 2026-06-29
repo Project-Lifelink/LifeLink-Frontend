@@ -72,13 +72,15 @@ export default function LoginPage() {
         );
       } catch (error) {
         console.log("error occured in redux from dipatch function ", error);
-        setLogging(false);
       }
 
       return data;
     } catch (error) {
       console.error("Error:", error.message);
+      alert("login failed due to some error")
       throw error;
+    }finally{
+      setLogging(false);
     }
   };
 

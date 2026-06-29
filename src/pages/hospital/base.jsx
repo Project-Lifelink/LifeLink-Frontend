@@ -44,40 +44,40 @@ const HospitalSidebar = () => {
 
     useEffect(() => {
         // if(!user) navigate("/hospitallogin");
-        getrequest();
+        // getrequest();
     }, [])
 
-    async function getrequest(id, token) {
-        try {
-            const res = await fetch(`/api/v1/hospitals/${id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-                .then(res => res.json())
-                .then(user => {
-                    dispatch(loginSuccess({
-                        user,
-                    }));
-                });
-            data = await res.json();
-            console.log("get request made")
-            console.log(data)
+    // async function getrequest(id, token) {
+    //     try {
+    //         const res = await fetch(`/api/v1/hospitals/${id}`, {
+    //             headers: {
+    //                 Authorization: `Bearer ${token}`,
+    //             },
+    //         })
+    //             .then(res => res.json())
+    //             .then(user => {
+    //                 dispatch(loginSuccess({
+    //                     user,
+    //                 }));
+    //             });
+    //         data = await res.json();
+    //         console.log("get request made")
+    //         console.log(data)
 
 
 
-        } catch (error) {
-            console.log("error occured in fetching", error);
-        }
+    //     } catch (error) {
+    //         console.log("error occured in fetching", error);
+    //     }
 
-    }
+    // }
 
     useEffect(() => {
         const id = localStorage.getItem("id");
         const token = localStorage.getItem("token");
 
         if (id && token) {
-            getrequest(id);
+            // getrequest(id);
 
         }
         else {

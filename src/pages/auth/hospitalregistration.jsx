@@ -119,7 +119,10 @@ const HospitalRegister = () => {
 
     } catch (error) {
       console.error("Error:", error.message);
+      alert("request failed due to some error")
       throw error;
+    }finally{
+      setLoading(false)
     }
   };
 

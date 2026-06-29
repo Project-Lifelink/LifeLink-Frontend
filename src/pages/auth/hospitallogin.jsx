@@ -35,7 +35,7 @@ export default function HospitalLogin() {
     try {
       setLoading(true);
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/v1/login/`,
+        `${import.meta.env.VITE_API_URL}/api/v1/hospitals/login/`,
 
         {
           method: "POST",
@@ -98,7 +98,7 @@ export default function HospitalLogin() {
   return (
     <div className="scrollbar-none overflow-auto h-screen">
       <Navbar />
-      {(loading) ? <p className="text-2xl font-extrabold text-center w-screen absolute">Loggin you in...</p> : ""}
+      {(loading) ? <p className="text-2xl font-extrabold text-center w-screen absolute">Logging you in...</p> : ""}
       <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6 shadow-2xl border-gray-200">
         <div>
 

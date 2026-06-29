@@ -9,9 +9,11 @@ import {
 } from "lucide-react";
 import { Link } from 'react-router-dom'
 
+
+
 export default function HelpSupport() {
   return (
-    <div className="flex-1 bg-gray-50 min-h-screen p-8">
+    <div className="flex-1 bg-gray-50 max-h-screen overflow-scroll scrollbar-none p-8">
       {/* Header */}
       <div className="bg-white rounded-3xl p-8 shadow-sm">
         <div className="flex items-center gap-4">
@@ -70,7 +72,7 @@ export default function HelpSupport() {
           <p className="text-gray-500 mt-2">
             Chat instantly with our support team.
           </p>
-          <div className = "mt-5">
+          <div className="mt-5">
 
 
             <Link to="../community" className="bg-blue-600 text-white px-4 py-2 rounded-xl">
@@ -147,12 +149,21 @@ export default function HelpSupport() {
           <button
             type="submit"
             className="bg-red-600 text-white px-6 py-3 rounded-xl flex items-center gap-2 hover:cursor-pointer"
-            onClick={alert("hey currently this feature is not available")}
           >
             Submit Report
             <Send size={18} />
           </button>
         </form>
+        <div className="flex gap-10 justify-center">
+
+          <button onClick={(e) => handledelteaccount} className="px-5 py-2 bg-red-600 mt-10 text-white shadow-xl rounded-xl hover:cursor-pointer hover:bg-red-800 transition">
+            {/* <Send size = {18} /> */}
+            Delete Account
+          </button>
+          <button onClick={(e) => handleupdateaccount} className="px-5 py-2 bg-red-600 mt-10 text-white shadow-xl rounded-xl hover:cursor-pointer hover:bg-red-800 transition">
+            Update Account
+          </button>
+        </div>
       </div>
     </div>
   );

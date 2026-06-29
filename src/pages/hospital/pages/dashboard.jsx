@@ -14,18 +14,24 @@ import { HashLink } from 'react-router-hash-link'
 import { useSelector } from 'react-redux'
 import { useState, useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux'
+import { loginSuccess } from "../../../redux/slices/authSlice.js";
 
 
 export default function HospitalDashboard() {
+  const dispatch = useDispatch()
+  // const [user,setUser] = useState();
   const navigate = useNavigate();
 
+
   const id = localStorage.getItem("id");
+ const user = useSelector((state) => state.auth.user)
 
   async function getdata() {
 
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/v1/hospital/${id}`,
+        `${import.meta.env.VITE_API_URL}/api/v1/hospitals/${id}`,
         {
           method: "GET",
           headers: {
@@ -40,36 +46,46 @@ export default function HospitalDashboard() {
       if (!response.ok) {
         throw new Error(data.message || "Failed to fetch hospital data");
       }
+      try {
 
+        dispatch(
+          loginSuccess({
+            user: data,
+            token: "",
+            role: "hospital",
+          })
+        );
+        
+      } catch (error) {
+        console.log("error occured in redux from dipatch function ", error);
+      }
       console.log("data by get request in hospital", data);
     } catch (error) {
       console.error(error);
+      if (!user) navigate('/hospitallogin')
     }
 
   }
 
 
-  const user = useSelector((state) => state.auth.user)
+
 
   useEffect(() => {
-    // if (!user) navigate('/hospitallogin')
-
-
+    
     getdata();
-
-
-
+    
+    
   }, [])
 
 
   console.log(user)
+
 
   const hospitalname = user?.name || "not found";
   const totalrequests = user?.totalrequests || "0";
   const activerequests = user?.activerequests || "0"
   const fullfilledrequests = user?.totaldonation || "0"
   const nearbydonors = user?.totaldonation || "0"
-
 
   const stats = [
     {
@@ -94,16 +110,16 @@ export default function HospitalDashboard() {
     },
   ];
 
-const bloodInventory = [
-  { group: "A+", units: 45, capacity: 100 },
-  { group: "A-", units: 20, capacity: 100 },
-  { group: "B+", units: 70, capacity: 100 },
-  { group: "B-", units: 15, capacity: 100 },
-  { group: "AB+", units: 55, capacity: 100 },
-  { group: "AB-", units: 10, capacity: 100 },
-  { group: "O+", units: 90, capacity: 100 },
-  { group: "O-", units: 35, capacity: 100 },
-];
+  const bloodInventory = [
+    { group: "A+", units: 45, capacity: 100 },
+    { group: "A-", units: 20, capacity: 100 },
+    { group: "B+", units: 70, capacity: 100 },
+    { group: "B-", units: 15, capacity: 100 },
+    { group: "AB+", units: 55, capacity: 100 },
+    { group: "AB-", units: 10, capacity: 100 },
+    { group: "O+", units: 90, capacity: 100 },
+    { group: "O-", units: 35, capacity: 100 },
+  ];
 
   const recentRequests = [
     {

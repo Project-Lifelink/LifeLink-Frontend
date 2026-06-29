@@ -1,4 +1,4 @@
-import { React,useState,useEffect } from "react";
+import { React, useState, useEffect } from "react";
 import {
   Search,
   AlertTriangle,
@@ -34,7 +34,7 @@ export default function BloodRequestsPage() {
         // if backend is sending array formate directly 
         setRequests(data);
         console.log(data);
-        
+
 
 
       } catch (error) {
@@ -48,7 +48,35 @@ export default function BloodRequestsPage() {
   }, []);
 
 
+   async function handlefullfilled ( requestId , e ){
+    e.preventDefault()
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/v1/blood-requests/${requestId}`,
+        {
+          method: "DELETE",
+          credentials: "include", // if using cookies
+        }
+      );
 
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message);
+      }
+
+      console.log(data);
+      alert("blood request delete successfully")
+      fetchActiveRequests();
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
+  function handleview (e,requestId){
+    e.preventDefault()
+
+  }
 
   const getStatusStyle = (status) => {
     switch (status) {
@@ -125,11 +153,10 @@ export default function BloodRequestsPage() {
         {requests.map((request) => (
           <div
             key={request.id}
-            className={`bg-white rounded-2xl border p-6 shadow-sm ${
-              request.status === "Emergency"
+            className={`bg-white rounded-2xl border p-6 shadow-sm ${request.status === "Emergency"
                 ? "border-red-400"
                 : ""
-            }`}
+              }`}
           >
             <div className="flex flex-col lg:flex-row justify-between gap-6">
               <div>
@@ -183,7 +210,6 @@ export default function BloodRequestsPage() {
                   Created {request.time}
                 </p>
               </div>
-
               <div className="flex flex-wrap gap-3 items-center">
                 {request.status === "Emergency" && (
                   <button className="flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-lg">
@@ -192,7 +218,7 @@ export default function BloodRequestsPage() {
                   </button>
                 )}
 
-                <button className="flex items-center gap-2 border px-4 py-2 rounded-lg">
+                <button onClick={(e) => handleview(e,request.id)} className="flex hover:cursor-pointer items-center gap-2 border px-4 py-2 rounded-lg">
                   <Eye size={18} />
                   View
                 </button>
@@ -202,7 +228,7 @@ export default function BloodRequestsPage() {
                   Contact Donors
                 </button>
 
-                <button className="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg">
+                <button onClick={(e) => handlefullfilled(request.id,e)} className="flex items-center gap-2 bg-green-600 text-white px-4 py-2 hover:cursor-pointer rounded-lg">
                   <CheckCircle size={18} />
                   Fulfilled
                 </button>
