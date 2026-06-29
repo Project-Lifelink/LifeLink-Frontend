@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import {
   Users,
   Send,
@@ -9,38 +9,82 @@ import {
 } from "lucide-react";
 
 export default function Community() {
-  const [message, setMessage] = useState("");
+  const [post, setPosts] = useState([]);
+  const [loading , setLoading] = useState(false);
+  const [postmessage, setPostmessage] = useState("");
 
-  const posts = [
-    {
-      id: 1,
-      user: "Rahul Sharma",
-      text: "Just completed my 5th blood donation today. Happy to help save lives!",
-      time: "2 hours ago",
-    },
-    {
-      id: 2,
-      user: "Priya Singh",
-      text: "Thank you to all donors who helped my cousin during surgery.",
-      time: "5 hours ago",
-    },
-    {
-      id: 3,
-      user: "Amit Verma",
-      text: "Looking forward to my next eligible donation date.",
-      time: "1 day ago",
-    },
-  ];
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+    
 
-    if (!message.trim()) return;
+  //   if (!message.trim()) return;
 
-    console.log(message);
+  //   console.log(message);
 
-    setMessage("");
-  };
+  //   setMessage("");
+  // };
+
+      const createpost = async(e) => {
+        e.preventDefault();
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/v1/community/`,
+          {
+            method: "POST",
+            body: JSON.stringify({
+              message: postmessage
+            }),
+          }
+        );
+  
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error(data.message || "Failed to fetch hospital data");
+        }
+        console.log("post created", data);
+        
+        
+      } catch (error) {
+        console.error(error);
+      } 
+  
+    }
+
+    async function getdata() {
+      try {
+        setLoading(true);
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/v1/community/`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              // Authorization: `Bearer ${token}`, // if JWT auth is used
+            },
+          }
+        );
+  
+        const data = await response.json();
+        setPosts(data)
+        if (!response.ok) {
+          throw new Error(data.message || "Failed to fetch hospital data");
+        }
+        console.log("data by get request in hospital", data);
+        
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+        
+      }
+  
+    }
+
+
+    useEffect(() => {
+      getdata();
+    },[])
 
   return (
     <div className="flex-1 bg-gray-50 min-h-screen p-8 overflow-scroll h-screen">
@@ -67,12 +111,12 @@ export default function Community() {
           Share Something
         </h2>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={createpost}>
           <textarea
             rows="4"
             placeholder="Write a message for the community..."
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
+            value={postmessage}
+            onChange={(e) => setPostmessage(e.target.value)}
             className="w-full border rounded-2xl p-4 resize-none outline-none focus:ring-2 focus:ring-red-500"
           />
 
@@ -90,7 +134,7 @@ export default function Community() {
 
       {/* Feed */}
       <div className="mt-8 space-y-6">
-        {posts.map((post) => (
+        {post.map((post) => (
           <div
             key={post.id}
             className="bg-white rounded-3xl p-6 shadow-sm"

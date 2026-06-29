@@ -16,20 +16,23 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux'
 import { loginSuccess } from "../../../redux/slices/authSlice.js";
+import { p } from "framer-motion/client";
 
 
 export default function HospitalDashboard() {
   const dispatch = useDispatch()
   // const [user,setUser] = useState();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
 
   const id = localStorage.getItem("id");
- const user = useSelector((state) => state.auth.user)
+  const user = useSelector((state) => state.auth.user)
 
   async function getdata() {
 
     try {
+      setLoading(true);
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/api/v1/hospitals/${id}`,
         {
@@ -55,7 +58,7 @@ export default function HospitalDashboard() {
             role: "hospital",
           })
         );
-        
+
       } catch (error) {
         console.log("error occured in redux from dipatch function ", error);
       }
@@ -63,6 +66,8 @@ export default function HospitalDashboard() {
     } catch (error) {
       console.error(error);
       if (!user) navigate('/hospitallogin')
+    } finally {
+      setLoading(false);
     }
 
   }
@@ -71,10 +76,10 @@ export default function HospitalDashboard() {
 
 
   useEffect(() => {
-    
+
     getdata();
-    
-    
+
+
   }, [])
 
 
@@ -82,6 +87,7 @@ export default function HospitalDashboard() {
 
 
   const hospitalname = user?.name || "not found";
+  const hospitalcity = user?.city || "";
   const totalrequests = user?.totalrequests || "0";
   const activerequests = user?.activerequests || "0"
   const fullfilledrequests = user?.totaldonation || "0"
@@ -148,19 +154,18 @@ export default function HospitalDashboard() {
     <div className="min-h-screen bg-slate-50 p-6 w-full" id="dashboard">
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
-        <div>
+        <div>{(loading)?"loading....":
           <h1 className="text-3xl font-bold text-slate-800">
-            {hospitalname}
+             {hospitalname}
           </h1>
+      
+          }
+          <p className = "font-bold">{hospitalcity}</p>
           <p className="text-slate-500 mt-1">
             Manage blood requests and donor network
           </p>
         </div>
 
-        {/* <HashLink to={} className="flex items-center gap-2 hover:cursor-pointer bg-red-600 hover:bg-red-700 text-white px-5 py-3 rounded-xl font-medium">
-
-          Active Blood Requests
-        </HashLink> */}
       </div>
 
       {/* Stats */}

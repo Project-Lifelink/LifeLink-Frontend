@@ -59,7 +59,7 @@ export default function HospitalLogin() {
       }
       else {
         localStorage.setItem("token", data.access_token);
-        localStorage.setItem("id", data.user.user_id)
+        localStorage.setItem("id", data.hospital.hospital_id)
         navigate("/hospital")
       }
 

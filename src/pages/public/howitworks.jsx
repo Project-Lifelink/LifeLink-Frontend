@@ -140,7 +140,7 @@ function Icon({ name }) {
 
 export default function HowItWorks() {
   return (
-    <section id="howitworks" className="w-full bg-white py-16 px-6 md:px-20">
+    <section id="howitworks" className="max-w-screen bg-white py-16 px-6 md:px-20">
       {/* Header */}
       <motion.div className="text-center mb-14"
       initial = {{opaicty:0 , y: 30}}
@@ -164,7 +164,7 @@ export default function HowItWorks() {
       whileInView = {{opacity: 1, y: 0}}
       transition = {{duration: 0.5}}>
         {steps.map((step, idx) => (
-          <div key={step.id} className="relative min-w-55">
+          <div key={step.id} className="relative">
             {/* connector line */}
             {idx !== steps.length - 1 && (
               <div className="hidden md:block absolute top-10 right-[-50%] w-full h-[2px] bg-gray-200" />
