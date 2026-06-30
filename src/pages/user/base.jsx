@@ -49,7 +49,7 @@ const Base = () => {
         {
             name: "Settings",
             icon: Settings,
-            link: ""
+            link: "/profile/settings"
         }
     ];
 
