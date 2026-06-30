@@ -39,6 +39,8 @@ import DonorVerification from './pages/hospital/pages/donorverification.jsx'
 import RequestHistory from './pages/hospital/pages/requesthistory.jsx'
 
 
+import Admin from './pages/admin/main.jsx'
+import Adminlogin from './pages/auth/adminlogin.jsx'
 
 
 
@@ -60,6 +62,8 @@ const App = () => {
         <Route path='/hospitalregistration' element={<HospitalRegister />} />
         <Route path='/hospitallogin' element={<HospitalLogin />} />
         <Route path='/hospital' element={<Hospital />} />
+        <Route path = "/admin" element = {<Admin />} />
+        <Route path = "/adminlogin" element = {<Adminlogin />} />
 
 
 {/* these are the routes for user side page  */}

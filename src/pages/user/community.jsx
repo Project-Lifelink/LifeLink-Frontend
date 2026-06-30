@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   Users,
   Send,
@@ -15,71 +15,75 @@ export default function Community() {
 
 
   const [posts, setPosts] = useState([]);
-  const [loading , setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [postmessage, setPostmessage] = useState("");
 
   const token = useSelector((state) => state.auth.token);
-    
 
 
-      const createpost = async(e) => {
-        e.preventDefault();
-      try {
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/v1/community/`,
-          {
-            method: "POST",
-            body: JSON.stringify({
-              message: postmessage
-            }),
-          }
-        );
-  
-        const data = await response.json();
-        if (!response.ok) {
-          throw new Error(data.message || "Failed to fetch hospital data");
+
+  const createpost = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/v1/community/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, // if JWT auth is used
+          },
+          body: JSON.stringify({
+            message: postmessage
+          }),
         }
-        console.log("post created", data);
-        
-        
-      } catch (error) {
-        console.error(error);
-      } 
-  
-    }
+      );
 
-    async function getdata() {
-      try {
-        setLoading(true);
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/v1/community/`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`, // if JWT auth is used
-            },
-          }
-        );
-  
-        const data = await response.json();
-        setPosts(data)
-        if (!response.ok) {
-          throw new Error(data.message || "Failed to fetch data");
-        }
-        console.log("data by get request in community", data);
-        
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-        
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to fetch hospital data");
       }
-  
+      console.log("post created", data);
+
+
+    } catch (error) {
+      console.error(error);
     }
-    useEffect(() => {
-      getdata();
-    },[])
+
+  }
+console.log(postmessage)
+  async function getdata() {
+    try {
+      setLoading(true);
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/v1/community/`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, // if JWT auth is used
+          },
+        }
+      );
+
+      const data = await response.json();
+      setPosts(data)
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to fetch data");
+      }
+      console.log("data by get request in community", data);
+
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+
+    }
+
+  }
+  useEffect(() => {
+    getdata();
+  }, [])
 
 
 
@@ -151,18 +155,18 @@ export default function Community() {
 
                 <div>
                   <h3 className="font-semibold text-ink">
-                    {post.user}
+                    {post.user_name}
                   </h3>
 
                   <div className="mt-0.5 flex items-center gap-1.5 text-sm text-muted">
                     <Clock size={14} />
-                    {post.time}
+                    {post.created_at}
                   </div>
                 </div>
               </div>
 
               <p className="mt-5 leading-relaxed text-ink-soft">
-                {post.text}
+                {post.message}
               </p>
 
               <div className="mt-5 flex items-center gap-5 text-sm text-muted">

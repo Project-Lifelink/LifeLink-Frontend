@@ -52,7 +52,6 @@ const HospitalSidebar = () => {
         { name: "Active Requests", icon: ClipboardList, badge: 0, link: "activerequest" },
         { name: "Request History", icon: History, link: "requesthistory" },
         { name: "Donor Verification", icon: ShieldCheck, link: "donorverification" },
-        { name: "Notifications", icon: Bell, badge: 0, link: "notifications" },
         { name: "Help & Support", icon: CircleHelp, link: "helpandsupport" },
     ];
 

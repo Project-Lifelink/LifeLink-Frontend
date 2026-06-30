@@ -4,14 +4,18 @@ import Reveal from '../../../components/motion/Reveal.jsx'
 import AmbientBackground from '../../../components/motion/AmbientBackground.jsx'
 
 const Notifications = () => {
-  const [notifications,setNotifications] = useState([]);
+  // const [notifications,setNotifications] = useState([]);
+  // const [loading,setLoading] = useState(false);
+  // const token = localStorage.getItem("token");
+  // console.log(token)
+
+ const [notifications,setNotifications] = useState([]);
   const [loading,setLoading] = useState(false);
-  const token = localStorage.getItem("token");
-  console.log(token)
+  const token = localStorage.getItem("token")
 
       useEffect(() => {
 
-        const fetchActiveRequests = async () => {
+        const notifications = async () => {
           setLoading(true)
             try {
                 const response = await fetch(
@@ -28,7 +32,7 @@ const Notifications = () => {
                 if (!response.ok) {
                     throw new Error("Failed to fetch requests");
                 }
-                await console.log(response.text())
+
                 const data = await response.json();
 
                 // if backend is sending array formate directly
@@ -44,7 +48,7 @@ const Notifications = () => {
             }
         };
 
-        fetchActiveRequests();
+        notifications();
     }, []);
 
   return (

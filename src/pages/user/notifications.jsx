@@ -10,7 +10,7 @@ const Notifications = () => {
 
       useEffect(() => {
 
-        const fetchActiveRequests = async () => {
+        const notifications = async () => {
           setLoading(true)
             try {
                 const response = await fetch(
@@ -43,7 +43,7 @@ const Notifications = () => {
             }
         };
 
-        fetchActiveRequests();
+        notifications();
     }, []);
 
 
