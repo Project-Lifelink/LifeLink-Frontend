@@ -9,11 +9,14 @@ import {
   AlertCircle,
   ArrowRight,
   ChevronDown,
-  Activity
+  Activity,
+  HeartHandshake,
+  ShieldCheck,
+  Quote
 } from 'lucide-react';
 import { motion } from 'framer-motion'
-import { button } from 'framer-motion/client';
 import { useState,useEffect } from 'react'
+import BloodDropLoader from '../../components/motion/BloodDropLoader.jsx'
 
 export default function requestblood() {
 
@@ -69,7 +72,7 @@ export default function requestblood() {
       );
 
       const data = await response.json();
-     
+
 
       if (!response.ok) {
         throw new Error(data.message);
@@ -85,62 +88,59 @@ export default function requestblood() {
 
 
   return (
-    <div className="min-h-screen bg-gray-50 overflow-scroll flex items-center justify-center p-4 md:p-8 font-sans" id='requestblood'>
-      <div className="max-w-6xl w-full bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden flex flex-col md:flex-row">
+    <div className="max-h-screen overflow-auto scrollbar-none scale-90 bg-canvas flex items-center justify-center " id='requestblood'>
+      <div className="grid w-full max-w-6xl overflow-hidden rounded-4xl border border-line bg-surface shadow-card md:grid-cols-2">
 
         {/* LEFT SIDE: Information & Instructions */}
-        <div className="w-full md:w-1/2 p-8 lg:p-12 flex flex-col justify-between bg-gradient-to-br from-white to-red-50/20">
+        <div className="relative hidden flex-col justify-between gap-8 overflow-hidden bg-subtle p-10 lg:p-12 md:flex">
+          <div className="pointer-events-none absolute inset-0 bg-brand-gradient-soft" />
 
           {/* Logo */}
-          <motion.div className="flex items-center gap-2 mb-8"
+          <motion.div className="relative flex items-center gap-2.5"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}>
-            <div className="bg-red-600 text-white p-1.5 rounded-full flex items-center justify-center">
-              <Heart className="w-4 h-4 fill-current" />
-            </div>
-            <span className="text-xl font-bold text-gray-900 tracking-tight">LifeLink</span>
+            <span className="flex h-9 w-9 items-center justify-center rounded-2xl bg-brand-gradient text-white shadow-glow">
+              <HeartHandshake className="h-5 w-5" />
+            </span>
+            <span className="text-lg font-semibold text-ink">
+              Life<span className="text-primary">Link</span>
+            </span>
           </motion.div>
 
           {/* Typography */}
-          <motion.div className="space-y-4 mb-6"
+          <motion.div className="relative space-y-4"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}>
-            <h1 className="text-3xl lg:text-4xl font-extrabold text-gray-900 leading-tight">
-              Submit a <br />
-              <span className="text-red-600">Blood Request</span>
+            <h1 className="font-display text-5xl font-normal leading-tight text-ink">
+              Submit a
+              <br />
+              <span className="text-gradient-brand italic">Blood Request</span>
             </h1>
-            <p className="text-gray-500 text-sm lg:text-base leading-relaxed max-w-sm">
+            <p className="max-w-sm text-lg leading-relaxed text-muted">
               Provide the patient's details below to alert our verified donor network. We will connect you with matches as quickly as possible.
             </p>
           </motion.div>
 
-          {/* Decorative Wave/Heartbeat placeholder layout spacing */}
-          <div className="h-40 my-4 flex items-center justify-center relative">
-            <div className="absolute inset-0 flex items-center justify-center opacity-10">
-              <div className="w-full h-0.5 bg-red-500 relative">
-                <div className="absolute -top-2 left-1/3 -translate-x-1/2 bg-red-500 w-4 h-4 rotate-45"></div>
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 text-red-500">
-                  <Activity className="w-12 h-12 stroke-[1.5]" />
-                </div>
-              </div>
-            </div>
+          {/* Decorative Heartbeat */}
+          <div className="relative my-2 flex h-28 items-center justify-center">
+            <Activity className="h-16 w-16 animate-heartbeat text-primary/30" strokeWidth={1.5} />
           </div>
 
           {/* Guidelines / Help Card */}
-          <motion.div className="bg-red-50/50 border border-red-100/50 rounded-2xl p-5 space-y-4"
+          <motion.div className="relative space-y-4 rounded-3xl border border-line bg-surface/70 p-5"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}>
 
-            <div className="flex items-start gap-3">
-              <div className="bg-red-100 p-2 rounded-xl text-red-600 shrink-0">
-                <FileText className="w-4 h-4" />
+            <div className="flex items-start gap-4">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-primary-50 text-primary">
+                <FileText className="h-5 w-5" />
               </div>
               <div>
-                <h4 className="text-xs font-bold text-gray-900">Accurate Information</h4>
-                <p className="text-[11px] text-gray-500 leading-normal mt-0.5">Please ensure contact details are reachable to avoid delays in coordination.</p>
+                <h4 className="font-semibold text-ink">Accurate Information</h4>
+                <p className="mt-0.5 text-sm text-muted">Please ensure contact details are reachable to avoid delays in coordination.</p>
               </div>
             </div>
           </motion.div>
@@ -148,15 +148,18 @@ export default function requestblood() {
         </div>
 
         {/* RIGHT SIDE: Blood Request Form */}
-        <motion.div className="w-full md:w-1/2 p-8 lg:p-12 md:border-l border-gray-100 flex flex-col justify-center"
+        <motion.div className="flex flex-col justify-center p-8 lg:p-12"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}>
 
           {/* Header */}
-          <div className="text-center mb-8">
-            <h2 className="text-2xl font-bold text-gray-900">Patient & Requirement Details</h2>
-            <p className="text-sm text-gray-500 mt-1">
+          <div className="mb-8 text-center">
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-3xl bg-brand-gradient text-white shadow-glow">
+              <Droplet size={28} />
+            </div>
+            <h2 className="mt-6 font-display text-3xl font-normal text-ink">Patient &amp; Requirement Details</h2>
+            <p className="mt-2 text-muted">
               Fill out the form to request blood
             </p>
           </div>
@@ -164,19 +167,19 @@ export default function requestblood() {
           {/* Form */}
           <form className="space-y-4" onSubmit={handleSubmit}>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               {/* Patient Name */}
 
 
               <div>
-                <label className="block text-xs font-bold text-gray-700 mb-1.5">Patient Name</label>
+                <label className="mb-1.5 block text-sm font-medium text-ink-soft">Patient Name</label>
                 <div className="relative">
-                  <User className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+                  <User className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
                   <input
                     type="text"
                     onChange={(e) => setPatient_name(e.target.value)}
                     placeholder="Enter patient's name"
-                    className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 transition-colors placeholder:text-gray-400"
+                    className="w-full rounded-2xl border border-line bg-canvas py-3 pl-11 pr-4 text-sm text-ink transition-colors placeholder:text-faint focus:border-primary focus:bg-surface focus:outline-none focus:ring-4 focus:ring-primary-50"
                   />
                 </div>
               </div>
@@ -184,14 +187,14 @@ export default function requestblood() {
               {/* Guardian Name */}
 
               <div>
-                <label className="block text-xs font-bold text-gray-700 mb-1.5">Guardian / Attendant Name</label>
+                <label className="mb-1.5 block text-sm font-medium text-ink-soft">Guardian / Attendant Name</label>
                 <div className="relative">
-                  <User className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+                  <User className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
                   <input
                     type="text"
                     onChange = {(e) => setGuardian_name(e.target.value)}
                     placeholder="Enter guardian's name"
-                    className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 transition-colors placeholder:text-gray-400"
+                    className="w-full rounded-2xl border border-line bg-canvas py-3 pl-11 pr-4 text-sm text-ink transition-colors placeholder:text-faint focus:border-primary focus:bg-surface focus:outline-none focus:ring-4 focus:ring-primary-50"
                   />
                 </div>
               </div>
@@ -211,29 +214,29 @@ export default function requestblood() {
 
               {/* Phone Number */}
               <div>
-                <label className="block text-xs font-bold text-gray-700 mb-1.5">Phone Number</label>
+                <label className="mb-1.5 block text-sm font-medium text-ink-soft">Phone Number</label>
                 <div className="relative">
-                  <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+                  <Phone className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
                   <input
                     type="tel"
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="Enter active phone number"
-                    className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 transition-colors placeholder:text-gray-400"
+                    className="w-full rounded-2xl border border-line bg-canvas py-3 pl-11 pr-4 text-sm text-ink transition-colors placeholder:text-faint focus:border-primary focus:bg-surface focus:outline-none focus:ring-4 focus:ring-primary-50"
                   />
                 </div>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               {/* Blood Group Dropdown */}
               <div>
-                <label className="block text-xs font-bold text-gray-700 mb-1.5">Required Blood Group</label>
+                <label className="mb-1.5 block text-sm font-medium text-ink-soft">Required Blood Group</label>
                 <div className="relative">
-                  <Droplet className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+                  <Droplet className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
                   <select
                     defaultValue=""
                     onChange={(e) => setBlood_group(e.target.value)}
-                    className="w-full pl-10 pr-10 py-2.5 bg-white border border-gray-200 rounded-xl text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 transition-colors text-gray-700"
+                    className="w-full appearance-none rounded-2xl border border-line bg-canvas py-3 pl-11 pr-10 text-sm text-ink-soft transition-colors focus:border-primary focus:bg-surface focus:outline-none focus:ring-4 focus:ring-primary-50"
                   >
                     <option value="" disabled hidden>Select blood group</option>
                     <option value="A+">A+</option>
@@ -245,76 +248,77 @@ export default function requestblood() {
                     <option value="O+">O+</option>
                     <option value="O-">O-</option>
                   </select>
-                  <ChevronDown className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4 pointer-events-none" />
+                  <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
                 </div>
               </div>
 
               {/* Quantity */}
               <div>
-                <label className="block text-xs font-bold text-gray-700 mb-1.5">Quantity (Units / Bags)</label>
+                <label className="mb-1.5 block text-sm font-medium text-ink-soft">Quantity (Units / Bags)</label>
                 <div className="relative">
-                  <FileText className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+                  <FileText className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
                   <input
                     type="number"
                     min="1"
                     onChange={(e) => setQuantity(e.target.value)}
                     placeholder="e.g. 2"
-                    className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 transition-colors placeholder:text-gray-400"
+                    className="w-full rounded-2xl border border-line bg-canvas py-3 pl-11 pr-4 text-sm text-ink transition-colors placeholder:text-faint focus:border-primary focus:bg-surface focus:outline-none focus:ring-4 focus:ring-primary-50"
                   />
                 </div>
               </div>
 
               {/*Age*/}
               <div>
-                <label className="block text-xs font-bold text-gray-700 mb-1.5">Age (Years)</label>
+                <label className="mb-1.5 block text-sm font-medium text-ink-soft">Age (Years)</label>
                 <div className="relative">
-                  <FileText className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+                  <FileText className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
                   <input
                     type="number"
                     min="1"
                     onChange={(e) => setAge(e.target.value)}
                     placeholder="e.g. 19"
-                    className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 transition-colors placeholder:text-gray-400"
+                    className="w-full rounded-2xl border border-line bg-canvas py-3 pl-11 pr-4 text-sm text-ink transition-colors placeholder:text-faint focus:border-primary focus:bg-surface focus:outline-none focus:ring-4 focus:ring-primary-50"
                   />
                 </div>
               </div>
               {/*Sex*/}
               <div>
-                <label className="block text-xs font-bold text-gray-700 mb-1.5">Sex</label>
+                <label className="mb-1.5 block text-sm font-medium text-ink-soft">Sex</label>
                 <div className="relative">
-                  <Droplet className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+                  <Droplet className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
                   <select
                     defaultValue=""
                     onChange={(e) => setSex(e.target.value)}
-                    className="w-full pl-10 pr-10 py-2.5 bg-white border border-gray-200 rounded-xl text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 transition-colors text-gray-700"
+                    className="w-full appearance-none rounded-2xl border border-line bg-canvas py-3 pl-11 pr-10 text-sm text-ink-soft transition-colors focus:border-primary focus:bg-surface focus:outline-none focus:ring-4 focus:ring-primary-50"
                   >
                     <option value="" disabled hidden>Select blood group</option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                     <option value="Other">Other</option>
                   </select>
-                  <ChevronDown className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4 pointer-events-none" />
+                  <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
                 </div>
               </div>
             </div>
 
 
-            <div className="bg-red-50/60 border border-red-100 rounded-2xl p-3.5 flex items-start gap-3 mt-2">
-              <div className="bg-red-500 text-white p-1 rounded-lg shrink-0 mt-0.5">
-                <Heart className="w-3.5 h-3.5 fill-current" />
+            <div className="mt-2 flex items-start gap-4 rounded-2xl border border-line bg-subtle p-4">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand-gradient text-white shadow-glow">
+                <ShieldCheck className="h-4 w-4" />
               </div>
               <div>
-                <h5 className="text-xs font-bold text-gray-900 leading-tight">Patient data verification</h5>
-                <p className="text-[11px] text-gray-500 leading-normal mt-0.5">By submitting, you authorize LifeLink to share these medical metrics with willing regional donors.</p>
+                <h5 className="text-sm font-semibold leading-tight text-ink">Patient data verification</h5>
+                <p className="mt-0.5 text-sm leading-normal text-muted">By submitting, you authorize LifeLink to share these medical metrics with willing regional donors.</p>
               </div>
             </div>
 
             <button
               type="submit"
-              className="w-full bg-red-600 hover:cursor-pointer hover:bg-red-700 text-white font-semibold py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-colors shadow-md shadow-red-600/10 active:scale-[0.99] transform pt-4"
+              className="press flex w-full items-center justify-center gap-2 rounded-2xl bg-brand-gradient py-3.5 font-semibold text-white shadow-glow"
             >
+              {(makingrequest) ? <BloodDropLoader size={9} className="text-white" /> : null}
               <span>{(makingrequest)?"Creating new Blood Request.....":"Make Blood Request "}</span>
-             {(makingrequest)?"": <ArrowRight className="w-4 h-4" />}
+             {(makingrequest)?"": <ArrowRight className="h-4 w-4" />}
             </button>
 
           </form>

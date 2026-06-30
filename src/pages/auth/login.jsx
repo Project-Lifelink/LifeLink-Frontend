@@ -3,18 +3,20 @@ import {
   EyeOff,
   Mail,
   Lock,
-  User,
   Heart,
   ShieldCheck,
   Users,
   Quote,
   HeartHandshake,
+  ArrowRight,
 } from "lucide-react";
 import Navbar from '../../components/layout/navbar.jsx'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { loginSuccess } from "../../redux/slices/authslice.js";
 import { useNavigate } from "react-router-dom"
+import AmbientBackground from '../../components/motion/AmbientBackground.jsx'
+import BloodDropLoader from '../../components/motion/BloodDropLoader.jsx'
 
 export default function LoginPage() {
 
@@ -99,150 +101,121 @@ export default function LoginPage() {
     console.log("request sent")
     loginuser();
   }
+
+  const features = [
+    { Icon: Heart, title: "Save Lives", text: "Every login brings you closer to making a real difference." },
+    { Icon: Users, title: "Trusted Community", text: "Connect with verified donors and recipients." },
+    { Icon: ShieldCheck, title: "Secure & Safe", text: "Your privacy and data protection remain our priority." },
+  ];
+
   return (
-    <div className="overflow-auto scrollbar-none max-h-screen">
+    <div className="relative min-h-screen overflow-hidden">
+      <AmbientBackground />
       <Navbar />
-      {(logging) ?
-        <p className="absolute text-2xl font-extrabold text-center w-screen">
-          Logging You in......
-        </p> : ""}
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6 shadow-2xl border-gray-200">
-        <div>
 
+      {logging ? (
+        <div className="fixed inset-x-0 top-24 z-50 flex justify-center">
+          <p className="glass flex items-center gap-3 rounded-full border border-line px-6 py-2 text-sm font-semibold text-ink shadow-card">
+            <BloodDropLoader size={10} />
+            Logging you in…
+          </p>
         </div>
-        <div className="w-full max-w-7xl bg-white rounded-3xl shadow-[0_0_20px_rgba(0,0,0,0.14)] overflow-hidden flex flex-col-reverse lg:flex-row">
+      ) : null}
 
-          {/* Left Side */}
-          <div className="p-10 lg:p-14 flex flex-col justify-between bg-gradient-to-br from-white to-red-50">
+      <div className="flex items-center justify-center px-4 py-10 md:px-8">
+        <div className="grid w-full max-w-6xl overflow-hidden rounded-4xl border border-line bg-surface shadow-card lg:grid-cols-2">
 
-            <div>
-              <h1 className="text-2xl font-bold">
-                Life<span className="text-red-600">Link</span>
-              </h1>
-            </div>
+          {/* Left Side — warm reassurance panel */}
+          <div className="relative hidden flex-col justify-between gap-10 overflow-hidden bg-subtle p-12 lg:flex">
+            <div className="pointer-events-none absolute inset-0 bg-brand-gradient-soft" />
+            <div className="relative">
+              <div className="flex items-center gap-2.5">
+                <span className="flex h-9 w-9 items-center justify-center rounded-2xl bg-brand-gradient text-white shadow-glow">
+                  <HeartHandshake className="h-5 w-5" />
+                </span>
+                <span className="text-lg font-semibold text-ink">
+                  Life<span className="text-primary">Link</span>
+                </span>
+              </div>
 
-            {/* Content */}
-            <div className="mt-2 ">
-              <h2 className="md:text-4xl font-extrabold leading-tight">
-                Welcome <span className="text-red-600">Back!</span>
+              <h2 className="mt-12 font-display text-5xl font-normal leading-tight text-ink">
+                Welcome back,
                 <br />
-                Glad to See You Again
+                <span className="text-gradient-brand italic">lifesaver</span>
               </h2>
-
-              <p className="text-gray-600 text-lg mt-2 font-semibold max-w-lg">
-                Login to your account and continue your journey
-                of saving lives and spreading hope.
+              <p className="mt-4 max-w-sm text-lg leading-relaxed text-muted">
+                Login to your account and continue your journey of saving lives
+                and spreading hope.
               </p>
 
-              {/* Features */}
-              <div className="space-y-8 mt-12">
-
-                <div className="flex items-start gap-5">
-                  <div className="bg-red-100 p-4 rounded-full">
-                    <Heart className="text-red-600" size={24} />
+              <div className="mt-10 space-y-4">
+                {features.map(({ Icon, title, text }) => (
+                  <div key={title} className="flex items-start gap-4 rounded-3xl border border-line bg-surface/70 p-4">
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-primary-50 text-primary">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-ink">{title}</h3>
+                      <p className="mt-0.5 text-sm text-muted">{text}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-semibold text-xl">
-                      Save Lives
-                    </h3>
-                    <p className="text-gray-600 mt-1">
-                      Every login brings you closer to making a real difference.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-5">
-                  <div className="bg-red-100 p-4 rounded-full">
-                    <Users className="text-red-600" size={28} />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-xl">
-                      Trusted Community
-                    </h3>
-                    <p className="text-gray-600 mt-1">
-                      Connect with verified donors and recipients.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-5">
-                  <div className="bg-red-100 p-4 rounded-full">
-                    <ShieldCheck className="text-red-600" size={28} />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-xl">
-                      Secure & Safe
-                    </h3>
-                    <p className="text-gray-600 mt-1">
-                      Your privacy and data protection remain our priority.
-                    </p>
-                  </div>
-                </div>
-
+                ))}
               </div>
             </div>
 
-
-
-            <div className="bg-red-50 rounded-2xl p-6 mt-8">
-              <div className="flex gap-4">
-                <Quote className="text-red-600" size={30} />
-                <p className="text-gray-700 text-lg">
-                  Together, we can create a world where no one
-                  suffers due to lack of blood.
-                </p>
-              </div>
+            <div className="relative flex gap-4 rounded-3xl border border-line bg-surface/70 p-6">
+              <Quote className="h-7 w-7 shrink-0 text-primary" />
+              <p className="text-ink-soft">
+                Together, we can create a world where no one suffers due to lack
+                of blood.
+              </p>
             </div>
           </div>
 
-          {/* Right Side */}
-          <div className="flex md:pt-10 justify-center p-10">
+          {/* Right Side — form */}
+          <div className="flex items-center justify-center p-8 md:p-12">
             <div className="w-full max-w-md">
-              <div className="flex justify-center items-center py-10">
-                <div className="relative">
-
-                  <div className="absolute inset-0 bg-red-200 blur-3xl opacity-40 rounded-full scale-150"></div>
-
-                  <div className="relative w-30 h-30 rounded-full bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center shadow-2xl">
-                    <HeartHandshake
-                      size={60}
-                      className="text-white"
-                    />
-                  </div>
-
-                  <div className="absolute -top-4 -right-6 w-10 h-10 rounded-full bg-red-300 animate-pulse"></div>
-                  <div className="absolute bottom-0 -left-8 w-8 h-8 rounded-full bg-red-200 animate-pulse"></div>
-                  <div className="absolute top-20 -left-10 w-6 h-6 rounded-full bg-red-400 animate-pulse"></div>
-
+              <div className="text-center">
+                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-3xl bg-brand-gradient text-white shadow-glow">
+                  <HeartHandshake size={30} />
                 </div>
+                <h1 className="mt-6 font-display text-4xl font-normal text-ink">
+                  Welcome to LifeLink
+                </h1>
+                <p className="mt-2 text-muted">
+                  Login to your{" "}
+                  <span className="font-semibold text-primary">LifeLink</span> account
+                </p>
               </div>
-              <div className="mb-10">
-                <h1 className="text-4xl text-center mb-3 font-bold ">Welcome to LifeLink</h1>
-                <p className="text-center text-2xl">Login to your <span className="text-red-600 font-bold">LifeLink</span> Account</p>
-              </div>
-              {/* Login Form*/}
-              <form onSubmit={handleSubmit}>
+
+              {/* Login Form */}
+              <form onSubmit={handleSubmit} className="mt-8 space-y-5">
                 <div>
-                  <label className="block text-xs font-bold text-gray-700 mb-1.5">Email Address</label>
+                  <label className="mb-1.5 block text-sm font-medium text-ink-soft">
+                    Email Address
+                  </label>
                   <div className="relative">
-                    <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+                    <Mail className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
                     <input
                       type="email"
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="Enter your email address"
-                      className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 transition-colors placeholder:text-gray-400"
+                      className="w-full rounded-2xl border border-line bg-canvas py-3 pl-11 pr-4 text-sm text-ink transition-colors placeholder:text-faint focus:border-primary focus:bg-surface focus:outline-none focus:ring-4 focus:ring-primary-50"
                     />
                   </div>
                 </div>
+
                 <div>
-                  <label className="block text-xs font-bold text-gray-700 mb-1.5">Password</label>
+                  <label className="mb-1.5 block text-sm font-medium text-ink-soft">
+                    Password
+                  </label>
                   <div className="relative">
-                    <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+                    <Lock className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
                     <input
                       type={showPassword ? "text" : "password"}
                       onChange={(e) => { setPassword(e.target.value) }}
-                      placeholder="Create a strong password"
-                      className="w-full pl-10 pr-10 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 transition-colors placeholder:text-gray-400"
+                      placeholder="Enter your password"
+                      className="w-full rounded-2xl border border-line bg-canvas py-3 pl-11 pr-11 text-sm text-ink transition-colors placeholder:text-faint focus:border-primary focus:bg-surface focus:outline-none focus:ring-4 focus:ring-primary-50"
                     />
                     <button
                       type="button"
@@ -250,27 +223,29 @@ export default function LoginPage() {
                         setShowPassword(!showPassword)
                         setLoggin(true);
                       }}
-
-                      className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-faint transition-colors hover:text-ink-soft"
                     >
-                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                      {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                     </button>
                   </div>
                 </div>
-                <div className="flex justify-center mt-3 ">
 
-                  <button type="Submit"
-                    disabled={logging}
-                    className="text-center bg-gray-200 px-5 py-2 rounded-xl hover:bg-gray-300 hover:w-35 hover:cursor-pointer"
-                  >{(logging) ? "Logging in" : "Login"}</button>
-                </div>
-                <div className="relative flex py-2 items-center">
-                  <div className="flex-grow border-t border-gray-100"></div>
-                  <span className="flex-shrink mx-4 text-xs text-gray-500">
-                    Don't have an account? <a href="/register" className="text-red-600 font-bold hover:underline ml-0.5">Register</a>
-                  </span>
-                  <div className="flex-grow border-t border-gray-100"></div>
-                </div>
+                <button
+                  type="Submit"
+                  disabled={logging}
+                  className="press flex w-full items-center justify-center gap-2 rounded-2xl bg-brand-gradient py-3.5 font-semibold text-white shadow-glow disabled:opacity-70"
+                >
+                  {logging ? <BloodDropLoader size={9} className="text-white" /> : null}
+                  {logging ? "Logging in…" : "Login"}
+                  {!logging && <ArrowRight className="h-4 w-4" />}
+                </button>
+
+                <p className="text-center text-sm text-muted">
+                  Don't have an account?{" "}
+                  <a href="/register" className="font-semibold text-primary hover:underline">
+                    Register
+                  </a>
+                </p>
               </form>
             </div>
           </div>

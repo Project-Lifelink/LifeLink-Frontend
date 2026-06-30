@@ -1,61 +1,21 @@
 import React from "react";
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
+import Reveal from '../../components/motion/Reveal.jsx'
 
 
 const steps = [
-  {
-    id: "01",
-    title: "Sign Up",
-    desc: "Create your account as a donor or a requester.",
-    icon: "user",
-  },
-  {
-    id: "02",
-    title: "Search / Request",
-    desc: "Search for blood donors nearby or send a blood request.",
-    icon: "location",
-  },
-  {
-    id: "03",
-    title: "Connect",
-    desc: "We connect you with verified donors or requesters.",
-    icon: "users",
-  },
-  {
-    id: "04",
-    title: "Donate / Help",
-    desc: "Donate blood and help save precious lives.",
-    icon: "drop",
-  },
-  {
-    id: "05",
-    title: "Stay Connected",
-    desc: "Get updates, express gratitude and stay connected.",
-    icon: "heart",
-  },
+  { id: "01", title: "Sign Up", desc: "Create your account as a donor or a requester.", icon: "user" },
+  { id: "02", title: "Search / Request", desc: "Search for blood donors nearby or send a blood request.", icon: "location" },
+  { id: "03", title: "Connect", desc: "We connect you with verified donors or requesters.", icon: "users" },
+  { id: "04", title: "Donate / Help", desc: "Donate blood and help save precious lives.", icon: "drop" },
+  { id: "05", title: "Stay Connected", desc: "Get updates, express gratitude and stay connected.", icon: "heart" },
 ];
 
 const features = [
-  {
-    title: "Verified & Safe",
-    desc: "All donors are verified to ensure your safety.",
-    icon: "shield",
-  },
-  {
-    title: "Quick & Easy",
-    desc: "Find or provide help in just a few clicks.",
-    icon: "bolt",
-  },
-  {
-    title: "Secure & Private",
-    desc: "Your data is protected with top security.",
-    icon: "lock",
-  },
-  {
-    title: "Make an Impact",
-    desc: "Every drop you give can save a life.",
-    icon: "heart",
-  },
+  { title: "Verified & Safe", desc: "All donors are verified to ensure your safety.", icon: "shield" },
+  { title: "Quick & Easy", desc: "Find or provide help in just a few clicks.", icon: "bolt" },
+  { title: "Secure & Private", desc: "Your data is protected with top security.", icon: "lock" },
+  { title: "Make an Impact", desc: "Every drop you give can save a life.", icon: "heart" },
 ];
 
 function Icon({ name }) {
@@ -139,70 +99,72 @@ function Icon({ name }) {
 }
 
 export default function HowItWorks() {
+  const reduce = useReducedMotion();
+
   return (
-    <section id="howitworks" className="max-w-screen bg-white py-16 px-6 md:px-20">
-      {/* Header */}
-      <motion.div className="text-center mb-14"
-      initial = {{opaicty:0 , y: 30}}
-      whileInView = {{opacity: 1 , y: 0}}
-      transition = {{duration: 0.5}}>
-        <p className="text-red-500 font-semibold tracking-widest">
-          HOW IT WORKS
-        </p>
-        <h1 className="text-4xl md:text-5xl font-bold mt-2">
-          Saving Lives is <span className="text-red-500">Simple</span>
-        </h1>
-        <p className="text-gray-500 mt-4 max-w-2xl mx-auto">
-          LifeLink makes it easy to connect donors with those in need.
-          Just a few simple steps can make a big difference.
-        </p>
-      </motion.div>
+    <section id="howitworks" className="w-full bg-surface px-5 py-24 md:px-8 md:py-32">
+      <div className="mx-auto max-w-7xl">
+        {/* Header */}
+        <Reveal className="mx-auto mb-16 max-w-2xl text-center">
+          <span className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
+            How it works
+          </span>
+          <h2 className="mt-4 font-display text-5xl font-normal leading-tight tracking-tight text-ink md:text-6xl">
+            Saving lives is{" "}
+            <span className="text-gradient-brand italic">simple</span>
+          </h2>
+          <p className="mt-4 text-lg text-muted">
+            LifeLink makes it easy to connect donors with those in need.
+            Just a few simple steps can make a big difference.
+          </p>
+        </Reveal>
 
-      {/* Steps */}
-      <motion.div className="relative grid grid-cols-2 md:grid-cols-5  gap-8 text-center"
-      initial = {{opacitiy: 0, y: 30}}
-      whileInView = {{opacity: 1, y: 0}}
-      transition = {{duration: 0.5}}>
-        {steps.map((step, idx) => (
-          <div key={step.id} className="relative">
-            {/* connector line */}
-            {idx !== steps.length - 1 && (
-              <div className="hidden md:block absolute top-10 right-[-50%] w-full h-[2px] bg-gray-200" />
-            )}
-
-            <div className="flex flex-col items-center">
-              <div className="w-10 h-10 flex items-center justify-center rounded-full bg-red-100 text-red-500 font-bold">
-                {step.id}
-              </div>
-
-              <div className="mt-6 w-20 h-20 rounded-xl bg-white shadow-md flex items-center justify-center text-red-500">
-                <Icon name={step.icon} />
-              </div>
-
-              <h3 className="mt-4 font-semibold text-lg">{step.title}</h3>
-              <p className="text-gray-500 text-sm mt-2">{step.desc}</p>
-            </div>
+        {/* Steps — donation journey */}
+        <div className="relative grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-5">
+          {/* flowing progress line (desktop) */}
+          <div className="absolute left-0 right-0 top-9 hidden h-0.5 overflow-hidden rounded-full bg-line lg:block">
+            <motion.div
+              className="h-full bg-brand-gradient"
+              initial={reduce ? { width: "100%" } : { width: "0%" }}
+              whileInView={{ width: "100%" }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={reduce ? undefined : { duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
+            />
           </div>
-        ))}
-      </motion.div>
 
-      {/* Features */}
-      <motion.div className="mt-20 grid grid-cols-1 md:grid-cols-4 gap-6 bg-gray-50 p-8 rounded-2xl"
-      initial = {{y: 20, opacity: 0}}
-      whileInView = {{y: 0 , opacity: 1}}
-      transition = {{duration: 0.5}}>
-        {features.map((f, i) => (
-          <div key={i} className="flex items-start gap-4">
-            <div className="text-red-500">
-              <Icon name={f.icon} />
+          {steps.map((step, idx) => (
+            <Reveal key={step.id} delay={idx * 0.12} className="relative">
+              <div className="group hover-lift flex h-full flex-col rounded-3xl border border-line bg-canvas p-6 hover:border-primary-100 hover:shadow-card">
+                <div className="flex items-center justify-between">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-50 text-primary transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6">
+                    <Icon name={step.icon} />
+                  </div>
+                  <span className="font-display text-3xl text-line-strong transition-colors duration-300 group-hover:text-primary-200">
+                    {step.id}
+                  </span>
+                </div>
+                <h3 className="mt-5 text-lg font-semibold text-ink">{step.title}</h3>
+                <p className="mt-1.5 text-sm leading-relaxed text-muted">{step.desc}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+
+        {/* Features */}
+        <Reveal className="mt-16 grid grid-cols-1 gap-px overflow-hidden rounded-4xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+          {features.map((f, i) => (
+            <div key={i} className="group flex items-start gap-4 bg-surface p-7 transition-colors duration-300 hover:bg-canvas">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-primary-50 text-primary transition-transform duration-300 group-hover:scale-110">
+                <Icon name={f.icon} />
+              </div>
+              <div>
+                <h4 className="font-semibold text-ink">{f.title}</h4>
+                <p className="mt-1 text-sm leading-relaxed text-muted">{f.desc}</p>
+              </div>
             </div>
-            <div>
-              <h4 className="font-semibold">{f.title}</h4>
-              <p className="text-gray-500 text-sm">{f.desc}</p>
-            </div>
-          </div>
-        ))}
-      </motion.div>
+          ))}
+        </Reveal>
+      </div>
     </section>
   );
 }

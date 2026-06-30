@@ -3,7 +3,6 @@ import {
   User,
   Mail,
   Phone,
-  Calendar,
   FileText,
   Lock,
   Eye,
@@ -18,8 +17,8 @@ import {
 } from 'lucide-react';
 import Navbar from '../../components/layout/navbar.jsx'
 import { useNavigate } from 'react-router-dom'
-import { TbFlagSearch } from 'react-icons/tb';
-import { p } from 'framer-motion/client';
+import AmbientBackground from '../../components/motion/AmbientBackground.jsx'
+import BloodDropLoader from '../../components/motion/BloodDropLoader.jsx'
 
 export default function RegisterPage() {
 
@@ -38,7 +37,7 @@ export default function RegisterPage() {
   const navigate = useNavigate();
 
   const registerUser = async () => {
-    
+
     try {
       setRegistering(true);
       const response = await fetch(
@@ -76,189 +75,129 @@ export default function RegisterPage() {
       return data;
     } catch (error) {
       console.error("Error:", error.message);
-      
+
         alert("registration failed due to some error")
       setRegistering(false);
       throw error;
     }
   };
-  
+
 
   function handleSubmit(e){
     e.preventDefault();
     registerUser();
   }
 
+  const features = [
+    { Icon: Shield, title: "Save Lives", text: "Your donation can make a real difference." },
+    { Icon: Users, title: "Trusted Community", text: "Connect with verified donors and those in need." },
+    { Icon: Bell, title: "Real-time Alerts", text: "Get notified when someone needs help." },
+    { Icon: Heart, title: "Make an Impact", text: "Be a hero in someone's most critical moment." },
+  ];
 
-
-  // console.log(bloodgroup)
-  // console.log(name);
-  // console.log(sex)
-  // console.log(age);
+  const inputClass =
+    "w-full rounded-2xl border border-line bg-canvas py-2.5 pl-11 pr-4 text-sm text-ink transition-colors placeholder:text-faint focus:border-primary focus:bg-surface focus:outline-none focus:ring-4 focus:ring-primary-50";
+  const selectClass =
+    "w-full appearance-none rounded-2xl border border-line bg-canvas py-2.5 pl-11 pr-10 text-sm text-ink-soft transition-colors focus:border-primary focus:bg-surface focus:outline-none focus:ring-4 focus:ring-primary-50";
 
   return (
-    <div className = "overflow-auto scrollbar-none max-h-screen">
+    <div className="relative min-h-screen overflow-hidden">
+      <AmbientBackground />
       <Navbar />
-      {
-        (registering)? <p className='text-2xl absolute font-extrabold top-30 text-center w-screen'>Creating Your Account.....</p>: ""
-      }
-      <div className=" bg-gray-50 flex items-center justify-center p-4 md:p-8 font-sans">
-        <div className="max-w-6xl w-full bg-white rounded-3xl shadow-[0_0_20px_rgba(0,0,0,0.14)] overflow-hidden flex flex-col-reverse md:flex-row">
+      {registering ? (
+        <div className="fixed inset-x-0 top-24 z-50 flex justify-center">
+          <p className="glass flex items-center gap-3 rounded-full border border-line px-6 py-2 text-sm font-semibold text-ink shadow-card">
+            <BloodDropLoader size={10} />
+            Creating your account…
+          </p>
+        </div>
+      ) : ""}
 
-          <div className="w-full md:w-1/2 p-8 lg:p-12 flex flex-col justify-between bg-gradient-to-br from-white to-red-50/20">
+      <div className="flex items-center justify-center px-4 py-10 md:px-8">
+        <div className="grid w-full max-w-6xl overflow-hidden rounded-4xl border border-line bg-surface shadow-card md:grid-cols-2">
 
-            <div className="flex items-center gap-2 mb-8">
-              <div className="bg-red-600 text-white p-1.5 rounded-full flex items-center justify-center">
-                <Heart className="w-4 h-4 fill-current" />
+          {/* LEFT: warm reassurance */}
+          <div className="relative hidden flex-col justify-between gap-8 overflow-hidden bg-subtle p-12 md:flex">
+            <div className="pointer-events-none absolute inset-0 bg-brand-gradient-soft" />
+            <div className="relative">
+              <div className="flex items-center gap-2.5">
+                <span className="flex h-9 w-9 items-center justify-center rounded-2xl bg-brand-gradient text-white shadow-glow">
+                  <Droplet className="h-5 w-5" fill="currentColor" />
+                </span>
+                <span className="text-lg font-semibold text-ink">LifeLink</span>
               </div>
-              <span className="text-xl font-bold text-gray-900 tracking-tight">LifeLink</span>
-            </div>
 
-            <div className="space-y-4 mb-2">
-              <h1 className="text-3xl lg:text-4xl font-extrabold text-gray-900 leading-tight">
-                Join <span className="text-red-600">LifeLink</span> <br />
-                Be a Lifesaver <Heart className="inline w-7 h-7 text-red-500 ml-1 stroke-[1.5]" />
+              <h1 className="mt-12 font-display text-5xl font-normal leading-tight text-ink">
+                Join LifeLink,
+                <br />
+                be a <span className="text-gradient-brand italic">lifesaver</span>
               </h1>
-              <p className="text-gray-500 text-sm lg:text-base leading-relaxed max-w-sm">
-                Create your account and connect with people in need. Your blood can bring hope and save lives.
+              <p className="mt-4 max-w-sm text-lg leading-relaxed text-muted">
+                Create your account and connect with people in need. Your blood
+                can bring hope and save lives.
               </p>
             </div>
 
-            <div className="h-10 my-1 flex items-center justify-center relative">
-              <div className="absolute inset-0 flex items-center justify-center opacity-10">
-                <div className="w-full h-0.5 bg-red-500 relative">
-                  <div className="absolute -top-2 left-1/2 -translate-x-1/2 bg-red-500 w-4 h-4 rotate-45"></div>
+            <div className="relative grid grid-cols-1 gap-3 sm:grid-cols-2">
+              {features.map(({ Icon, title, text }) => (
+                <div key={title} className="rounded-3xl border border-line bg-surface/70 p-4">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary-50 text-primary">
+                    <Icon className="h-4 w-4" />
+                  </div>
+                  <h4 className="mt-3 text-sm font-semibold text-ink">{title}</h4>
+                  <p className="mt-0.5 text-xs leading-relaxed text-muted">{text}</p>
                 </div>
-              </div>
+              ))}
             </div>
-
-            <div className="bg-red-50/50 border border-red-100/50 rounded-2xl p-5 grid grid-cols-2 gap-4">
-
-              <div className="flex items-start gap-5">
-                <div className="bg-red-100 p-2 rounded-xl text-red-600 shrink-0">
-                  <Shield className="w-4 h-4" />
-                </div>
-                <div>
-                  <h4 className="text-xs font-bold text-gray-900">Save Lives</h4>
-                  <p className="text-[11px] text-gray-500 leading-normal mt-0.5">Your donation can make a real difference.</p>
-                </div>
-              </div>
-
-
-              <div className="flex items-start gap-3">
-                <div className="bg-red-100 p-2 rounded-xl text-red-600 shrink-0">
-                  <Users className="w-4 h-4" />
-                </div>
-                <div>
-                  <h4 className="text-xs font-bold text-gray-900">Trusted Community</h4>
-                  <p className="text-[11px] text-gray-500 leading-normal mt-0.5">Connect with verified donors and those in need.</p>
-                </div>
-              </div>
-
-              {/* Feature 3 */}
-              <div className="flex items-start gap-3">
-                <div className="bg-red-100 p-2 rounded-xl text-red-600 shrink-0">
-                  <Bell className="w-4 h-4" />
-                </div>
-                <div>
-                  <h4 className="text-xs font-bold text-gray-900">Real-time Alerts</h4>
-                  <p className="text-[11px] text-gray-500 leading-normal mt-0.5">Get notified when someone needs help.</p>
-                </div>
-              </div>
-
-              {/* Feature 4 */}
-              <div className="flex items-start gap-3">
-                <div className="bg-red-100 p-2 rounded-xl text-red-600 shrink-0">
-                  <Heart className="w-4 h-4" />
-                </div>
-                <div>
-                  <h4 className="text-xs font-bold text-gray-900">Make an Impact</h4>
-                  <p className="text-[11px] text-gray-500 leading-normal mt-0.5">Be a hero in someone's most critical moment.</p>
-                </div>
-              </div>
-            </div>
-
           </div>
 
-          {/* RIGHT SIDE: Form */}
-          <div className="w-full md:w-1/2 p-8 lg:p-12 md:border-l border-gray-100 flex flex-col justify-center">
-
-            {/* Header */}
-            <div className="text-center mb-8">
-              <h2 className="text-2xl font-bold text-gray-900">Create Your Account</h2>
-              <p className="text-sm text-gray-500 mt-1 flex items-center justify-center gap-1">
-                Let's get started <span className="text-red-500">❤️</span>
-              </p>
+          {/* RIGHT: Form */}
+          <div className="flex w-full flex-col justify-center p-8 md:p-12">
+            <div className="mb-8 text-center">
+              <h2 className="font-display text-4xl font-normal text-ink">Create your account</h2>
+              <p className="mt-2 text-sm text-muted">It only takes a minute to get started.</p>
             </div>
 
-            {/* Form right side me */}
-            <form onSubmit = {handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
-                  <label className="block text-xs font-bold text-gray-700 mb-1.5">Full Name</label>
+                  <label className="mb-1.5 block text-sm font-medium text-ink-soft">Full Name</label>
                   <div className="relative">
-                    <User className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
-                    <input
-                      type="text"
-                      placeholder="Enter your full name"
-                      onChange={(e) => { setName(e.target.value) }}
-                      className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 transition-colors placeholder:text-gray-400"
-                    />
+                    <User className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
+                    <input type="text" placeholder="Enter your full name" onChange={(e) => { setName(e.target.value) }} className={inputClass} />
                   </div>
                 </div>
 
-                {/* Email Address */}
                 <div>
-                  <label className="block text-xs font-bold text-gray-700 mb-1.5">Email Address</label>
+                  <label className="mb-1.5 block text-sm font-medium text-ink-soft">Email Address</label>
                   <div className="relative">
-                    <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
-                    <input
-                      type="email"
-                      onChange={(e) => { setEmail(e.target.value) }}
-                      placeholder="Enter your email address"
-                      className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 transition-colors placeholder:text-gray-400"
-                    />
+                    <Mail className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
+                    <input type="email" onChange={(e) => { setEmail(e.target.value) }} placeholder="Enter your email address" className={inputClass} />
                   </div>
                 </div>
 
-                {/* Phone Number */}
                 <div>
-                  <label className="block text-xs font-bold text-gray-700 mb-1.5">Phone Number</label>
+                  <label className="mb-1.5 block text-sm font-medium text-ink-soft">Phone Number</label>
                   <div className="relative">
-                    <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
-                    <input
-                      type="string"
-                      onChange={(e) => { setPhone(e.target.value) }}
-                      placeholder="Enter your phone number"
-                      className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 transition-colors placeholder:text-gray-400"
-                    />
+                    <Phone className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
+                    <input type="string" onChange={(e) => { setPhone(e.target.value) }} placeholder="Enter your phone number" className={inputClass} />
                   </div>
                 </div>
-                {/*Age*/}
+
                 <div>
-                  <label className="block text-xs font-bold text-gray-700 mb-1.5">Age (Years)</label>
+                  <label className="mb-1.5 block text-sm font-medium text-ink-soft">Age (Years)</label>
                   <div className="relative">
-                    <FileText className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
-                    <input
-                      type="number"
-                      min="1"
-                      onChange={(e) => { setAge(e.target.value) }}
-                      placeholder="e.g. 19"
-                      className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 transition-colors placeholder:text-gray-400"
-                    />
+                    <FileText className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
+                    <input type="number" min="1" onChange={(e) => { setAge(e.target.value) }} placeholder="e.g. 19" className={inputClass} />
                   </div>
                 </div>
-                {/* Blood Group Dropdown */}
+
                 <div>
-                  <label className="block text-xs font-bold text-gray-700 mb-1.5">Required Blood Group</label>
+                  <label className="mb-1.5 block text-sm font-medium text-ink-soft">Blood Group</label>
                   <div className="relative">
-                    <Droplet className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
-                    <select
-                      defaultValue=""
-                      onChange={(e) => { setBlood_group(e.target.value) }}
-                      className="w-full pl-10 pr-10 py-2.5 bg-white border border-gray-200 rounded-xl text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 transition-colors text-gray-700"
-                    >
+                    <Droplet className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
+                    <select defaultValue="" onChange={(e) => { setBlood_group(e.target.value) }} className={selectClass}>
                       <option value="" disabled hidden>Select blood group</option>
                       <option value="A+">A+</option>
                       <option value="A-">A-</option>
@@ -269,106 +208,83 @@ export default function RegisterPage() {
                       <option value="O+">O+</option>
                       <option value="O-">O-</option>
                     </select>
-                    <ChevronDown className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4 pointer-events-none" />
+                    <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
                   </div>
                 </div>
-                {/* Gender */}
-                <div className="w-full sm:pr-2">
-                  <label className="block text-xs font-bold text-gray-700 mb-1.5">Gender</label>
+
+                <div className="w-full">
+                  <label className="mb-1.5 block text-sm font-medium text-ink-soft">Gender</label>
                   <div className="relative">
-                    <User className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
-                    <select
-                      defaultValue=""
-                      onChange={(e) => { setSex(e.target.value) }}
-                      className="w-full pl-10 pr-10 py-2.5 bg-white border border-gray-200 rounded-xl text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 transition-colors text-gray-700"
-                    >
+                    <User className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
+                    <select defaultValue="" onChange={(e) => { setSex(e.target.value) }} className={selectClass}>
                       <option value="" disabled hidden>Select your gender</option>
                       <option value="male">Male</option>
                       <option value="female">Female</option>
                       <option value="other">Other</option>
                     </select>
-                    <ChevronDown className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4 pointer-events-none" />
+                    <ChevronDown className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
                   </div>
                 </div>
               </div>
 
-
-
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {/* Password */}
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
-                  <label className="block text-xs font-bold text-gray-700 mb-1.5">Password</label>
+                  <label className="mb-1.5 block text-sm font-medium text-ink-soft">Password</label>
                   <div className="relative">
-                    <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+                    <Lock className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
                     <input
                       type={showPassword ? "text" : "password"}
                       onChange={(e) => { setPassword(e.target.value) }}
                       placeholder="Create a strong password"
-                      className="w-full pl-10 pr-10 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 transition-colors placeholder:text-gray-400"
+                      className="w-full rounded-2xl border border-line bg-canvas py-2.5 pl-11 pr-11 text-sm text-ink transition-colors placeholder:text-faint focus:border-primary focus:bg-surface focus:outline-none focus:ring-4 focus:ring-primary-50"
                     />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
-                    >
-                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-faint transition-colors hover:text-ink-soft">
+                      {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                     </button>
                   </div>
                 </div>
 
-                {/* Confirm Password */}
                 <div>
-                  <label className="block text-xs font-bold text-gray-700 mb-1.5">Confirm Password</label>
+                  <label className="mb-1.5 block text-sm font-medium text-ink-soft">Confirm Password</label>
                   <div className="relative">
-                    <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+                    <Lock className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
                     <input
                       type={showConfirmPassword ? "text" : "password"}
                       placeholder="Confirm your password"
-                      className="w-full pl-10 pr-10 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 transition-colors placeholder:text-gray-400"
+                      className="w-full rounded-2xl border border-line bg-canvas py-2.5 pl-11 pr-11 text-sm text-ink transition-colors placeholder:text-faint focus:border-primary focus:bg-surface focus:outline-none focus:ring-4 focus:ring-primary-50"
                     />
-                    <button
-                      type="button"
-                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                      className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
-                    >
-                      {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-faint transition-colors hover:text-ink-soft">
+                      {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                     </button>
                   </div>
                 </div>
               </div>
 
-              {/* Info Notice Card */}
-              <div className="bg-red-50/60 border border-red-100 rounded-2xl p-3.5 flex items-start gap-3">
-                <div className="bg-red-500 text-white p-1 rounded-lg shrink-0 mt-0.5">
-                  <Shield className="w-3.5 h-3.5" />
+              {/* Info Notice */}
+              <div className="flex items-start gap-3 rounded-2xl border border-line bg-canvas p-3.5">
+                <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-xl bg-primary-50 text-primary">
+                  <Shield className="h-3.5 w-3.5" />
                 </div>
                 <div>
-                  <h5 className="text-xs font-bold text-gray-900 leading-tight">Your data is safe with us.</h5>
-                  <p className="text-[11px] text-gray-500 leading-normal mt-0.5">We never share your information with anyone.</p>
+                  <h5 className="text-sm font-semibold leading-tight text-ink">Your data is safe with us.</h5>
+                  <p className="mt-0.5 text-xs leading-normal text-muted">We never share your information with anyone.</p>
                 </div>
               </div>
 
-
-
-              {/* Submit Button */}
               <button
                 type="submit"
-                disabled = {registering}
-                className="w-full bg-red-600 hover:cursor-pointer hover:bg-red-700 text-white font-semibold py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-colors shadow-md shadow-red-600/10 active:scale-[0.99] transform"
+                disabled={registering}
+                className="press flex w-full items-center justify-center gap-2 rounded-2xl bg-brand-gradient py-3.5 font-semibold text-white shadow-glow disabled:opacity-70"
               >
-                <span>{(registering)?"Creating your account.....":"Create your account"}</span>
-               {(!registering)? <ArrowRight className="w-4 h-4" /> : ""}
+                {(registering) ? <BloodDropLoader size={9} className="text-white" /> : ""}
+                <span>{(registering) ? "Creating your account…" : "Create your account"}</span>
+                {(!registering) ? <ArrowRight className="h-4 w-4" /> : ""}
               </button>
 
-              {/* Login Footer */}
-              <div className="relative flex py-2 items-center">
-                <div className="flex-grow border-t border-gray-100"></div>
-                <span className="flex-shrink mx-4 text-xs text-gray-500">
-                  Already have an account? <a href="/login" className="text-red-600 font-bold hover:underline ml-0.5">Login</a>
-                </span>
-                <div className="flex-grow border-t border-gray-100"></div>
-              </div>
+              <p className="text-center text-sm text-muted">
+                Already have an account?{" "}
+                <a href="/login" className="font-semibold text-primary hover:underline">Login</a>
+              </p>
 
             </form>
           </div>

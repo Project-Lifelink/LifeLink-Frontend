@@ -6,8 +6,13 @@ import {
     Eye,
     CheckCircle,
     Filter,
+    Plus,
+    Droplet,
 } from "lucide-react";
 import { Link } from 'react-router-dom'
+import AmbientBackground from '../../components/motion/AmbientBackground.jsx'
+import Reveal from '../../components/motion/Reveal.jsx'
+import BloodDropLoader from '../../components/motion/BloodDropLoader.jsx'
 
 export default function BloodRequestsPage() {
     const [requests, setRequests] = useState([]);
@@ -32,7 +37,7 @@ export default function BloodRequestsPage() {
 
                 const data = await response.json();
 
-                // if backend is sending array formate directly 
+                // if backend is sending array formate directly
                 setRequests(data);
                 console.log(data);
 
@@ -54,50 +59,52 @@ export default function BloodRequestsPage() {
     const getStatusStyle = (status) => {
         switch (status) {
             case "Emergency":
-                return "bg-red-100 text-red-700";
+                return "bg-danger-soft text-danger";
             case "Matched":
-                return "bg-green-100 text-green-700";
+                return "bg-success-soft text-success";
             default:
-                return "bg-blue-100 text-blue-700";
+                return "bg-info-soft text-info";
         }
     };
 
     return (
-        <div id="activerequest" className="min-h-screen flex items-center justify-center min-w-cover overflow-scroll bg-slate-50 p-6">
-            <div>
+        <div id="activerequest" className="relative min-h-screen bg-canvas px-6 py-12 md:px-8 md:py-16">
+            <AmbientBackground />
+            <div className="relative mx-auto max-w-6xl">
 
                 {/* Header */}
-                <div className="flex flex-col md:flex-row justify-between gap-4 mb-8">
+                <Reveal className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end">
                     <div>
-                        <h1 className="text-3xl font-bold text-slate-800">
-                            Current Blood Requests
+                        <h1 className="font-display text-4xl font-normal text-ink md:text-5xl">
+                            Current Blood <span className="text-gradient-brand italic">Requests</span>
                         </h1>
-                        <p className="text-slate-500 mt-1">
+                        <p className="mt-2 text-muted">
                             Monitor and manage active blood requests.
                         </p>
                     </div>
 
-                    <Link to = "../requestblood" className="bg-red-600 hover:bg-red-700 transition flex items-center text-white px-5 py-3 rounded-xl font-medium">
-                        + New Request
+                    <Link to="../requestblood" className="press inline-flex items-center justify-center gap-2 rounded-2xl bg-brand-gradient px-5 py-3 font-semibold text-white shadow-glow">
+                        <Plus className="h-4 w-4" />
+                        New Request
                     </Link>
-                </div>
+                </Reveal>
 
                 {/* Filters */}
-                <div className="bg-white rounded-2xl shadow-[0_0_20px_rgba(0,0,0,0.14)] p-5 mb-6">
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <Reveal delay={0.08} className="mb-6 rounded-3xl border border-line bg-surface p-5 shadow-soft">
+                    <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
                         <div className="relative">
                             <Search
                                 size={18}
-                                className="absolute left-3 top-3.5 text-gray-400"
+                                className="absolute left-4 top-1/2 -translate-y-1/2 text-faint"
                             />
                             <input
                                 type="text"
                                 placeholder="Search Patient..."
-                                className="w-full border rounded-lg pl-10 py-3 outline-none"
+                                className="w-full rounded-2xl border border-line bg-canvas py-3 pl-11 pr-4 text-sm text-ink transition-colors placeholder:text-faint focus:border-primary focus:bg-surface focus:outline-none focus:ring-4 focus:ring-primary-50"
                             />
                         </div>
 
-                        <select className="border rounded-lg px-3 py-3">
+                        <select className="rounded-2xl border border-line bg-canvas px-4 py-3 text-sm text-ink-soft transition-colors focus:border-primary focus:bg-surface focus:outline-none focus:ring-4 focus:ring-primary-50">
                             <option>All Blood Groups</option>
                             <option>O+</option>
                             <option>O-</option>
@@ -109,39 +116,49 @@ export default function BloodRequestsPage() {
                             <option>AB-</option>
                         </select>
 
-                        <select className="border rounded-lg px-3 py-3">
+                        <select className="rounded-2xl border border-line bg-canvas px-4 py-3 text-sm text-ink-soft transition-colors focus:border-primary focus:bg-surface focus:outline-none focus:ring-4 focus:ring-primary-50">
                             <option>All Status</option>
                             <option>Emergency</option>
                             <option>Active</option>
                             <option>Matched</option>
                         </select>
 
-                        <button className="flex justify-center items-center gap-2 shadow-[0_0_20px_rgba(0,0,0,0.14)] rounded-lg">
+                        <button className="press flex items-center justify-center gap-2 rounded-2xl border border-line bg-canvas py-3 text-sm font-semibold text-ink-soft hover:border-primary-100">
                             <Filter size={18} />
                             Apply Filters
                         </button>
                     </div>
-                </div>
+                </Reveal>
+
+                {/* Loading state */}
+                {loading ? (
+                    <div className="flex flex-col items-center justify-center rounded-3xl border border-line bg-surface py-20 shadow-soft">
+                        <BloodDropLoader size={12} />
+                        <p className="mt-4 text-sm text-muted">Loading active requests…</p>
+                    </div>
+                ) : null}
 
                 {/* Request Cards */}
                 <div className="space-y-5">
-                    {requests.map((request) => (
-                        <div
+                    {requests.map((request, i) => (
+                        <Reveal
+                            as="div"
+                            delay={i * 0.06}
                             key={request.id}
-                            className={`bg-white rounded-2xl shadow-[0_0_20px_rgba(0,0,0,0.14)] p-6 ${request.status === "Emergency"
-                                    ? "border-red-400"
-                                    : ""
+                            className={`hover-lift rounded-3xl border bg-surface p-6 shadow-soft hover:shadow-card ${request.status === "Emergency"
+                                    ? "border-primary-200 hover:border-primary-200"
+                                    : "border-line hover:border-primary-100"
                                 }`}
                         >
-                            <div className="flex flex-col lg:flex-row justify-between gap-6">
+                            <div className="flex flex-col justify-between gap-6 lg:flex-row">
                                 <div>
-                                    <div className="flex items-center gap-3 mb-3">
-                                        <h2 className="font-bold text-lg">
+                                    <div className="mb-3 flex items-center gap-3">
+                                        <h2 className="font-display text-2xl font-normal text-ink">
                                             {request.patient}
                                         </h2>
 
                                         <span
-                                            className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusStyle(
+                                            className={`rounded-full px-3 py-1 text-sm font-medium ${getStatusStyle(
                                                 request.status
                                             )}`}
                                         >
@@ -149,68 +166,69 @@ export default function BloodRequestsPage() {
                                         </span>
                                     </div>
 
-                                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-sm">
+                                    <div className="grid grid-cols-2 gap-6 text-sm md:grid-cols-4">
                                         <div>
-                                            <p className="text-slate-500">Request ID</p>
-                                            <p className="font-semibold">{request.id}</p>
+                                            <p className="text-muted">Request ID</p>
+                                            <p className="mt-0.5 font-semibold text-ink">{request.id}</p>
                                         </div>
 
                                         <div>
-                                            <p className="text-slate-500">Blood Group</p>
-                                            <p className="font-semibold text-red-600">
+                                            <p className="text-muted">Blood Group</p>
+                                            <p className="mt-0.5 inline-flex items-center gap-1 font-semibold text-primary">
+                                                <Droplet className="h-3.5 w-3.5" />
                                                 {request.blood_group}
                                             </p>
                                         </div>
 
                                         <div>
-                                            <p className="text-slate-500">Units Required</p>
-                                            <p className="font-semibold">{request.quantity}</p>
+                                            <p className="text-muted">Units Required</p>
+                                            <p className="mt-0.5 font-semibold text-ink">{request.quantity}</p>
                                         </div>
 
                                         <div>
-                                            <p className="text-slate-500">Name</p>
-                                            <p className="font-semibold">
+                                            <p className="text-muted">Name</p>
+                                            <p className="mt-0.5 font-semibold text-ink">
                                                 {request.patient_name}
                                             </p>
                                         </div>
                                         <div>
-                                            <p className="text-slate-500">Phone Number</p>
-                                            <p className="font-semibold">
+                                            <p className="text-muted">Phone Number</p>
+                                            <p className="mt-0.5 font-semibold text-ink">
                                                 {request.phone}
                                             </p>
                                         </div>
                                     </div>
 
-                                    <p className="text-sm text-slate-400 mt-4">
+                                    <p className="mt-4 text-sm text-faint">
                                         Created {request.time}
                                     </p>
                                 </div>
 
-                                <div className="flex flex-wrap gap-3 items-center">
+                                <div className="flex flex-wrap items-center gap-3">
                                     {request.status === "Emergency" && (
-                                        <button className="flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-lg">
+                                        <button className="press flex items-center gap-2 rounded-2xl bg-brand-gradient px-4 py-2 text-sm font-semibold text-white shadow-glow">
                                             <AlertTriangle size={18} />
                                             Emergency Alert
                                         </button>
                                     )}
 
-                                    <button className="flex items-center gap-2 border px-4 py-2 rounded-lg">
+                                    <button className="press flex items-center gap-2 rounded-2xl border border-line bg-surface px-4 py-2 text-sm font-medium text-ink-soft hover:border-primary-100">
                                         <Eye size={18} />
                                         View
                                     </button>
 
-                                    <button className="flex items-center gap-2 border px-4 py-2 rounded-lg">
+                                    <button className="press flex items-center gap-2 rounded-2xl border border-line bg-surface px-4 py-2 text-sm font-medium text-ink-soft hover:border-primary-100">
                                         <Phone size={18} />
                                         Contact Donors
                                     </button>
 
-                                    <button className="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg">
+                                    <button className="press flex items-center gap-2 rounded-2xl bg-success px-4 py-2 text-sm font-semibold text-white">
                                         <CheckCircle size={18} />
                                         Fulfilled
                                     </button>
                                 </div>
                             </div>
-                        </div>
+                        </Reveal>
                     ))}
                 </div>
             </div>

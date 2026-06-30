@@ -1,1 +1,306 @@
 @import 'tailwindcss';
+
+/* ------------------------------------------------------------------ *
+ * LifeLink Design System v2 — "Calm Care"
+ * Premium healthcare aesthetic: Apple Health calm + Linear typography
+ * + Airbnb warmth. Warm neutral canvas, Inter + Instrument Serif,
+ * subtle blood-red gradients, large radii, soft elevation.
+ * Prefer these tokens (bg-canvas, text-ink, shadow-card, font-display,
+ * bg-primary, text-gradient-brand...) over raw literals.
+ * JS mirror lives in src/constants/theme.js
+ * ------------------------------------------------------------------ */
+@theme {
+  /* Typography — Inter for UI/body, Instrument Serif for display */
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
+    Roboto, Helvetica, Arial, sans-serif;
+  --font-display: 'Instrument Serif', ui-serif, Georgia, 'Times New Roman',
+    serif;
+
+  /* Brand — blood red, gradient stops #B71C1C (deep) → #E53935 (bright) */
+  --color-primary-50: #fdeceb;
+  --color-primary-100: #fbd5d2;
+  --color-primary-200: #f6aba6;
+  --color-primary-300: #f08079;
+  --color-primary-400: #ec5f57;
+  --color-primary-500: #e53935;
+  --color-primary-600: #d32f2f;
+  --color-primary-700: #c62828;
+  --color-primary-800: #b71c1c;
+  --color-primary-900: #8e1414;
+  --color-primary-950: #5c0a0a;
+  --color-primary: #d32f2f;
+  --color-primary-bright: #e53935;
+  --color-primary-deep: #b71c1c;
+
+  /* Warm neutral surfaces & text (stone-tinted, pairs with #FAFAF8) */
+  --color-canvas: #fafaf8;
+  --color-surface: #ffffff;
+  --color-subtle: #f5f5f3;
+  --color-line: #eceae6;
+  --color-line-strong: #e0ddd7;
+  --color-ink: #1c1917;
+  --color-ink-soft: #44403c;
+  --color-muted: #78716c;
+  --color-faint: #a8a29e;
+
+  /* Semantic states (soft, healthcare-calm) */
+  --color-success: #1f9d57;
+  --color-success-soft: #e6f6ec;
+  --color-warning: #c77700;
+  --color-warning-soft: #fdf0db;
+  --color-danger: #d32f2f;
+  --color-danger-soft: #fdeceb;
+  --color-info: #2b6cb0;
+  --color-info-soft: #e7f0f9;
+
+  /* Radii — large, soft (20–28px hallmark) */
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.5rem;
+  --radius-4xl: 1.75rem;
+
+  /* Elevation — subtle, warm, premium */
+  --shadow-soft: 0 1px 2px rgba(28, 25, 23, 0.04),
+    0 1px 3px rgba(28, 25, 23, 0.05);
+  --shadow-card: 0 2px 6px rgba(28, 25, 23, 0.03),
+    0 18px 40px -22px rgba(28, 25, 23, 0.18);
+  --shadow-lift: 0 4px 10px rgba(28, 25, 23, 0.05),
+    0 30px 60px -28px rgba(28, 25, 23, 0.24);
+  --shadow-glow: 0 16px 44px -16px rgba(229, 57, 53, 0.4);
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    letter-spacing: -0.011em;
+  }
+
+  /* Instrument Serif looks best slightly tightened and large */
+  .font-display {
+    letter-spacing: -0.015em;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+}
+
+@layer utilities {
+  /* Subtle blood-red gradient — used sparingly for emphasis surfaces */
+  .bg-brand-gradient {
+    background-image: linear-gradient(135deg, #b71c1c 0%, #e53935 100%);
+  }
+  .bg-brand-gradient-soft {
+    background-image: linear-gradient(
+      135deg,
+      rgba(183, 28, 28, 0.06) 0%,
+      rgba(229, 57, 53, 0.08) 100%
+    );
+  }
+  .text-gradient-brand {
+    background-image: linear-gradient(120deg, #b71c1c 0%, #e53935 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Glassmorphism — translucent surface, used only where appropriate */
+  .glass {
+    background-color: rgba(255, 255, 255, 0.72);
+    backdrop-filter: saturate(180%) blur(16px);
+    -webkit-backdrop-filter: saturate(180%) blur(16px);
+  }
+
+  .scrollbar-none {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* ---------------------------------------------------------------- *
+   * Motion layer — GPU-friendly ambient + interaction animations.
+   * Everything here uses transform/opacity only and is disabled under
+   * prefers-reduced-motion (see bottom of file).
+   * ---------------------------------------------------------------- */
+
+  /* Ambient floating blobs (background life) — 20–60s loops */
+  .animate-blob {
+    animation: ll-blob 32s ease-in-out infinite;
+    will-change: transform;
+  }
+  .animate-blob-slow {
+    animation: ll-blob 52s ease-in-out infinite;
+    will-change: transform;
+  }
+  .animate-blob-rev {
+    animation: ll-blob-rev 44s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  /* Gentle idle float for decorative/floating elements */
+  .animate-float {
+    animation: ll-float 7s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  /* Falling blood drop — gravity-eased descent, loops on a slow cycle */
+  .animate-fall {
+    animation: ll-fall 5s cubic-bezier(0.5, 0, 0.9, 0.5) infinite;
+    will-change: transform, opacity;
+  }
+  .animate-float-slow {
+    animation: ll-float 11s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  /* Pulsing glow for primary CTAs */
+  .animate-pulse-glow {
+    animation: ll-pulse-glow 2.8s ease-in-out infinite;
+  }
+
+  /* Heartbeat for heart marks */
+  .animate-heartbeat {
+    animation: ll-heartbeat 2.4s ease-in-out infinite;
+    will-change: transform;
+    transform-origin: center;
+  }
+
+  /* Animated brand-gradient text/fill (slow pan) */
+  .text-gradient-brand-animated {
+    background-image: linear-gradient(120deg, #b71c1c 0%, #e53935 50%, #b71c1c 100%);
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: ll-gradient-pan 8s ease-in-out infinite;
+  }
+
+  /* Shimmer for skeleton loaders */
+  .shimmer {
+    background: linear-gradient(
+      100deg,
+      rgba(28, 25, 23, 0.04) 30%,
+      rgba(28, 25, 23, 0.09) 50%,
+      rgba(28, 25, 23, 0.04) 70%
+    );
+    background-size: 200% 100%;
+    animation: ll-shimmer 1.6s ease-in-out infinite;
+  }
+
+  /* Physical hover lift — pair on cards (transform/shadow only) */
+  .hover-lift {
+    transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.32s ease;
+    will-change: transform;
+  }
+  .hover-lift:hover {
+    transform: translateY(-4px);
+  }
+
+  /* Press feedback for buttons */
+  .press {
+    transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.25s ease, background-color 0.2s ease, color 0.2s ease;
+  }
+  .press:hover {
+    transform: translateY(-2px);
+  }
+  .press:active {
+    transform: translateY(0) scale(0.98);
+  }
+
+  /* Animated nav underline */
+  .link-underline {
+    position: relative;
+  }
+  .link-underline::after {
+    content: '';
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    bottom: 6px;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(120deg, #b71c1c, #e53935);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .link-underline:hover::after {
+    transform: scaleX(1);
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * Keyframes (top level)
+ * ------------------------------------------------------------------ */
+@keyframes ll-blob {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  33% { transform: translate3d(3%, -4%, 0) scale(1.06); }
+  66% { transform: translate3d(-3%, 3%, 0) scale(0.96); }
+  100% { transform: translate3d(0, 0, 0) scale(1); }
+}
+@keyframes ll-blob-rev {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  33% { transform: translate3d(-4%, 4%, 0) scale(0.95); }
+  66% { transform: translate3d(4%, -3%, 0) scale(1.07); }
+  100% { transform: translate3d(0, 0, 0) scale(1); }
+}
+@keyframes ll-float {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -12px, 0); }
+}
+@keyframes ll-fall {
+  0% { transform: translate3d(0, -20px, 0) scale(0.7); opacity: 0; }
+  10% { opacity: 1; }
+  82% { opacity: 1; }
+  100% { transform: translate3d(0, var(--fall-distance, 320px), 0) scale(1); opacity: 0; }
+}
+@keyframes ll-pulse-glow {
+  0%, 100% { box-shadow: 0 12px 30px -14px rgba(229, 57, 53, 0.45); }
+  50% { box-shadow: 0 20px 50px -14px rgba(229, 57, 53, 0.7); }
+}
+@keyframes ll-heartbeat {
+  0%, 60%, 100% { transform: scale(1); }
+  20% { transform: scale(1.14); }
+  40% { transform: scale(1.06); }
+}
+@keyframes ll-gradient-pan {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+@keyframes ll-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ------------------------------------------------------------------ *
+ * Accessibility — honour reduced-motion globally
+ * ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .hover-lift:hover,
+  .press:hover,
+  .press:active {
+    transform: none !important;
+  }
+}

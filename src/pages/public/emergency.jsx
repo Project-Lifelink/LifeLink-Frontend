@@ -2,11 +2,7 @@ import React from 'react'
 
 const Emergency = () => {
   return (
-    <>
-    <div>
-        
-    </div>
-    </>
+    <section className="bg-canvas" />
   )
 }
 

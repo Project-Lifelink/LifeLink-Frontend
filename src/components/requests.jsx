@@ -1,5 +1,8 @@
 import React from "react";
 import { motion } from 'framer-motion'
+import { Droplet, MapPin, Hospital, Users, CalendarDays, ArrowRight } from "lucide-react";
+import Reveal from './motion/Reveal.jsx'
+import AmbientBackground from './motion/AmbientBackground.jsx'
 
 const requests = [
     {
@@ -37,92 +40,107 @@ const requests = [
     },
 ];
 
+const urgencyStyles = {
+    Critical: "bg-danger-soft text-danger",
+    Urgent: "bg-warning-soft text-warning",
+    Normal: "bg-success-soft text-success",
+};
+
 const BloodRequests = () => {
     return (
-        <div className="min-h-screen bg-gray-50 px-6 py-10">
-            <div className="max-w-7xl mx-auto">
+        <div className="relative min-h-screen overflow-hidden bg-canvas px-5 py-20 md:px-8 md:py-24">
+            <AmbientBackground />
+            <div className="relative mx-auto max-w-7xl">
 
-                <motion.h1 className="text-4xl font-bold text-center mb-2"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}>
-                    Blood Requests
-                </motion.h1>
+                <Reveal className="mx-auto mb-14 max-w-2xl text-center">
+                    <span className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
+                        Active Requests
+                    </span>
+                    <motion.h1 className="mt-4 font-display text-5xl font-normal leading-tight text-ink md:text-6xl"
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}>
+                        Blood <span className="text-gradient-brand italic">Requests</span>
+                    </motion.h1>
 
-                <motion.p className="text-center text-gray-600 mb-10"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}>
-                    Help save lives by responding to active blood requests.
-                </motion.p>
+                    <motion.p className="mt-4 text-lg leading-relaxed text-muted"
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}>
+                        Help save lives by responding to active blood requests.
+                    </motion.p>
+                </Reveal>
 
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {requests.map((request) => (
-                        <motion.div
-                            key={request.id}
-                            className="bg-white rounded-2xl shadow-md p-6 border border-gray-100"
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5 }}
-                        >
-                            <div className="flex justify-between items-center mb-5">
-                                <h2 className="text-xl font-semibold">
-                                    {request.patient}
-                                </h2>
+                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                    {requests.map((request, i) => (
+                        <Reveal as="div" key={request.id} delay={i * 0.08}>
+                            <motion.div
+                                className="hover-lift group flex h-full flex-col rounded-3xl border border-line bg-surface p-6 shadow-soft hover:border-primary-100 hover:shadow-card"
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5 }}
+                            >
+                                <div className="mb-5 flex items-center justify-between">
+                                    <h2 className="text-lg font-semibold text-ink">
+                                        {request.patient}
+                                    </h2>
 
-                                <span className="bg-red-100 text-red-600 px-3 py-1 rounded-full font-semibold">
-                                    {request.bloodGroup}
-                                </span>
-                            </div>
+                                    <span className="flex items-center gap-1.5 rounded-full bg-primary-50 px-3 py-1 text-sm font-bold text-primary">
+                                        <Droplet className="h-3.5 w-3.5 fill-current" />
+                                        {request.bloodGroup}
+                                    </span>
+                                </div>
 
-                            <div className="space-y-3 text-gray-700">
-                                <p>
-                                    <span className="font-semibold">Units Required:</span>{" "}
-                                    {request.units}
-                                </p>
+                                <div className="space-y-3 text-sm text-ink-soft">
+                                    <p className="flex items-center gap-2.5">
+                                        <Droplet className="h-4 w-4 text-faint" />
+                                        <span className="font-medium text-muted">Units Required:</span>
+                                        <span className="font-semibold text-ink">{request.units}</span>
+                                    </p>
 
-                                <p>
-                                    <span className="font-semibold">Hospital:</span>{" "}
-                                    {request.hospital}
-                                </p>
+                                    <p className="flex items-center gap-2.5">
+                                        <Hospital className="h-4 w-4 text-faint" />
+                                        <span className="font-medium text-muted">Hospital:</span>
+                                        <span className="font-semibold text-ink">{request.hospital}</span>
+                                    </p>
 
-                                <p>
-                                    <span className="font-semibold">Location:</span>{" "}
-                                    {request.location}
-                                </p>
+                                    <p className="flex items-center gap-2.5">
+                                        <MapPin className="h-4 w-4 text-faint" />
+                                        <span className="font-medium text-muted">Location:</span>
+                                        <span className="font-semibold text-ink">{request.location}</span>
+                                    </p>
 
-                                <p>
-                                    <span className="font-semibold">Donors Responded:</span>{" "}
-                                    {request.donors}
-                                </p>
+                                    <p className="flex items-center gap-2.5">
+                                        <Users className="h-4 w-4 text-faint" />
+                                        <span className="font-medium text-muted">Donors Responded:</span>
+                                        <span className="font-semibold text-ink">{request.donors}</span>
+                                    </p>
 
-                                <p>
-                                    <span className="font-semibold">Request Date:</span>{" "}
-                                    {request.date}
-                                </p>
+                                    <p className="flex items-center gap-2.5">
+                                        <CalendarDays className="h-4 w-4 text-faint" />
+                                        <span className="font-medium text-muted">Request Date:</span>
+                                        <span className="font-semibold text-ink">{request.date}</span>
+                                    </p>
+                                </div>
 
                                 <span
-                                    className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${request.urgency === "Critical"
-                                        ? "bg-red-100 text-red-700"
-                                        : request.urgency === "Urgent"
-                                            ? "bg-orange-100 text-orange-700"
-                                            : "bg-green-100 text-green-700"
-                                        }`}
+                                    className={`mt-5 inline-flex w-fit items-center rounded-full px-3 py-1 text-xs font-semibold ${urgencyStyles[request.urgency] || "bg-subtle text-muted"}`}
                                 >
                                     {request.urgency}
                                 </span>
-                            </div>
 
-                            <div className="flex gap-3 mt-6">
-                                <button className="flex-1 bg-red-600 text-white py-2 rounded-lg hover:bg-red-700">
-                                    Donate Now
-                                </button>
+                                <div className="mt-6 flex gap-3 pt-2">
+                                    <button className="press flex flex-1 items-center justify-center gap-1.5 rounded-2xl bg-brand-gradient py-2.5 text-sm font-semibold text-white shadow-glow">
+                                        Donate Now
+                                        <ArrowRight className="h-4 w-4" />
+                                    </button>
 
-                                <button className="flex-1 border border-red-600 text-red-600 py-2 rounded-lg hover:bg-red-50">
-                                    View Details
-                                </button>
-                            </div>
-                        </motion.div>
+                                    <button className="press flex-1 rounded-2xl border border-line bg-surface py-2.5 text-sm font-semibold text-ink-soft hover:border-primary-100 hover:text-primary">
+                                        View Details
+                                    </button>
+                                </div>
+                            </motion.div>
+                        </Reveal>
                     ))}
                 </div>
             </div>

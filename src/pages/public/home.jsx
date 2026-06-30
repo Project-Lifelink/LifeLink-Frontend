@@ -1,11 +1,7 @@
 import React from 'react'
 import lifelinkimage from '../../assets/images/lifelink.png'
 import { HashLink } from 'react-router-hash-link'
-import { User } from 'lucide-react'
-import { UsersRound } from 'lucide-react'
-import { Clock } from 'lucide-react'
-import { Verified } from 'lucide-react'
-import { Heart } from 'lucide-react'
+import { User, UsersRound, Clock, Verified, Heart, Droplet, ArrowRight } from 'lucide-react'
 import { motion } from 'framer-motion'
 import About from './about.jsx'
 import Howitworks from './howitworks.jsx'
@@ -15,84 +11,132 @@ import Requestblood from './requestblood.jsx'
 import Navbar from '../../components/layout/navbar.jsx'
 import Footer from '../../components/layout/footer.jsx'
 import BloodRequests from '../../components/requests.jsx'
-// import Footer from '../components/footer.jsx'
+import AmbientBackground from '../../components/motion/AmbientBackground.jsx'
+import Heartbeat from '../../components/motion/Heartbeat.jsx'
+import Tilt from '../../components/motion/Tilt.jsx'
+import Reveal from '../../components/motion/Reveal.jsx'
+import FallingDrops from '../../components/motion/FallingDrops.jsx'
+
+
+
+const ease = [0.22, 1, 0.36, 1]
 
 const home = () => {
     return (
         <>
             <Navbar />
-            <div className=" mt-5 md:mt-0 h-screen">
-                <section>
-                    <div className="flex m-5 flex-col md:flex-row">
 
-                        <motion.div className="md:max-w-1/2 text-center md:text-left"
-                            initial={{ opacity: 0, x: -20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.3 }}>
+            <section id="home" className="relative overflow-hidden">
+                <AmbientBackground variant="rich" />
+                <FallingDrops
+                    drops={[
+                        { left: '4%', top: '14%', delay: '0s', distance: '460px', size: 13, opacity: 0.5 },
+                        { left: '90%', top: '4%', delay: '2.5s', distance: '560px', size: 17, opacity: 0.42 },
+                        { left: '60%', top: '8%', delay: '4s', distance: '420px', size: 11, opacity: 0.38 },
+                    ]}
+                />
 
-                            <div>
-                                <h2 className="md:text-8xl text-4xl font-extrabold md:ml-12 mt-13">
-                                    Save Lives,<br />
-                                    <span className="text-red-700">Be a Lifeline</span>
-                                </h2>
+                <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-5 pb-10 pt-16 md:px-8 md:pt-24 lg:grid-cols-[1.05fr_0.95fr]">
+                    {/* Copy */}
+                    <motion.div
+                        className="text-center lg:text-left"
+                        initial={{ opacity: 0, y: 24 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, ease }}
+                    >
+                        <span className="inline-flex items-center gap-2 rounded-full border border-line bg-surface/70 px-4 py-1.5 text-sm font-medium text-ink-soft shadow-soft">
+                            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary-50 text-primary">
+                                <Droplet className="h-3 w-3 animate-heartbeat" fill="currentColor" />
+                            </span>
+                            Real-time blood donor network
+                        </span>
+
+                        <h1 className="mt-7 font-display text-6xl font-normal leading-[0.98] tracking-tight text-ink md:text-7xl xl:text-[5.5rem]">
+                            Save lives,
+                            <br />
+                            be a{' '}
+                            <span className="text-gradient-brand-animated italic">lifeline</span>
+                        </h1>
+
+                        {/* Heartbeat line — "life is moving" */}
+                        <div className="mx-auto mt-5 h-9 w-72 text-primary lg:mx-0">
+                            <Heartbeat className="h-full w-full" strokeWidth={3.5} glow opacityRange={[0.55, 1]} />
+                        </div>
+
+                        <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-muted lg:mx-0">
+                            LifeLink connects blood donors with people in need in real time —
+                            with or without hospital verification. Donate blood, save lives, and
+                            bring hope to your community.
+                        </p>
+
+                        <div className="mt-9 flex flex-col items-center gap-3 sm:flex-row lg:justify-start">
+                            <HashLink
+                                smooth
+                                to="/hospitalregistration"
+                                className="press animate-pulse-glow group inline-flex w-full items-center justify-center gap-2 rounded-full bg-ink px-7 py-4 font-semibold text-white sm:w-auto"
+                            >
+                                Register Hospital
+                                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                            </HashLink>
+                            <HashLink
+                                smooth
+                                to="/hospitallogin"
+                                className="press inline-flex w-full items-center justify-center rounded-full border border-line bg-surface px-7 py-4 font-semibold text-ink-soft shadow-soft hover:bg-subtle sm:w-auto"
+                            >
+                                Hospital Login
+                            </HashLink>
+                        </div>
+
+                        <div className="mt-9 flex items-center justify-center gap-3 lg:justify-start">
+                            <div className="flex -space-x-3">
+                                {[0, 1, 2].map((i) => (
+                                    <span
+                                        key={i}
+                                        className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-canvas bg-primary-50 text-primary"
+                                    >
+                                        <UsersRound className="h-5 w-5" />
+                                    </span>
+                                ))}
                             </div>
-                            <div>
-                                <p className="md:ml-12 md:pr-30 mt-8 max-w-170 font-semibold">
-                                    LifeLink connects blood donors with people in need in real time with or without hospitals verification. Donate blood, save lives,and make the world a better place. Be a person who is liver saver
-                                </p>
+                            <p className="text-sm text-muted">
+                                <span className="font-semibold text-ink">100+</span> people saving lives together
+                            </p>
+                        </div>
+                    </motion.div>
+
+                    {/* Image */}
+                    <motion.div
+                        className="relative"
+                        initial={{ opacity: 0, scale: 0.96 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.7, ease }}
+                    >
+                        <Tilt max={14} className="rounded-4xl">
+                            <div className="relative overflow-hidden rounded-4xl border border-primary-100 bg-gradient-to-br from-primary-100 via-surface to-primary-50 p-4 shadow-lift">
+                                <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-primary-200/40 blur-2xl" />
+                                <img
+                                    src={lifelinkimage}
+                                    alt="People donating blood and supporting one another"
+                                    className="relative mx-auto w-full max-w-xl"
+                                    style={{ transform: 'translateZ(40px)' }}
+                                />
                             </div>
-                            <div className="md:ml-12 m-5 flex gap-10">
-                                <HashLink smooth to = "/hospitalregistration" className="bg-red-600 transition-all px-4 duration-200 text-white md:px-12 hover:bg-white hover:text-black hover:border-1 font-semibold rounded-xl  md:py-4 "> Register Hospital </HashLink>
-                                <HashLink smooth to="/hospitallogin" className="md:px-10 md:py-4 transition-all px-4 duration-200  rounded-xl hover:bg-gray-100 hover:border-1 font-semibold bg-gray-200 "> Hospital Login </HashLink>
+                        </Tilt>
+
+                        {/* floating glass stat */}
+                        <div className="animate-float glass absolute -bottom-5 left-6 hidden items-center gap-3 rounded-3xl border border-line/80 px-5 py-3 shadow-card sm:flex">
+                            <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary-50 text-primary">
+                                <Heart className="h-5 w-5 animate-heartbeat" fill="currentColor" />
+                            </span>
+                            <div className="text-left">
+                                <p className="text-sm font-semibold text-ink">Every drop counts</p>
+                                <p className="text-xs text-muted">1 donation · up to 3 lives</p>
                             </div>
-                            <div className='hidden md:flex md:ml-12 mt-7 '>
-                                <UsersRound /><UsersRound /><UsersRound /><p>100+users</p>
-                            </div>
-                            <motion.div className="mt-5 ml-12 hidden md:flex absolute gap-20"
-                                initial={{ oapcity: 0 }}
-                                whileInView={{ opacitiy: 1 }}
-                                transition={{ delay: 0.3, duration: 0.3 }}>
-                                <div className=" bg-gray-100 rounded-2xl py-5 px-2 max-w-65 flex items-center gap-2">
-                                    <div className="bg-gray-200 p-2 rounded-xl"><User /></div>
-                                    <div>
-                                        <div><p className="font-bold">Find Donors</p></div>
-                                        <div>Quickly locate nearby blood donors</div>
-                                    </div>
-                                </div>
-                                <div className=" bg-gray-100 rounded-2xl py-5 px-2 max-w-65 flex items-center gap-2">
-                                    <div className="bg-gray-200 p-2 rounded-xl"><Clock /></div>
-                                    <div>
-                                        <div><p className="font-bold">Request Blood</p></div>
-                                        <div>Submit request and get help fast</div>
-                                    </div>
-                                </div>
-                                <div className=" bg-gray-100 rounded-2xl py-5 px-2 max-w-65 flex items-center gap-2">
-                                    <div className="bg-gray-200 p-2 rounded-xl"><Verified /></div>
-                                    <div>
-                                        <div><p className="font-bold">Verified & Safe</p></div>
-                                        <div>All donors are verified for your safety</div>
-                                    </div>
-                                </div>
-                                <div className=" bg-gray-100 rounded-2xl py-5 px-2 max-w-65 flex items-center gap-2">
-                                    <div className="bg-gray-200 p-2 rounded-xl"><Heart /></div>
-                                    <div>
-                                        <div><p className="font-bold">Save Lives</p></div>
-                                        <div>Your donation can bring someone back to life</div>
-                                    </div>
-                                </div>
-                            </motion.div>
-                        </motion.div>
-                        <motion.div
-                            initial={{ opaicty: 0, x: 20 }}
-                            whileInView={{ opacity: 1, x: 0 }}>
-                            <div>
-                                <img src={lifelinkimage} alt="" className="md:w-225  md:h-138 mr-0" />
-                            </div>
-                        </motion.div>
-                    </div>
-                </section>
-            </div>
-            
+                        </div>
+                    </motion.div>
+                </div>
+            </section>
+
             <About />
             <Features />
             <Howitworks />
@@ -101,7 +145,6 @@ const home = () => {
             {/* <BloodRequests /> */}
 
             <Footer />
-
         </>
     )
 }

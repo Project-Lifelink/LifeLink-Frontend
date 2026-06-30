@@ -1,7 +1,6 @@
 import React from "react";
 import {
   Building2,
-  User,
   Mail,
   Phone,
   MapPin,
@@ -21,7 +20,8 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { loginSuccess } from "../../redux/slices/authslice.js";
 import { useNavigate } from "react-router-dom"
-import { div } from "framer-motion/client";
+import AmbientBackground from '../../components/motion/AmbientBackground.jsx'
+import BloodDropLoader from '../../components/motion/BloodDropLoader.jsx'
 
 const HospitalRegister = () => {
 
@@ -134,292 +134,188 @@ const HospitalRegister = () => {
     registerUser();
   }
 
+  const features = [
+    { Icon: ShieldCheck, title: "Verify Donors", text: "Verify and trust donors for safe blood transfusions." },
+    { Icon: ClipboardPlus, title: "Raise Blood Requests", text: "Post urgent blood requirements instantly." },
+    { Icon: Users, title: "Connect & Collaborate", text: "Build a trusted network of donors and hospitals." },
+    { Icon: Bell, title: "Real-time Updates", text: "Get notified instantly about request activity." },
+  ];
+
+  const fieldClass =
+    "flex items-center gap-3 rounded-2xl border border-line bg-canvas px-4 py-3 text-ink transition-colors focus-within:border-primary focus-within:bg-surface focus-within:ring-4 focus-within:ring-primary-50";
 
   return (
-    <div className=" scrollbar-none overflow-auto h-screen bg-gray-50 p-6 pt-0 shadow-sm">
+    <div className="relative min-h-screen overflow-hidden">
+      <AmbientBackground />
       <Navbar />
-      {(loading) ?
-        <div className="absolute text-2xl text-center z-1 font-extrabold">
 
-          {/* <p >Registering to Server....</p> */}
+      {loading ? (
+        <div className="fixed inset-x-0 top-24 z-50 flex justify-center">
+          <p className="glass flex items-center gap-3 rounded-full border border-line px-6 py-2 text-sm font-semibold text-ink shadow-card">
+            <BloodDropLoader size={10} />
+            Registering to server…
+          </p>
         </div>
+      ) : ""}
 
-        : ""}
-      <div className="max-w-7xl mx-auto bg-white rounded-3xl shadow-2xl scale-90 overflow-hidden">
-        <div className="grid lg:grid-cols-2">
+      <div className="px-4 py-10 md:px-8">
+        <div className="mx-auto max-w-7xl overflow-hidden rounded-4xl border border-line bg-surface shadow-card">
+          <div className="grid lg:grid-cols-2">
 
-          {/* LEFT SECTION */}
-          <div className="p-12 border-r">
-            <div className="flex items-center gap-2 mb-12">
-              <div className="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center text-white font-bold">
-                ♥
-              </div>
-              <h1 className="text-3xl font-bold">
-                Life<span className="text-red-600">Link</span>
-              </h1>
-            </div>
-
-            <h2 className="text-5xl font-bold leading-tight mb-6">
-              Partner with{" "}
-              <span className="text-red-600">LifeLink</span>
-              <br />
-              Save More Lives Together
-            </h2>
-
-            <p className="text-gray-600 text-lg leading-relaxed mb-12">
-              Hospitals and healthcare organizations can verify donors,
-              raise blood requests for patients, and connect with lifesavers
-              in real-time.
-            </p>
-
-            {/* Feature Cards */}
-            <div className="grid md:grid-cols-2 gap-8 mb-12">
-              <div className="flex gap-4">
-                <div className="w-14 h-14 bg-red-50 rounded-full flex items-center justify-center">
-                  <ShieldCheck className="text-red-600" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-lg">
-                    Verify Donors
-                  </h3>
-                  <p className="text-gray-600 text-sm">
-                    Verify and trust donors for safe blood transfusions.
-                  </p>
-                </div>
+            {/* LEFT SECTION */}
+            <div className="relative hidden flex-col gap-10 overflow-hidden bg-subtle p-12 lg:flex">
+              <div className="pointer-events-none absolute inset-0 bg-brand-gradient-soft" />
+              <div className="relative flex items-center gap-2.5">
+                <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-brand-gradient text-white shadow-glow">
+                  <Building2 className="h-5 w-5" />
+                </span>
+                <h1 className="text-xl font-semibold text-ink">
+                  Life<span className="text-primary">Link</span>
+                </h1>
               </div>
 
-              <div className="flex gap-4">
-                <div className="w-14 h-14 bg-red-50 rounded-full flex items-center justify-center">
-                  <ClipboardPlus className="text-red-600" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-lg">
-                    Raise Blood Requests
-                  </h3>
-                  <p className="text-gray-600 text-sm">
-                    Post urgent blood requirements instantly.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex gap-4">
-                <div className="w-14 h-14 bg-red-50 rounded-full flex items-center justify-center">
-                  <Users className="text-red-600" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-lg">
-                    Connect & Collaborate
-                  </h3>
-                  <p className="text-gray-600 text-sm">
-                    Build a trusted network of donors and hospitals.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex gap-4">
-                <div className="w-14 h-14 bg-red-50 rounded-full flex items-center justify-center">
-                  <Bell className="text-red-600" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-lg">
-                    Real-time Updates
-                  </h3>
-                  <p className="text-gray-600 text-sm">
-                    Get notified instantly about request activity.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Bottom Card */}
-            <div className="bg-red-50 rounded-2xl p-6 flex gap-4">
-              <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center">
-                <ShieldCheck className="text-red-600" />
-              </div>
-
-              <div>
-                <h3 className="font-bold text-xl mb-2">
-                  Trusted. Verified. Together.
-                </h3>
-                <p className="text-gray-600">
-                  LifeLink helps hospitals and donors work together
-                  for a safer and healthier community.
+              <div className="relative">
+                <h2 className="font-display text-5xl font-normal leading-tight text-ink">
+                  Partner with LifeLink,
+                  <br />
+                  <span className="text-gradient-brand italic">save more lives</span>
+                </h2>
+                <p className="mt-4 text-lg leading-relaxed text-muted">
+                  Hospitals and healthcare organizations can verify donors, raise
+                  blood requests for patients, and connect with lifesavers in
+                  real-time.
                 </p>
               </div>
-            </div>
-          </div>
 
-          {/* RIGHT SECTION */}
-          <div className="p-12">
-            <div className="flex justify-end mb-10">
-              <div className="flex items-center gap-4">
-                <span className="text-gray-600">
-                  Already registered?
-                </span>
-                <Link to="/hospitallogin" className="border border-red-600 text-red-600 px-5 py-2 rounded-lg">
+              <div className="relative grid gap-3 sm:grid-cols-2">
+                {features.map(({ Icon, title, text }) => (
+                  <div key={title} className="rounded-3xl border border-line bg-surface/70 p-4">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary-50 text-primary">
+                      <Icon className="h-4 w-4" />
+                    </div>
+                    <h3 className="mt-3 text-sm font-semibold text-ink">{title}</h3>
+                    <p className="mt-0.5 text-xs leading-relaxed text-muted">{text}</p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="relative mt-auto flex gap-4 rounded-3xl border border-line bg-surface/70 p-6">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary-50 text-primary">
+                  <ShieldCheck className="h-6 w-6" />
+                </div>
+                <div>
+                  <h3 className="mb-1 font-semibold text-ink">Trusted. Verified. Together.</h3>
+                  <p className="text-sm text-muted">
+                    LifeLink helps hospitals and donors work together for a safer
+                    and healthier community.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* RIGHT SECTION */}
+            <div className="p-8 md:p-12">
+              <div className="mb-8 flex items-center justify-end gap-3">
+                <span className="text-sm text-muted">Already registered?</span>
+                <Link
+                  to="/hospitallogin"
+                  className="rounded-full border border-line px-5 py-2 text-sm font-semibold text-ink-soft transition-colors hover:bg-subtle"
+                >
                   Login
                 </Link>
               </div>
+
+              <h2 className="font-display text-4xl font-normal text-ink">Register your hospital</h2>
+              <p className="mt-2 text-muted">Create your hospital account to get started.</p>
+
+              <form className="mt-8 space-y-4" onSubmit={handleSubmit}>
+                <div className="grid gap-4 md:grid-cols-2">
+                  <div className={fieldClass}>
+                    <Building2 size={18} className="text-faint" />
+                    <input type="text" placeholder="Hospital Name" onChange={(e) => setName(e.target.value)} className="w-full bg-transparent text-sm outline-none placeholder:text-faint" />
+                  </div>
+                  <div className={fieldClass}>
+                    <Landmark size={18} className="text-faint" />
+                    <input type="text" placeholder="Type — Private or Government" onChange={(e) => setType(e.target.value)} className="w-full bg-transparent text-sm outline-none placeholder:text-faint" />
+                  </div>
+                </div>
+
+                <div className="grid gap-4 md:grid-cols-2">
+                  <div className={fieldClass}>
+                    <Mail size={18} className="text-faint" />
+                    <input type="text" placeholder="Official Email Address" onChange={(e) => setEmail(e.target.value)} className="w-full bg-transparent text-sm outline-none placeholder:text-faint" />
+                  </div>
+                  <div className={fieldClass}>
+                    <Phone size={18} className="text-faint" />
+                    <input type="text" placeholder="Phone Number" onChange={(e) => setPhone(e.target.value)} className="w-full bg-transparent text-sm outline-none placeholder:text-faint" />
+                  </div>
+                </div>
+
+                <div className="grid gap-4 md:grid-cols-2">
+                  <div className={fieldClass}>
+                    <Phone size={18} className="text-faint" />
+                    <input type="text" placeholder="Alternative Phone Number 1" onChange={(e) => setAlternative_phone1(e.target.value)} className="w-full bg-transparent text-sm outline-none placeholder:text-faint" />
+                  </div>
+                  <div className={fieldClass}>
+                    <Phone size={18} className="text-faint" />
+                    <input type="text" placeholder="Alternative Phone Number 2" onChange={(e) => setAlternative_phone2(e.target.value)} className="w-full bg-transparent text-sm outline-none placeholder:text-faint" />
+                  </div>
+                </div>
+
+                <div className="grid gap-4 md:grid-cols-2">
+                  <div className={fieldClass}>
+                    <MapPin size={18} className="text-faint" />
+                    <input type="text" placeholder="Hospital Address" className="w-full bg-transparent text-sm outline-none placeholder:text-faint" onChange={(e) => setAddress(e.target.value)} />
+                  </div>
+                  <div className={fieldClass}>
+                    <MapPin size={18} className="text-faint" />
+                    <input type="text" placeholder="District" className="w-full bg-transparent text-sm outline-none placeholder:text-faint" onChange={(e) => setDistrict(e.target.value)} />
+                  </div>
+                </div>
+
+                <div className="grid gap-4 md:grid-cols-3">
+                  <div className={fieldClass}>
+                    <input type="text" placeholder="City" className="w-full bg-transparent text-sm outline-none placeholder:text-faint" onChange={(e) => { setCity(e.target.value) }} />
+                  </div>
+                  <div className={fieldClass}>
+                    <input type="text" placeholder="State" className="w-full bg-transparent text-sm outline-none placeholder:text-faint" onChange={(e) => setState(e.target.value)} />
+                  </div>
+                  <div className={fieldClass}>
+                    <input type="text" placeholder="Pin Code" className="w-full bg-transparent text-sm outline-none placeholder:text-faint" />
+                  </div>
+                </div>
+
+                <div className="grid gap-4 md:grid-cols-2">
+                  <div className={fieldClass}>
+                    <Lock size={18} className="text-faint" />
+                    <input type={(hidden) ? "password" : "text"} placeholder="Password" className="w-full bg-transparent text-sm outline-none placeholder:text-faint" onChange={(e) => setPassword(e.target.value)} />
+                    <Eye size={18} className="cursor-pointer text-faint" onClick={() => setHidden(!hidden)} />
+                  </div>
+                  <div className={fieldClass}>
+                    <Lock size={18} className="text-faint" />
+                    <input type={(hidden) ? "password" : "text"} placeholder="Confirm Password" className="w-full bg-transparent text-sm outline-none placeholder:text-faint" />
+                    <Eye size={18} className="cursor-pointer text-faint" onClick={() => setHidden(!hidden)} />
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3 rounded-2xl border border-line bg-canvas p-4">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary-50 text-primary">
+                    <ShieldCheck className="h-4 w-4" />
+                  </div>
+                  <h4 className="font-medium text-ink">Your data is secure with us.</h4>
+                </div>
+
+                <button
+                  disabled={loading}
+                  type="Submit"
+                  className="press flex w-full items-center justify-center gap-2 rounded-2xl bg-brand-gradient py-4 font-semibold text-white shadow-glow disabled:opacity-70"
+                >
+                  {(loading) ? <BloodDropLoader size={9} className="text-white" /> : ""}
+                  {(loading) ? "Registering to server…" : "Register Hospital"}
+                  {(loading) ? "" : <ArrowRight size={18} />}
+                </button>
+              </form>
             </div>
-
-            <h2 className="text-5xl font-bold mb-3">
-              Register Your Hospital
-            </h2>
-
-            <p className="text-gray-600 mb-10 text-lg">
-              Create your hospital account to get started ❤️
-            </p>
-
-            <form className="space-y-6" onSubmit={handleSubmit}>
-              <div className="grid md:grid-cols-2 gap-5">
-                <div className="flex items-center border rounded-xl px-4 py-3 gap-3">
-                  <Building2 size={18} />
-                  <input
-                    type="text"
-                    placeholder="Hospital Name"
-                    onChange={(e) => setName(e.target.value)}
-                    className="w-full outline-none"
-                  />
-                </div>
-                <div className="flex items-center border rounded-xl px-4 py-3 gap-3">
-                  <Landmark size={18} />
-                  <input
-                    type="text"
-                    placeholder="type Private or Government"
-                    onChange={(e) => setType(e.target.value)}
-                    className="w-full outline-none"
-                  />
-                </div>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-5">
-                <div className="flex items-center border rounded-xl px-4 py-3 gap-3">
-                  <Mail size={18} />
-                  <input
-                    type="text"
-                    placeholder="Official Email Address"
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full outline-none"
-                  />
-                </div>
-                <div className="flex items-center border rounded-xl px-4 py-3 gap-3">
-                  <Phone size={18} />
-                  <input
-                    type="text"
-                    placeholder="Phone Number"
-                    onChange={(e) => setPhone(e.target.value)}
-                    className="w-full outline-none"
-                  />
-                </div>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-5">
-                <div className="flex items-center border rounded-xl px-4 py-3 gap-3">
-                  <Phone size={18} />
-                  <input
-                    type="text"
-                    placeholder="Alternative Phone Number 1"
-                    onChange={(e) => setAlternative_phone1(e.target.value)}
-                    className="w-full outline-none"
-                  />
-                </div>
-                <div className="flex items-center border rounded-xl px-4 py-3 gap-3">
-                  <Phone size={18} />
-                  <input
-                    type="text"
-                    placeholder="Alternative Phone Number 2"
-                    onChange={(e) => setAlternative_phone2(e.target.value)}
-                    className="w-full outline-none"
-                  />
-                </div>
-              </div>
-              <div className="grid md:grid-cols-2 gap-5">
-                <div className="flex items-center border rounded-xl px-4 py-3 gap-3">
-                  <MapPin size={18} />
-                  <input
-                    type="text"
-                    placeholder="Hospital Address"
-                    className="w-full outline-none"
-                    onChange={(e) => setAddress(e.target.value)}
-                  />
-                </div>
-                <div className="flex items-center border rounded-xl px-4 py-3 gap-3">
-
-                  <input
-                    type="text"
-                    placeholder="district"
-                    className="w-full outline-none"
-                    onChange={(e) => setDistrict(e.target.value)}
-                  />
-                </div>
-              </div>
-
-              <div className="grid md:grid-cols-3 gap-5">
-                <div className="flex items-center border rounded-xl px-4 py-3 gap-3">
-                  {/* {icon size={18}} */}
-                  <input
-                    type="text"
-                    placeholder="city"
-                    className="w-full outline-none"
-                    onChange={(e) => { setCity(e.target.value) }}
-                  />
-                </div>
-                <div className="flex items-center border rounded-xl px-4 py-3 gap-3">
-                  {/* {icon} */}
-                  <input
-                    type="text"
-                    placeholder="state"
-                    className="w-full outline-none"
-                    onChange={(e) => setState(e.target.value)}
-                  />
-                </div>
-                <div className="flex items-center border rounded-xl px-4 py-3 gap-3">
-                  {/* {MapPin} */}
-                  <input
-                    type="text"
-                    placeholder="pin code"
-                    className="w-full outline-none"
-                  />
-                </div>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-5">
-                <div className="flex items-center border rounded-xl px-4 py-3 gap-3">
-                  <Lock size={18} />
-                  <input
-                    type={(hidden) ? "password" : "text"}
-                    placeholder="Password"
-                    className="w-full outline-none"
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                  <Eye size={18} onClick={() => setHidden(!hidden)} />
-                </div>
-                <div className="flex items-center border rounded-xl px-4 py-3 gap-3">
-                  <Lock size={18} />
-                  <input
-                    type={(hidden) ? "password" : "text"}
-                    placeholder="Confirm Password"
-                    className="w-full outline-none"
-                  />
-                  <Eye size={18} onClick={() => setHidden(!hidden)} />
-                </div>
-              </div>
-
-              <div className="bg-red-50 border border-red-100 rounded-xl p-4 flex gap-3">
-                <ShieldCheck className="text-red-600" />
-                <div>
-                  <h4 className="font-semibold">
-                    Your data is secure with us.
-                  </h4>
-
-                </div>
-              </div>
-
-              <button disabled={loading} type="Submit" className="w-full bg-red-600 hover:cursor-pointer hover:bg-red-700 text-white py-4 rounded-xl flex justify-center items-center gap-2 font-semibold">
-                {(loading) ? "Registering to server....." : "Register Hospital"}
-                {(loading) ? "" : <ArrowRight size={18} />}
-              </button>
-            </form>
           </div>
         </div>
       </div>

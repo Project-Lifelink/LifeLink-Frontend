@@ -1,209 +1,168 @@
 import React from "react";
-import {
-  Heart,
-  //   Facebook,
-  //   Instagram,
-  //   Twitter,
-  //   Linkedin,
-  //   Mail,
-  //   Phone,
-  //   MapPin,
-} from "lucide-react";
-import { motion } from 'framer-motion'
+import { Heart, Droplet, MapPin, Mail, ArrowRight } from "lucide-react";
 import { HashLink } from 'react-router-hash-link'
+import Reveal from '../motion/Reveal.jsx'
+import Heartbeat from '../motion/Heartbeat.jsx'
+
+const quickLinks = [
+  { to: "/", label: "Home", hash: false },
+  { to: "#about", label: "About Us", hash: true },
+  { to: "#features", label: "Features", hash: true },
+  { to: "#howitworks", label: "How It Works", hash: true },
+  { to: "#contact", label: "Contact", hash: true },
+];
+
+const services = [
+  "Find Blood Donors",
+  "Request Blood",
+  "Emergency Alerts",
+  "Donation Tracking",
+  "Community Support",
+];
+
+const builtBy = ["Mohammad Rizvi", "Anurag Singh", "Akash Kumar", "Aabgeen Abhsar"];
 
 const Footer = () => {
   return (
-    <motion.footer className="bg-gray-100 border-t border-gray-200 mt-20" id="contact"
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-    >
+    <footer className="bg-canvas" id="contact">
       {/* CTA Section */}
-      <div className="max-w-7xl mx-auto px-6 py-16">
-        <div className="bg-gradient-to-r from-red-400 to-red-800 rounded-3xl p-10 md:p-14 text-white flex flex-col md:flex-row justify-between items-center gap-8">
-          <div>
-            <h2 className="text-4xl font-bold mb-3">
-              Save Lives, One Donation at a Time
-            </h2>
-            <p className="text-red-100 text-lg">
-              Join thousands of donors helping people find blood when they need
-              it most.
-            </p>
-          </div>
+      <div className="mx-auto max-w-7xl px-5 pt-20 md:px-8">
+        <Reveal className="relative overflow-hidden rounded-4xl bg-brand-gradient p-10 text-white shadow-glow md:p-16">
+          <div className="animate-blob pointer-events-none absolute -top-20 -right-16 h-64 w-64 rounded-full bg-white/10 blur-2xl" />
+          <div className="animate-blob-rev pointer-events-none absolute -bottom-24 -left-10 h-64 w-64 rounded-full bg-black/10 blur-2xl" />
+          <div className="relative flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
+            <div>
+              <h2 className="font-display text-4xl font-normal leading-tight md:text-5xl">
+                Save lives, one donation at a time
+              </h2>
+              <p className="mt-3 max-w-xl text-lg text-white/85">
+                Join thousands of donors helping people find blood when they need
+                it most.
+              </p>
+            </div>
 
-          <HashLink smooth to="/requests" className="bg-white text-red-600 px-8 py-4 hover:cursor-pointer rounded-xl font-semibold hover:scale-105 transition">
-            Become a Donor
-          </HashLink>
-        </div>
+            <HashLink
+              smooth
+              to="/requests"
+              className="press group inline-flex shrink-0 items-center gap-2 rounded-full bg-white px-8 py-4 font-semibold text-primary-800"
+            >
+              Become a Donor
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </HashLink>
+          </div>
+        </Reveal>
+      </div>
+
+      {/* Heartbeat separator — full screen width */}
+      <div className="mt-14 h-10 w-full text-primary md:h-14">
+        <Heartbeat className="h-full w-full" strokeWidth={3} glow opacityRange={[0.4, 1]} duration={4} />
       </div>
 
       {/* Main Footer */}
-      <div className="max-w-7xl mx-auto px-6 py-16">
-        <div className="">
+      <div className="mx-auto max-w-7xl px-5 py-14 md:px-8">
+        <Reveal className="grid grid-cols-2 gap-10 md:grid-cols-3 lg:grid-cols-6">
           {/* Brand */}
-          <div>
-            <div className="flex items-center gap-2 mb-5">
-              <Heart className="text-red-600" fill="currentColor" />
-              <h2 className="text-3xl font-bold">
-                Life<span className="text-red-600">Link</span>
+          <div className="col-span-2 lg:col-span-2">
+            <div className="group mb-5 flex items-center gap-2.5">
+              <span className="animate-float flex h-9 w-9 items-center justify-center rounded-2xl bg-brand-gradient text-white shadow-glow">
+                <Droplet className="h-5 w-5" fill="currentColor" />
+              </span>
+              <h2 className="text-xl font-semibold text-ink">
+                Life<span className="text-primary">Link</span>
               </h2>
             </div>
 
-            <p className="text-gray-600 leading-relaxed">
+            <p className="max-w-sm leading-relaxed text-muted">
               Connecting blood donors with recipients instantly. Building a
               trusted community dedicated to saving lives through technology and
               compassion.
             </p>
+          </div>
 
-            <div className="flex gap-4 mt-6">
-              <a
-                href="#"
-                className="w-11 h-11 rounded-full bg-red-50 flex items-center justify-center text-red-600 hover:bg-red-600 hover:text-white transition"
-              >
-                {/* <Facebook size={20} /> */}
-              </a>
+          {/* Quick Links */}
+          <div>
+            <h3 className="mb-5 text-sm font-semibold uppercase tracking-wide text-faint">Quick Links</h3>
+            <ul className="space-y-3 text-muted">
+              {quickLinks.map((link) =>
+                link.hash ? (
+                  <li key={link.label}>
+                    <HashLink smooth to={link.to} className="inline-block transition-all duration-200 hover:translate-x-1 hover:text-primary">
+                      {link.label}
+                    </HashLink>
+                  </li>
+                ) : (
+                  <li key={link.label}>
+                    <a href={link.to} className="inline-block transition-all duration-200 hover:translate-x-1 hover:text-primary">
+                      {link.label}
+                    </a>
+                  </li>
+                )
+              )}
+            </ul>
+          </div>
 
-              <a
-                href="#"
-                className="w-11 h-11 rounded-full bg-red-50 flex items-center justify-center text-red-600 hover:bg-red-600 hover:text-white transition"
-              >
-                {/* <Instagram size={20} /> */}
-              </a>
+          {/* Services */}
+          <div>
+            <h3 className="mb-5 text-sm font-semibold uppercase tracking-wide text-faint">Services</h3>
+            <ul className="space-y-3 text-muted">
+              {services.map((s) => (
+                <li key={s}>{s}</li>
+              ))}
+            </ul>
+          </div>
 
-              <a
-                href="#"
-                className="w-11 h-11 rounded-full bg-red-50 flex items-center justify-center text-red-600 hover:bg-red-600 hover:text-white transition"
-              >
-                {/* <Twitter size={20} /> */}
-              </a>
-
-              <a
-                href="#"
-                className="w-11 h-11 rounded-full bg-red-50 flex items-center justify-center text-red-600 hover:bg-red-600 hover:text-white transition"
-              >
-                {/* <Linkedin size={20} /> */}
-              </a>
+          {/* Contact */}
+          <div>
+            <h3 className="mb-5 text-sm font-semibold uppercase tracking-wide text-faint">Contact</h3>
+            <div className="space-y-4 text-muted">
+              <div className="flex gap-3">
+                <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                <span>Varanasi, Uttar Pradesh, India</span>
+              </div>
+              <div className="flex gap-3">
+                <Mail className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                <span>support@lifelink.com</span>
+              </div>
             </div>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-10">
 
-
-            {/* Quick Links */}
-            <div>
-              <h3 className="text-xl font-semibold mb-5">Quick Links</h3>
-
-              <ul className="space-y-3 text-gray-600">
-                <li>
-                  <a href="/" className="hover:text-red-600 transition">
-                    Home
-                  </a>
-                </li>
-
-                <li>
-                  <HashLink smooth to="#about" className="hover:text-red-600 transition">
-                    About Us
-                  </HashLink>
-                </li>
-
-                <li>
-                  <HashLink smooth to="#features" className="hover:text-red-600 transition">
-                    Features
-                  </HashLink>
-                </li>
-
-                <li>
-                  <HashLink smooth to="#howitworks" className="hover:text-red-600 transition">
-                    How It Works
-                  </HashLink>
-                </li>
-
-                <li>
-                  <HashLink smooth to="#contact" className="hover:text-red-600 transition">
-                    Contact
-                  </HashLink>
-                </li>
-              </ul>
+          {/* Pages */}
+          <div>
+            <h3 className="mb-5 text-sm font-semibold uppercase tracking-wide text-faint">Pages</h3>
+            <div className="flex flex-col space-y-3 text-muted">
+              <a href="/profile" className="inline-block transition-all duration-200 hover:translate-x-1 hover:text-primary">Profile</a>
+              <a href="/hospital" className="inline-block transition-all duration-200 hover:translate-x-1 hover:text-primary">Hospital</a>
+              <a href="/admin" className="inline-block transition-all duration-200 hover:translate-x-1 hover:text-primary">Admin</a>
             </div>
+          </div>
+        </Reveal>
 
-            {/* Services */}
-            <div>
-              <h3 className="text-xl font-semibold mb-5">Services</h3>
-
-              <ul className="space-y-3 text-gray-600">
-                <li>Find Blood Donors</li>
-                <li>Request Blood</li>
-                <li>Emergency Alerts</li>
-                <li>Donation Tracking</li>
-                <li>Community Support</li>
-              </ul>
-            </div>
-
-            {/* Contact */}
-            <div>
-              <h3 className="text-xl font-semibold mb-5">Contact Us</h3>
-
-              <div className="space-y-5 text-gray-600">
-                <div className="flex gap-3">
-                  {/* <MapPin
-                  className="text-red-600 shrink-0 mt-1"
-                  size={20}
-                /> */}
-                  <span>Varanasi, Uttar Pradesh, India</span>
-                </div>
-
-                <div className="flex gap-3">
-                  {/* <Phone
-                  className="text-red-600 shrink-0"
-                  size={20}
-                /> */}
-                  {/* <span>+91 98765 43210</span> */}
-                </div>
-
-                <div className="flex gap-3">
-                  {/* <Mail
-                  className="text-red-600 shrink-0"
-                  size={20}
-                /> */}
-                  <span>support@lifelink.com</span>
-                </div>
-              </div>
-            </div>
-            <div>
-              <h1 className="font-semibold text-lg mb-5">Built by</h1>
-              <div className="space-y-2 text-gray-600">
-                <p>Mohammad Rizvi</p>
-                <p>Anurag Singh</p>
-                <p>Akash Kumar</p>
-                <p>Aabgeen Abhsar</p>
-
-
-              </div>
-            </div>
-            <div>
-              <h1 className="font-semibold text-lg mb-5">Pages</h1>
-              <div className="space-y-2 text-gray-600 flex flex-col">
-                <a href="/profile">Profile</a>
-                <a href="/hospital">Hospital</a>
-                <a href="/admin">Admin</a>
-
-              </div>
-            </div>
+        {/* Built by */}
+        <div className="mt-14 border-t border-line pt-8">
+          <h3 className="mb-4 text-sm font-semibold uppercase tracking-wide text-faint">Built by</h3>
+          <div className="flex flex-wrap gap-3">
+            {builtBy.map((name) => (
+              <span
+                key={name}
+                className="press rounded-full border border-line bg-surface px-4 py-1.5 text-sm text-ink-soft hover:border-primary-100"
+              >
+                {name}
+              </span>
+            ))}
           </div>
         </div>
       </div>
 
-      {/* Bottom Footer */ }
-  <div className="border-t border-gray-200">
-    <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row justify-between items-center gap-4">
-      <p className="text-gray-500 text-sm">
-        © 2026 LifeLink. All rights reserved.
-      </p>
-
-
-    </div>
-  </div>
-    </motion.footer >
+      {/* Bottom Footer */}
+      <div className="border-t border-line">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-5 py-6 md:flex-row md:px-8">
+          <p className="text-sm text-muted">© 2026 LifeLink. All rights reserved.</p>
+          <p className="flex items-center gap-1.5 text-sm text-muted">
+            Made with <Heart className="h-4 w-4 animate-heartbeat text-primary" fill="currentColor" /> for humanity
+          </p>
+        </div>
+      </div>
+    </footer>
   );
 };
 

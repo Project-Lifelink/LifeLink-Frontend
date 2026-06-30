@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import {
   Users,
   Send,
@@ -7,117 +7,175 @@ import {
   Clock,
   User,
 } from "lucide-react";
+import Reveal from "../../components/motion/Reveal.jsx";
+import AmbientBackground from "../../components/motion/AmbientBackground.jsx";
+import { useSelector } from 'react-redux'
 
 export default function Community() {
-  const [message, setMessage] = useState("");
 
-  const posts = [
-    {
-      id: 1,
-      user: "Rahul Sharma",
-      text: "Just completed my 5th blood donation today. Happy to help save lives!",
-      time: "2 hours ago",
-    },
-    {
-      id: 2,
-      user: "Priya Singh",
-      text: "Thank you to all donors who helped my cousin during surgery.",
-      time: "5 hours ago",
-    },
-    {
-      id: 3,
-      user: "Amit Verma",
-      text: "Looking forward to my next eligible donation date.",
-      time: "1 day ago",
-    },
-  ];
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const [posts, setPosts] = useState([]);
+  const [loading , setLoading] = useState(false);
+  const [postmessage, setPostmessage] = useState("");
 
-    if (!message.trim()) return;
+  const token = useSelector((state) => state.auth.token);
+    
 
-    console.log(message);
 
-    setMessage("");
-  };
+      const createpost = async(e) => {
+        e.preventDefault();
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/v1/community/`,
+          {
+            method: "POST",
+            body: JSON.stringify({
+              message: postmessage
+            }),
+          }
+        );
+  
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error(data.message || "Failed to fetch hospital data");
+        }
+        console.log("post created", data);
+        
+        
+      } catch (error) {
+        console.error(error);
+      } 
+  
+    }
+
+    async function getdata() {
+      try {
+        setLoading(true);
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/v1/community/`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`, // if JWT auth is used
+            },
+          }
+        );
+  
+        const data = await response.json();
+        setPosts(data)
+        if (!response.ok) {
+          throw new Error(data.message || "Failed to fetch data");
+        }
+        console.log("data by get request in community", data);
+        
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+        
+      }
+  
+    }
+    useEffect(() => {
+      getdata();
+    },[])
+
+
+
+
 
   return (
-    <div className="flex-1 bg-gray-50 min-h-screen p-8 overflow-scroll h-screen">
-      {/* Header */}
-      <div className="bg-white rounded-3xl p-8 shadow-sm">
-        <div className="flex items-center gap-4">
-          <Users className="h-10 w-10 text-red-600" />
+    <div className="relative min-h-screen flex-1 bg-canvas p-6 md:p-8">
+      <AmbientBackground />
 
-          <div>
-            <h1 className="text-3xl font-bold">
-              Community
-            </h1>
+      <div className="relative mx-auto max-w-3xl">
+        {/* Header */}
+        <Reveal className="rounded-4xl border border-line bg-surface p-8 shadow-card">
+          <div className="flex items-center gap-4">
+            <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-3xl bg-brand-gradient-soft text-primary">
+              <Users className="h-7 w-7" />
+            </span>
 
-            <p className="text-gray-500 mt-1">
-              Connect, share experiences, and inspire others to donate blood.
-            </p>
+            <div>
+              <h1 className="font-display text-4xl font-normal text-ink">
+                Community
+              </h1>
+
+              <p className="mt-1 text-muted">
+                Connect, share experiences, and inspire others to donate blood.
+              </p>
+            </div>
           </div>
-        </div>
-      </div>
+        </Reveal>
 
-      {/* Create Post */}
-      <div className="bg-white rounded-3xl p-6 shadow-sm mt-8">
-        <h2 className="text-xl font-bold mb-4">
-          Share Something
-        </h2>
+        {/* Create Post */}
+        <Reveal delay={0.08} className="mt-8 rounded-3xl border border-line bg-surface p-6 shadow-soft">
+          <h2 className="font-display text-2xl font-normal text-ink">
+            Share Something
+          </h2>
 
-        <form onSubmit={handleSubmit}>
-          <textarea
-            rows="4"
-            placeholder="Write a message for the community..."
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            className="w-full border rounded-2xl p-4 resize-none outline-none focus:ring-2 focus:ring-red-500"
-          />
+          <form onSubmit={createpost} className="mt-4">
+            <textarea
+              rows="4"
+              placeholder="Write a message for the community..."
+              value={postmessage}
+              onChange={(e) => setPostmessage(e.target.value)}
+              className="w-full resize-none rounded-2xl border border-line bg-canvas p-4 text-sm text-ink transition-colors placeholder:text-faint focus:border-primary focus:bg-surface focus:outline-none focus:ring-4 focus:ring-primary-50"
+            />
 
-          <div className="flex justify-end mt-4">
-            <button
-              type="submit"
-              className="bg-red-600 text-white px-6 py-3 rounded-xl flex items-center gap-2 hover:cursor-pointer"
+            <div className="mt-4 flex justify-end">
+              <button
+                type="submit"
+                className="press inline-flex items-center gap-2 rounded-2xl bg-brand-gradient px-6 py-3 font-semibold text-white shadow-glow hover:cursor-pointer"
+              >
+                Post Message
+                <Send size={18} />
+              </button>
+            </div>
+          </form>
+        </Reveal>
+
+        {/* Feed */}
+        <div className="mt-8 space-y-6">
+          {posts.map((post, i) => (
+            <Reveal
+              key={post.id}
+              delay={i * 0.08}
+              className="hover-lift rounded-3xl border border-line bg-surface p-6 shadow-soft hover:border-primary-100 hover:shadow-card"
             >
-              Post Message
-              <Send size={18} />
-            </button>
-          </div>
-        </form>
-      </div>
+              <div className="flex items-center gap-4">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary-50 text-primary">
+                  <User className="h-5 w-5" />
+                </div>
 
-      {/* Feed */}
-      <div className="mt-8 space-y-6">
-        {posts.map((post) => (
-          <div
-            key={post.id}
-            className="bg-white rounded-3xl p-6 shadow-sm"
-          >
-            <div className="flex items-center gap-4">
-              <div className="bg-red-100 p-3 rounded-full">
-                <User className="text-red-600" />
-              </div>
+                <div>
+                  <h3 className="font-semibold text-ink">
+                    {post.user}
+                  </h3>
 
-              <div>
-                <h3 className="font-bold">
-                  {post.user}
-                </h3>
-
-                <div className="flex items-center gap-2 text-sm text-gray-500">
-                  <Clock size={14} />
-                  {post.time}
+                  <div className="mt-0.5 flex items-center gap-1.5 text-sm text-muted">
+                    <Clock size={14} />
+                    {post.time}
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <p className="mt-5 text-gray-700 leading-relaxed">
-              {post.text}
-            </p>
+              <p className="mt-5 leading-relaxed text-ink-soft">
+                {post.text}
+              </p>
 
-          </div>
-        ))}
+              <div className="mt-5 flex items-center gap-5 text-sm text-muted">
+                <span className="inline-flex items-center gap-1.5">
+                  <Heart size={15} /> Support
+                </span>
+                <span className="inline-flex items-center gap-1.5">
+                  <MessageCircle size={15} /> Reply
+                </span>
+              </div>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </div>
   );

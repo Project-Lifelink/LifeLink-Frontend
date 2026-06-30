@@ -1,34 +1,149 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { HashLink } from 'react-router-hash-link'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
+import { Droplet, Menu, X } from 'lucide-react'
 
+const navLinks = [
+    { to: '/#home', label: 'Home' },
+    { to: '#about', label: 'About' },
+    { to: '/#howitworks', label: 'How it Works' },
+    { to: '/#features', label: 'Features' },
+]
 
 const Navbar = () => {
+    const [open, setOpen] = useState(false)
+    const [scrolled, setScrolled] = useState(false)
+    const reduce = useReducedMotion()
+
+    useEffect(() => {
+        const onScroll = () => setScrolled(window.scrollY > 12)
+        onScroll()
+        window.addEventListener('scroll', onScroll, { passive: true })
+        return () => window.removeEventListener('scroll', onScroll)
+    }, [])
+
     return (
-        <>
-            <motion.div 
-            initial = {{opacity: 0 , y:20}}
-            whileInView = {{opacity: 1 , y: 0}}
-            transition = {{duration: 0.3}}>
-                <nav>
-                    <div className="flex flex-row p-5 justify-between w-full ">
-                        <div><a href = "/" className="font-bold text-2xl">Life<span className="text-red-600">Link</span></a></div>
-                        <div className = "hidden md:flex flex-col md:flex-row gap-7 transition-all duration-300">
-                            <HashLink className = "hover:text-[19px] hover:border-b-1 transition-all duration-200" smooth to = "/#home" >Home</HashLink>
-                            <HashLink className = "hover:text-[19px] hover:border-b-1 transition-all duration-200" smooth to = "#about" >About</HashLink>
-                            <HashLink className = "hover:text-[19px] hover:border-b-1 transition-all duration-200" smooth to = "/#howitworks" >How it Works</HashLink>
-                            <HashLink className = "hover:text-[19px] hover:border-b-1 transition-all duration-200" smooth to = "/#features" >Features</HashLink>
-                            {/* <HashLink className = "hover:text-[19px] hover:border-b-1 transition-all duration-200" smooth to = "/hospitalregistration" >HospitalRegistration</HashLink> */}
-                            {/* <HashLink className = "hover:text-[19px] hover:border-b-1 transition-all duration-200" smooth to = "/hospitallogin" >HostpitalLogin </HashLink> */}
-                        </div>
-                        <div className = "flex gap-2 justify-between ">
-                            <HashLink smooth to = "/login" className = "px-7 hover:bg-gray-100 border-1 rounded-xl py-3 transition-all duration-200 border-gray-200 bg-gray-200">Login</HashLink>
-                            <HashLink smooth to = "/register" className = "bg-red-600 text-white hover:bg-gray-100 transition-all duration-200 hover:text-black px-7 py-3 rounded-xl">Register</HashLink>
-                        </div>
+        <motion.header
+            initial={{ opacity: 0, y: -16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="sticky top-0 z-50"
+        >
+            <div
+                className={`mx-auto max-w-7xl px-4 transition-all duration-300 md:px-6 ${
+                    scrolled ? 'pt-2' : 'pt-4'
+                }`}
+            >
+                <nav
+                    className={`glass flex items-center justify-between rounded-3xl border px-5 transition-all duration-300 ${
+                        scrolled
+                            ? 'border-line py-2.5 shadow-card'
+                            : 'border-line/80 py-3 shadow-soft'
+                    }`}
+                >
+                    {/* Brand */}
+                    <a href="/" className="group flex items-center gap-2.5">
+                        <span className="flex h-9 w-9 items-center justify-center rounded-2xl bg-brand-gradient text-white shadow-glow transition-transform duration-300 group-hover:-translate-y-0.5">
+                            <Droplet className="h-5 w-5 group-hover:animate-heartbeat" fill="currentColor" />
+                        </span>
+                        <span className="text-lg font-semibold tracking-tight text-ink">
+                            Life<span className="text-primary">Link</span>
+                        </span>
+                    </a>
+
+                    {/* Desktop links */}
+                    <div className="hidden items-center gap-1 md:flex">
+                        {navLinks.map((link) => (
+                            <HashLink
+                                key={link.label}
+                                smooth
+                                to={link.to}
+                                className="link-underline rounded-full px-4 py-2 text-sm font-medium text-ink-soft transition-colors hover:text-ink"
+                            >
+                                {link.label}
+                            </HashLink>
+                        ))}
                     </div>
+
+                    {/* Desktop actions */}
+                    <div className="hidden items-center gap-2 md:flex">
+                        <HashLink
+                            smooth
+                            to="/login"
+                            className="press rounded-full px-5 py-2.5 text-sm font-semibold text-ink-soft hover:bg-subtle"
+                        >
+                            Login
+                        </HashLink>
+                        <HashLink
+                            smooth
+                            to="/register"
+                            className="press rounded-full bg-ink px-5 py-2.5 text-sm font-semibold text-white"
+                        >
+                            Register
+                        </HashLink>
+                    </div>
+
+                    {/* Mobile toggle */}
+                    <button
+                        type="button"
+                        aria-label="Toggle menu"
+                        aria-expanded={open}
+                        onClick={() => setOpen((v) => !v)}
+                        className="press inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-line text-ink hover:bg-subtle md:hidden"
+                    >
+                        {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+                    </button>
                 </nav>
-            </motion.div>
-        </>
+
+                {/* Mobile menu */}
+                {open && (
+                    <motion.div
+                        initial={reduce ? false : { opacity: 0, y: -8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                        className="glass mt-2 rounded-3xl border border-line/80 p-4 shadow-card md:hidden"
+                    >
+                        <div className="flex flex-col gap-1">
+                            {navLinks.map((link, i) => (
+                                <motion.div
+                                    key={link.label}
+                                    initial={reduce ? false : { opacity: 0, x: -8 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: 0.04 * i, duration: 0.2 }}
+                                >
+                                    <HashLink
+                                        smooth
+                                        to={link.to}
+                                        onClick={() => setOpen(false)}
+                                        className="block rounded-2xl px-4 py-2.5 text-sm font-medium text-ink-soft transition-colors hover:bg-subtle hover:text-ink"
+                                    >
+                                        {link.label}
+                                    </HashLink>
+                                </motion.div>
+                            ))}
+                        </div>
+                        <div className="mt-3 flex flex-col gap-2">
+                            <HashLink
+                                smooth
+                                to="/login"
+                                onClick={() => setOpen(false)}
+                                className="press rounded-2xl border border-line px-5 py-2.5 text-center text-sm font-semibold text-ink-soft hover:bg-subtle"
+                            >
+                                Login
+                            </HashLink>
+                            <HashLink
+                                smooth
+                                to="/register"
+                                onClick={() => setOpen(false)}
+                                className="press rounded-2xl bg-ink px-5 py-2.5 text-center text-sm font-semibold text-white"
+                            >
+                                Register
+                            </HashLink>
+                        </div>
+                    </motion.div>
+                )}
+            </div>
+        </motion.header>
     )
 }
 

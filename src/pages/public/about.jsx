@@ -13,189 +13,118 @@ import {
 
 import aboutlifelink from '../../assets/images/aboutlifelink.png'
 import { motion } from 'framer-motion'
+import Reveal from '../../components/motion/Reveal.jsx'
+import CountUp from '../../components/motion/CountUp.jsx'
+import AmbientBackground from '../../components/motion/AmbientBackground.jsx'
+
+const pillars = [
+  { icon: Users, title: "Our Mission", desc: "To save more lives by making blood donation easy and accessible." },
+  { icon: Eye, title: "Our Vision", desc: "A world where no one dies due to the unavailability of blood." },
+  { icon: ShieldCheck, title: "Our Promise", desc: "We ensure verified donors, safe connections and quick help." },
+];
+
+const stats = [
+  { icon: Heart, value: "0+", title: "Lives Saved", desc: "Thanks to our amazing donors and volunteers." },
+  { icon: User, value: "10+", title: "Registered Donors", desc: "Generous people ready to save lives." },
+  { icon: Droplets, value: "0+", title: "Blood Requests", desc: "Successfully matched and fulfilled." },
+  { icon: MapPin, value: "500+", title: "Cities Covered", desc: "Spreading hope across the nation." },
+];
+
+const floatIcons = [
+  { Icon: Plus, pos: "top-6 left-0", delay: "0s" },
+  { Icon: Activity, pos: "top-6 right-0", delay: "-2s" },
+  { Icon: Users, pos: "bottom-6 left-3", delay: "-4s" },
+  { Icon: ShieldCheck, pos: "bottom-6 right-3", delay: "-6s" },
+];
 
 const About = () => {
   return (
-    <motion.section
-      id="about"
-      className="bg-[#f8f8f8] py-20 px-6 md:px-16"
-      
-    >
-      {/* Heading */}
-      <motion.div className="text-center mb-16"
-      initial = {{opacity: 0, y: 50}}
-      whileInView = {{opacity: 1, y: 0}}
-      transition={{duration: 1}}>
-        <h3 className="text-red-600 font-semibold tracking-wide uppercase">
-          About LifeLink
-        </h3>
-        <div className="w-14 h-1 bg-red-600 mx-auto mt-4 rounded-full"></div>
-      </motion.div>
+    <section id="about" className="relative overflow-hidden bg-surface px-5 py-24 md:px-8 md:py-32">
+      <AmbientBackground />
+      <div className="relative mx-auto max-w-7xl">
+        {/* Heading */}
+        <Reveal className="mb-16 max-w-2xl">
+          <span className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
+            About LifeLink
+          </span>
+          <h2 className="mt-4 font-display text-5xl font-normal leading-tight tracking-tight text-ink md:text-6xl">
+            Bridging the gap between{" "}
+            <span className="text-gradient-brand italic">heroes and hope</span>
+          </h2>
+        </Reveal>
 
-      {/* Main Content */}
-      <motion.div className="flex flex-col lg:flex-row items-center justify-between gap-16"
-      initial = {{opacity: 0, y: 50}}
-      whileInView = {{opacity: 1, y: 0}}
-      transition={{duration: 1}}>
-        {/* Left Content */}
-        <div className="flex-1">
-          <h1 className="text-5xl font-bold mb-4">
-            About <span className="text-red-600">LifeLink</span>
-          </h1>
+        {/* Main Content */}
+        <div className="grid items-center gap-16 lg:grid-cols-2">
+          {/* Left Content */}
+          <Reveal direction="right">
+            <p className="text-lg leading-8 text-muted">
+              LifeLink is a platform that connects voluntary blood donors with
+              people in urgent need of blood. We believe that a small act of
+              kindness can create a big difference.
+            </p>
+            <p className="mt-4 text-lg leading-8 text-muted">
+              Our mission is to make blood donation simple, accessible, and
+              transparent for everyone.
+            </p>
 
-          <h3 className="text-2xl font-semibold text-gray-800 mb-8">
-            Bridging the gap between heroes and hope.
-          </h3>
-
-          <p className="text-gray-600 text-lg leading-8 mb-6">
-            LifeLink is a platform that connects voluntary blood donors with
-            people in urgent need of blood. We believe that a small act of
-            kindness can create a big difference.
-          </p>
-
-          <p className="text-gray-600 text-lg leading-8 mb-12">
-            Our mission is to make blood donation simple, accessible, and
-            transparent for everyone.
-          </p>
-
-          {/* Mission Vision Promise */}
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="border-r border-gray-200 pr-6">
-              <div className="w-16 h-16 rounded-full bg-red-50 flex items-center justify-center mb-5">
-                <Users className="text-red-600" size={30} />
-              </div>
-
-              <h4 className="font-bold text-xl mb-3">Our Mission</h4>
-
-              <p className="text-gray-600">
-                To save more lives by making blood donation easy and accessible.
-              </p>
+            {/* Mission Vision Promise */}
+            <div className="mt-12 grid gap-6 sm:grid-cols-3">
+              {pillars.map(({ icon: Icon, title, desc }, i) => (
+                <Reveal
+                  key={title}
+                  delay={i * 0.1}
+                  className="group hover-lift rounded-3xl border border-line bg-canvas p-6 hover:border-primary-100 hover:shadow-card"
+                >
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-50 text-primary transition-transform duration-300 group-hover:scale-110">
+                    <Icon size={22} />
+                  </div>
+                  <h4 className="mt-5 text-lg font-semibold text-ink">{title}</h4>
+                  <p className="mt-1.5 text-sm leading-relaxed text-muted">{desc}</p>
+                </Reveal>
+              ))}
             </div>
+          </Reveal>
 
-            <div className="border-r border-gray-200 pr-6">
-              <div className="w-16 h-16 rounded-full bg-red-50 flex items-center justify-center mb-5">
-                <Eye className="text-red-600" size={30} />
-              </div>
+          {/* Right Image Section */}
+          <Reveal direction="left" className="flex justify-center">
+            <div className="relative aspect-square w-full max-w-[440px]">
+              <div className="animate-blob-slow absolute inset-0 rounded-full bg-brand-gradient-soft" />
+              <div className="absolute inset-6 rounded-full border border-line bg-surface/40" />
 
-              <h4 className="font-bold text-xl mb-3">Our Vision</h4>
+              <img
+                src={aboutlifelink}
+                alt="LifeLink community"
+                className="relative z-10 h-full w-full object-contain"
+              />
 
-              <p className="text-gray-600">
-                A world where no one dies due to the unavailability of blood.
-              </p>
+              {floatIcons.map(({ Icon, pos, delay }, i) => (
+                <div
+                  key={i}
+                  style={{ animationDelay: delay }}
+                  className={`animate-float glass absolute ${pos} z-20 flex h-14 w-14 items-center justify-center rounded-2xl border border-line/80 text-primary shadow-card`}
+                >
+                  <Icon size={26} />
+                </div>
+              ))}
             </div>
-
-            <div>
-              <div className="w-16 h-16 rounded-full bg-red-50 flex items-center justify-center mb-5">
-                <ShieldCheck className="text-red-600" size={30} />
-              </div>
-
-              <h4 className="font-bold text-xl mb-3">Our Promise</h4>
-
-              <p className="text-gray-600">
-                We ensure verified donors, safe connections and quick help.
-              </p>
-            </div>
-          </div>
+          </Reveal>
         </div>
 
-        {/* Right Image Section */}
-        <div className="flex-1 flex justify-center">
-          <div className="relative w-[500px] h-[500px]">
-            {/* Background Circle */}
-            <div className="absolute inset-0 rounded-full bg-red-100"></div>
-
-            {/* Main Image */}
-            <img
-              src={aboutlifelink}
-              alt="LifeLink"
-              className="relative z-10 w-full h-full object-contain"
-            />
-
-            {/* Floating Icons */}
-
-            <div className="absolute top-10 left-2 w-20 h-20 bg-white rounded-full shadow-lg flex items-center justify-center">
-              <Plus className="text-red-600" size={34} />
-            </div>
-
-            <div className="absolute top-10 right-2 w-20 h-20 bg-white rounded-full shadow-lg flex items-center justify-center">
-              <Activity className="text-red-600" size={34} />
-            </div>
-
-            <div className="absolute bottom-10 left-5 w-20 h-20 bg-white rounded-full shadow-lg flex items-center justify-center">
-              <Users className="text-red-600" size={34} />
-            </div>
-
-            <div className="absolute bottom-10 right-5 w-20 h-20 bg-white rounded-full shadow-lg flex items-center justify-center">
-              <ShieldCheck className="text-red-600" size={34} />
-            </div>
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Stats Section */}
-      <motion.div className="bg-white rounded-3xl shadow-sm mt-20 p-8 md:p-12"
-      initial = {{y:30,opacity: 0}}
-      whileInView = {{y:0,opacity: 1}}
-      transition = {{duration: 1}}>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-10">
-          <div className="flex gap-5">
-            <div className="w-16 h-16 rounded-full bg-red-50 flex items-center justify-center">
-              <Heart className="text-red-600" />
-            </div>
-
-            <div>
-              <h3 className="text-4xl font-bold text-red-600">0+</h3>
-              <p className="font-semibold text-lg">Lives Saved</p>
-              <p className="text-gray-500 text-sm">
-                Thanks to our amazing donors and volunteers.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex gap-5">
-            <div className="w-16 h-16 rounded-full bg-red-50 flex items-center justify-center">
-              <User className="text-red-600" />
-            </div>
-
-            <div>
-              <h3 className="text-4xl font-bold text-red-600">10+</h3>
-              <p className="font-semibold text-lg">Registered Donors</p>
-              <p className="text-gray-500 text-sm">
-                Generous people ready to save lives.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex gap-5">
-            <div className="w-16 h-16 rounded-full bg-red-50 flex items-center justify-center">
-              <Droplets className="text-red-600" />
-            </div>
-
-            <div>
-              <h3 className="text-4xl font-bold text-red-600">0+</h3>
-              <p className="font-semibold text-lg">Blood Requests</p>
-              <p className="text-gray-500 text-sm">
-                Successfully matched and fulfilled.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex gap-5">
-            <div className="w-16 h-16 rounded-full bg-red-50 flex items-center justify-center">
-              <MapPin className="text-red-600" />
-            </div>
-
-            <div>
-              <h3 className="text-4xl font-bold text-red-600">500+</h3>
-              <p className="font-semibold text-lg">Cities Covered</p>
-              <p className="text-gray-500 text-sm">
-                Spreading hope across the nation.
-              </p>
-            </div>
-          </div>
-        </div>
-      </motion.div>
-    </motion.section>
+        {/* Stats Section */}
+        <Reveal className="mt-24 grid grid-cols-2 gap-8 rounded-4xl border border-line bg-canvas p-8 md:p-12 lg:grid-cols-4">
+          {stats.map(({ icon: Icon, value, title, desc }, i) => (
+            <Reveal as="div" key={title} delay={i * 0.1}>
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-surface text-primary shadow-soft">
+                <Icon size={22} />
+              </div>
+              <CountUp value={value} className="mt-5 block font-display text-4xl text-ink" />
+              <p className="mt-1 font-semibold text-ink">{title}</p>
+              <p className="mt-1 text-sm leading-relaxed text-muted">{desc}</p>
+            </Reveal>
+          ))}
+        </Reveal>
+      </div>
+    </section>
   );
 };
 
