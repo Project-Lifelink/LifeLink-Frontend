@@ -20,7 +20,7 @@ const services = [
   "Community Support",
 ];
 
-const builtBy = ["Mohammad Rizvi", "Anurag Singh", "Akash Kumar", "Aabgeen Abhsar"];
+const builtBy = ["Mohammad Rizvi", "Anurag Singh", "Akash Kumar", "Aabgeen Abhsar" , "Vedant Kumar"];
 
 const Footer = () => {
   return (
@@ -131,8 +131,8 @@ const Footer = () => {
             <h3 className="mb-5 text-sm font-semibold uppercase tracking-wide text-faint">Pages</h3>
             <div className="flex flex-col space-y-3 text-muted">
               <a href="/profile" className="inline-block transition-all duration-200 hover:translate-x-1 hover:text-primary">Profile</a>
-              <a href="/hospital" className="inline-block transition-all duration-200 hover:translate-x-1 hover:text-primary">Hospital</a>
-              <a href="/admin" className="inline-block transition-all duration-200 hover:translate-x-1 hover:text-primary">Admin</a>
+              <a href="/hospitallogin" className="inline-block transition-all duration-200 hover:translate-x-1 hover:text-primary">Hospital</a>
+              <a href="/adminlogin" className="inline-block transition-all duration-200 hover:translate-x-1 hover:text-primary">Admin</a>
             </div>
           </div>
         </Reveal>

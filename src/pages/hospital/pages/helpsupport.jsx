@@ -73,24 +73,7 @@ export default function HelpSupport() {
             </p>
           </Reveal>
 
-          <Reveal as="div" delay={0.16} className="hover-lift rounded-3xl border border-line bg-surface p-6 shadow-soft hover:border-primary-100 hover:shadow-card">
-            <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-info-soft text-info">
-              <MessageSquare className="h-6 w-6" />
-            </span>
-
-            <h2 className="mt-4 text-lg font-semibold text-ink">
-              Live Chat
-            </h2>
-
-            <p className="mt-2 text-muted">
-              Chat instantly with our support team.
-            </p>
-            <div className="mt-5">
-              <Link to="../community" className="press inline-flex rounded-2xl bg-info px-4 py-2 font-medium text-white">
-                Start Chat
-              </Link>
-            </div>
-          </Reveal>
+         
         </div>
 
         {/* FAQ Section */}

@@ -72,18 +72,18 @@ const home = () => {
                         <div className="mt-9 flex flex-col items-center gap-3 sm:flex-row lg:justify-start">
                             <HashLink
                                 smooth
-                                to="/hospitalregistration"
+                                to="/login"
                                 className="press animate-pulse-glow group inline-flex w-full items-center justify-center gap-2 rounded-full bg-ink px-7 py-4 font-semibold text-white sm:w-auto"
                             >
-                                Register Hospital
+                                Donate Blood
                                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                             </HashLink>
                             <HashLink
                                 smooth
-                                to="/hospitallogin"
+                                to="/login"
                                 className="press inline-flex w-full items-center justify-center rounded-full border border-line bg-surface px-7 py-4 font-semibold text-ink-soft shadow-soft hover:bg-subtle sm:w-auto"
                             >
-                                Hospital Login
+                                Request Blood
                             </HashLink>
                         </div>
 

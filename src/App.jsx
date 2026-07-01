@@ -35,7 +35,6 @@ import RequestBloodHospital from './pages/hospital/pages/bloodrequest.jsx'
 import NotificationsHospital from './pages/hospital/pages/notification.jsx'
 import ActiveRequestsHospital from './pages/hospital/pages/activerequests.jsx'
 import HelpandSupportHospital from './pages/hospital/pages/helpsupport.jsx'
-import CommunityHospital from './pages/hospital/pages/community.jsx'
 import DonorVerification from './pages/hospital/pages/donorverification.jsx'
 import RequestHistory from './pages/hospital/pages/requesthistory.jsx'
 import HospitalSettings from './pages/hospital/pages/settings.jsx'
@@ -92,7 +91,6 @@ const App = () => {
           <Route path="notifications" element={<NotificationsHospital />} />
           <Route path="activerequest" element={<ActiveRequestsHospital />} />
           <Route path="helpandsupport" element={<HelpandSupportHospital />} />
-          <Route path="community" element={<CommunityHospital />} />
           <Route path="donorverification" element={<DonorVerification />} />
           <Route path="requesthistory" element={<RequestHistory />} />
           <Route path="settings" element={<HospitalSettings />} />

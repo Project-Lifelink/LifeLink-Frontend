@@ -91,6 +91,7 @@ export default function Adminlogin() {
     e.preventDefault();
     // loginuser();
     console.log("login from submitted")
+    alert("there is no admin account available till now")
 
   }
 
@@ -120,7 +121,7 @@ export default function Adminlogin() {
                 <h1 className="mt-6 font-display text-4xl font-normal text-ink">Welcome to LifeLink</h1>
                 <p className="mt-2 text-muted">
                   Login to your{" "}
-                  <span className="font-semibold text-primary">LifeLink</span> account
+                  <span className="font-semibold text-primary">Admin</span> account
                 </p>
               </div>
 

@@ -1,52 +1,48 @@
 import React from "react";
 import { motion } from 'framer-motion'
-import { Droplet, MapPin, Hospital, Users, CalendarDays, ArrowRight } from "lucide-react";
+import { Droplet, MapPin, Hospital, Users, CalendarDays, ArrowRight, Phone } from "lucide-react";
 import Reveal from './motion/Reveal.jsx'
 import AmbientBackground from './motion/AmbientBackground.jsx'
-
-const requests = [
-    {
-        id: 1,
-        patient: "User Name",
-        bloodGroup: "A+",
-        units: 2,
-        hospital: "City Hospital",
-        location: "Varanasi",
-        urgency: "Critical",
-        donors: 5,
-        date: "15 Jun 2026",
-    },
-    {
-        id: 2,
-        patient: "User Name 2",
-        bloodGroup: "O-",
-        units: 1,
-        hospital: "Heritage Hospital",
-        location: "Lucknow",
-        urgency: "Urgent",
-        donors: 2,
-        date: "14 Jun 2026",
-    },
-    {
-        id: 3,
-        patient: "User Name 3",
-        bloodGroup: "B+",
-        units: 3,
-        hospital: "Apollo Hospital",
-        location: "Delhi",
-        urgency: "Normal",
-        donors: 8,
-        date: "13 Jun 2026",
-    },
-];
-
-const urgencyStyles = {
-    Critical: "bg-danger-soft text-danger",
-    Urgent: "bg-warning-soft text-warning",
-    Normal: "bg-success-soft text-success",
-};
+import { useState, useEffect } from "react";
 
 const BloodRequests = () => {
+    const [requests, setRequests] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchActiveRequests = async () => {
+            try {
+                const response = await fetch(
+                    `${import.meta.env.VITE_API_URL}/api/v1/blood-requests/`,
+                    {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    }
+                );
+
+                if (!response.ok) {
+                    throw new Error("Failed to fetch requests");
+                }
+
+                const data = await response.json();
+
+                // if backend is sending array formate directly
+                setRequests(data);
+                console.log(data);
+
+
+
+            } catch (error) {
+                console.error(error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchActiveRequests();
+    }, []);
     return (
         <div className="relative min-h-screen overflow-hidden bg-canvas px-5 py-20 md:px-8 md:py-24">
             <AmbientBackground />
@@ -82,12 +78,12 @@ const BloodRequests = () => {
                             >
                                 <div className="mb-5 flex items-center justify-between">
                                     <h2 className="text-lg font-semibold text-ink">
-                                        {request.patient}
+                                        {request.patient_name}
                                     </h2>
 
                                     <span className="flex items-center gap-1.5 rounded-full bg-primary-50 px-3 py-1 text-sm font-bold text-primary">
                                         <Droplet className="h-3.5 w-3.5 fill-current" />
-                                        {request.bloodGroup}
+                                        {request.blood_group}
                                     </span>
                                 </div>
 
@@ -95,9 +91,26 @@ const BloodRequests = () => {
                                     <p className="flex items-center gap-2.5">
                                         <Droplet className="h-4 w-4 text-faint" />
                                         <span className="font-medium text-muted">Units Required:</span>
-                                        <span className="font-semibold text-ink">{request.units}</span>
+                                        <span className="font-semibold text-ink">{request.quantity}</span>
                                     </p>
 
+                                    
+
+                                    <p className="flex items-center gap-2.5">
+                                        <Phone className="h-4 w-4 text-faint" />
+                                        <span className="font-medium text-muted">Phone:</span>
+                                        <span className="font-semibold text-ink">{request.phone}</span>
+                                    </p>
+                                    <p className="flex items-center gap-2.5">
+                                        <Phone className="h-4 w-4 text-faint" />
+                                        <span className="font-medium text-muted">Additional Phone:</span>
+                                        <span className="font-semibold text-ink">{request.additional_phone}</span>
+                                    </p>
+                                    <p className="flex items-center gap-2.5">
+                                        <Users className="h-4 w-4 text-faint" />
+                                        <span className="font-medium text-muted">Gender:</span>
+                                        <span className="font-semibold text-ink">{request.sex}</span>
+                                    </p>
                                     <p className="flex items-center gap-2.5">
                                         <Hospital className="h-4 w-4 text-faint" />
                                         <span className="font-medium text-muted">Hospital:</span>
@@ -111,32 +124,17 @@ const BloodRequests = () => {
                                     </p>
 
                                     <p className="flex items-center gap-2.5">
-                                        <Users className="h-4 w-4 text-faint" />
-                                        <span className="font-medium text-muted">Donors Responded:</span>
-                                        <span className="font-semibold text-ink">{request.donors}</span>
-                                    </p>
-
-                                    <p className="flex items-center gap-2.5">
                                         <CalendarDays className="h-4 w-4 text-faint" />
                                         <span className="font-medium text-muted">Request Date:</span>
                                         <span className="font-semibold text-ink">{request.date}</span>
                                     </p>
-                                </div>
 
-                                <span
-                                    className={`mt-5 inline-flex w-fit items-center rounded-full px-3 py-1 text-xs font-semibold ${urgencyStyles[request.urgency] || "bg-subtle text-muted"}`}
-                                >
-                                    {request.urgency}
-                                </span>
+                                </div>
 
                                 <div className="mt-6 flex gap-3 pt-2">
                                     <button className="press flex flex-1 items-center justify-center gap-1.5 rounded-2xl bg-brand-gradient py-2.5 text-sm font-semibold text-white shadow-glow">
                                         Donate Now
                                         <ArrowRight className="h-4 w-4" />
-                                    </button>
-
-                                    <button className="press flex-1 rounded-2xl border border-line bg-surface py-2.5 text-sm font-semibold text-ink-soft hover:border-primary-100 hover:text-primary">
-                                        View Details
                                     </button>
                                 </div>
                             </motion.div>

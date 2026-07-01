@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import AmbientBackground from "../../../components/motion/AmbientBackground.jsx";
 import Reveal from "../../../components/motion/Reveal.jsx";
+import {Link} from 'react-router-dom'
 
 export default function BloodRequestsPage() {
   const [requests, setRequests] = useState([]);
@@ -107,9 +108,9 @@ export default function BloodRequestsPage() {
             </p>
           </div>
 
-          <button className="press flex items-center justify-center gap-2 rounded-2xl bg-brand-gradient px-5 py-3 font-semibold text-white shadow-glow">
+          <Link to = "/requestblood" className="press flex items-center justify-center gap-2 rounded-2xl bg-brand-gradient px-5 py-3 font-semibold text-white shadow-glow">
             + New Request
-          </button>
+          </Link>
         </Reveal>
 
         {/* Filters */}
@@ -120,7 +121,7 @@ export default function BloodRequestsPage() {
                 size={18}
                 className="absolute left-4 top-1/2 -translate-y-1/2 text-faint"
               />
-              <input
+              <input 
                 type="text"
                 placeholder="Search Patient..."
                 className="w-full rounded-2xl border border-line bg-canvas py-3 pl-11 pr-4 text-sm text-ink transition-colors placeholder:text-faint focus:border-primary focus:bg-surface focus:outline-none focus:ring-4 focus:ring-primary-50"
@@ -225,10 +226,10 @@ export default function BloodRequestsPage() {
                     </button>
                   )}
 
-                  <button onClick={(e) => handleview(e,request.id)} className="press flex hover:cursor-pointer items-center gap-2 rounded-2xl border border-line bg-canvas px-4 py-2 text-ink-soft hover:border-primary-100 hover:text-primary">
+                  <Link to = "/requests" className="press flex hover:cursor-pointer items-center gap-2 rounded-2xl border border-line bg-canvas px-4 py-2 text-ink-soft hover:border-primary-100 hover:text-primary">
                     <Eye size={18} />
                     View
-                  </button>
+                  </Link>
 
                   <button className="press flex items-center gap-2 rounded-2xl border border-line bg-canvas px-4 py-2 text-ink-soft hover:border-primary-100 hover:text-primary">
                     <Phone size={18} />
