@@ -1,5 +1,6 @@
 import React from "react";
 import { Heart, Droplet, MapPin, Mail, ArrowRight } from "lucide-react";
+import {Link} from 'react-router-dom'
 import { HashLink } from 'react-router-hash-link'
 import Reveal from '../motion/Reveal.jsx'
 import Heartbeat from '../motion/Heartbeat.jsx'
@@ -130,9 +131,9 @@ const Footer = () => {
           <div>
             <h3 className="mb-5 text-sm font-semibold uppercase tracking-wide text-faint">Pages</h3>
             <div className="flex flex-col space-y-3 text-muted">
-              <a href="/profile" className="inline-block transition-all duration-200 hover:translate-x-1 hover:text-primary">Profile</a>
-              <a href="/hospitallogin" className="inline-block transition-all duration-200 hover:translate-x-1 hover:text-primary">Hospital</a>
-              <a href="/adminlogin" className="inline-block transition-all duration-200 hover:translate-x-1 hover:text-primary">Admin</a>
+              <Link href="/profile" className="inline-block transition-all duration-200 hover:translate-x-1 hover:text-primary">Profile</Link>
+              <Link href="/hospitallogin" className="inline-block transition-all duration-200 hover:translate-x-1 hover:text-primary">Hospital</Link>
+              <Link href="/adminlogin" className="inline-block transition-all duration-200 hover:translate-x-1 hover:text-primary">Admin</Link>
             </div>
           </div>
         </Reveal>
