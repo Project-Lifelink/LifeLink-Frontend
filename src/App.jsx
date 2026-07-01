@@ -25,6 +25,7 @@ import ExploreHospitals from './pages/user/explorehospitals.jsx'
 import ActiveRequests from './pages/user/activerequest.jsx'
 import HelpandSupport from './pages/user/helpandsupport.jsx'
 import Community from './pages/user/community.jsx'
+import UserSettings from './pages/user/settings.jsx'
 
 
 //hospital side page
@@ -37,6 +38,7 @@ import HelpandSupportHospital from './pages/hospital/pages/helpsupport.jsx'
 import CommunityHospital from './pages/hospital/pages/community.jsx'
 import DonorVerification from './pages/hospital/pages/donorverification.jsx'
 import RequestHistory from './pages/hospital/pages/requesthistory.jsx'
+import HospitalSettings from './pages/hospital/pages/settings.jsx'
 
 
 import Admin from './pages/admin/main.jsx'
@@ -77,6 +79,7 @@ const App = () => {
           <Route path="activerequests" element={<ActiveRequests />} />
           <Route path="helpandsupport" element={<HelpandSupport />} />
           <Route path="community" element={<Community />} />
+          <Route path="settings" element={<UserSettings />} />
           {/* <Route path="requesthistory" element={<RequestHistory />} /> */}
         </Route>
 
@@ -92,6 +95,7 @@ const App = () => {
           <Route path="community" element={<CommunityHospital />} />
           <Route path="donorverification" element={<DonorVerification />} />
           <Route path="requesthistory" element={<RequestHistory />} />
+          <Route path="settings" element={<HospitalSettings />} />
           {/* <Route path="requesthistory" element={<RequestHistory />} /> */}
         </Route>
       </Routes>

@@ -10,6 +10,7 @@ import {
     ChevronLeft,
     ChevronRight,
     User2,
+    Settings,
 } from "lucide-react";
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
@@ -53,6 +54,7 @@ const HospitalSidebar = () => {
         { name: "Request History", icon: History, link: "requesthistory" },
         { name: "Donor Verification", icon: ShieldCheck, link: "donorverification" },
         { name: "Help & Support", icon: CircleHelp, link: "helpandsupport" },
+        { name: "Settings", icon: Settings, link: "settings" },
     ];
 
     const NavItem = ({ item, mobile = false }) => {
