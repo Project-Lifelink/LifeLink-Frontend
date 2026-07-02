@@ -22,7 +22,6 @@ const Features = () => {
 
     const stats = [
         { icon: <Users size={22} />, value: "10+", title: "Active Donors", desc: "Generous people ready to save lives." },
-        { icon: <Droplets size={22} />, value: "0", title: "Blood Requests", desc: "Requests fulfilled successfully." },
         { icon: <ShieldCheck size={22} />, value: "100%", title: "Verified Users", desc: "Ensuring a safe and trusted community." },
         { icon: <Bell size={22} />, value: "24/7", title: "Support", desc: "We're here to help you anytime." },
         { icon: <Heart size={22} />, value: "Countless", title: "Lives Saved", desc: "Because of people like you." },
@@ -93,7 +92,7 @@ const Features = () => {
                 </div>
 
                 {/* Stats */}
-                <Reveal className="mt-20 grid grid-cols-2 gap-8 rounded-4xl border border-line bg-surface p-8 md:p-10 lg:grid-cols-5">
+                <Reveal className="mt-20 grid grid-cols-2 gap-8 rounded-4xl border border-line bg-surface p-8 md:p-10 lg:grid-cols-4">
                     {stats.map((item, index) => (
                         <Reveal as="div" key={index} delay={index * 0.08}>
                             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-50 text-primary">

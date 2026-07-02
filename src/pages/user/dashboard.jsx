@@ -34,8 +34,8 @@ export default function DashboardContent() {
   const totaldonation = user?.totaldonation || 0
 
   const stats = [
-    { icon: Heart, tone: "text-primary bg-primary-50", value: totaldonation, label: "Total Donations" },
-    { icon: Users, tone: "text-info bg-info-soft", value: 0, label: "Total Requests" },
+    // { icon: Heart, tone: "text-primary bg-primary-50", value: totaldonation, label: "Total Donations" },
+    // { icon: Users, tone: "text-info bg-info-soft", value: 0, label: "Total Requests" },
     { icon: ShieldCheck, tone: "text-success bg-success-soft", value: "100%", label: "Profile Strength" },
   ];
 
@@ -87,8 +87,6 @@ export default function DashboardContent() {
                   <div className="mt-8 grid gap-4 sm:grid-cols-3">
                     {[
                       { label: "Blood Group", value: bloodgroup },
-                      { label: "Last Donation", value: lastdonation },
-                      { label: "Total Donations", value: totaldonation },
                     ].map((b) => (
                       <div key={b.label} className="rounded-2xl border border-line bg-canvas p-4">
                         <p className="text-sm text-muted">{b.label}</p>
