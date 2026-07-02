@@ -25,73 +25,14 @@ export default function Adminlogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-
-//   const loginuser = async () => {
-
-
-
-//     try {
-//       setLoading(true);
-//       const response = await fetch(
-//         `${import.meta.env.VITE_API_URL}/api/v1/hospitals/login/`,
-
-//         {
-//           method: "POST",
-//           headers: {
-//             "Content-Type": "application/json",
-//           },
-//           body: JSON.stringify({
-//             email,
-//             password
-//           }),
-//         }
-//       );
-
-//       const data = await response.json();
-//       console.log(data)
-
-//       if (!response.ok) {
-//         setLoading(false)
-//         throw new Error(data.message || "Something went wrong");
-
-//       }
-//       else {
-//         localStorage.setItem("token", data.access_token);
-//         localStorage.setItem("id", data.hospital.hospital_id)
-//         navigate("/hospital")
-//       }
-
-
-//       try {
-
-//         dispatch(
-//           loginSuccess({
-//             user: data.user,
-//             token: data.access_token,
-//             role: "hospital",
-//           })
-//         );
-//       } catch (error) {
-//         console.log("error occured in redux from dipatch function ", error);
-//       }
-
-//       return data;
-//     } catch (error) {
-//       console.error("Error:", error.message);
-//       alert("login failed", error.message)
-//       setLoading(false);
-//       throw error;
-//     }
-//   };
-
-
-
-
   function handleSubmit(e) {
     e.preventDefault();
     // loginuser();
     console.log("login from submitted")
-    alert("there is no admin account available till now")
+
+    if(password === `${import.meta.env.VITE_ADMIN_PASSWORD}`) navigate("/admin")
+      else{alert("incorrect password")}
+
 
   }
 
@@ -170,7 +111,7 @@ export default function Adminlogin() {
                 </button>
                 
               </form>
-              <button className = "px-5 py-2 bg-red-500 text-white m-5 rounded-2xl" onClick = {(e) => navigate("/admin")}>Go to Main Admin Page</button>
+              {/* <button className = "px-5 py-2 bg-red-500 text-white m-5 rounded-2xl" onClick = {(e) => navigate("/admin")}>Go to Main Admin Page</button> */}
             </div> 
           </div>
 
