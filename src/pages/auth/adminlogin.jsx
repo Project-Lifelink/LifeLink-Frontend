@@ -168,8 +168,10 @@ export default function Adminlogin() {
                   {loading ? "Logging in…" : "Login"}
                   {!loading && <ArrowRight className="h-4 w-4" />}
                 </button>
+                
               </form>
-            </div>
+              <button className = "px-5 py-2 bg-red-500 text-white m-5 rounded-2xl" onClick = {(e) => navigate("/admin")}>Go to Main Admin Page</button>
+            </div> 
           </div>
 
         </div>

@@ -40,8 +40,19 @@ import RequestHistory from './pages/hospital/pages/requesthistory.jsx'
 import HospitalSettings from './pages/hospital/pages/settings.jsx'
 
 
+
+
+//admin page
 import Admin from './pages/admin/main.jsx'
 import Adminlogin from './pages/auth/adminlogin.jsx'
+import AdminDashboard from './pages/admin/pages/dashboard.jsx';
+import ActiveRequestAdmin from './pages/admin/pages/activerequests.jsx';
+import AdminHospitals from './pages/admin/pages/hospitals.jsx';
+import AdminUsers from './pages/admin/pages/users.jsx';
+import AdminSettings from './pages/admin/pages/settings.jsx';
+import User from './pages/admin/pages/users.jsx'
+import Settings from './pages/admin/pages/settings.jsx'
+
 
 
 
@@ -63,7 +74,7 @@ const App = () => {
         <Route path='/hospitalregistration' element={<HospitalRegister />} />
         <Route path='/hospitallogin' element={<HospitalLogin />} />
         <Route path='/hospital' element={<Hospital />} />
-        <Route path = "/admin" element = {<Admin />} />
+        
         <Route path = "/adminlogin" element = {<Adminlogin />} />
 
 
@@ -96,6 +107,18 @@ const App = () => {
           <Route path="settings" element={<HospitalSettings />} />
           {/* <Route path="requesthistory" element={<RequestHistory />} /> */}
         </Route>
+
+        {/* Admin Controls */}
+        <Route path = "/admin" element = {<Admin />}>
+        <Route index element = {<AdminDashboard />} />
+        <Route path = "dashboard" element = {<AdminDashboard />} />
+        <Route path = "activerequest" element = {<ActiveRequestAdmin />} />
+        <Route path = "hospitals" element = {<AdminHospitals />} />
+        <Route path = "users" element = {<User/>} />
+        <Route path = "settings" element = {<Settings />} />
+        </Route>
+
+
       </Routes>
 
     </>

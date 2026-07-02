@@ -27,7 +27,7 @@ const Footer = () => {
   return (
     <footer className="bg-canvas" id="contact">
       {/* CTA Section */}
-      <div className="mx-auto max-w-7xl px-5 pt-20 md:px-8">
+      {/* <div className="mx-auto max-w-7xl px-5 pt-20 md:px-8">
         <Reveal className="relative overflow-hidden rounded-4xl bg-brand-gradient p-10 text-white shadow-glow md:p-16">
           <div className="animate-blob pointer-events-none absolute -top-20 -right-16 h-64 w-64 rounded-full bg-white/10 blur-2xl" />
           <div className="animate-blob-rev pointer-events-none absolute -bottom-24 -left-10 h-64 w-64 rounded-full bg-black/10 blur-2xl" />
@@ -52,7 +52,7 @@ const Footer = () => {
             </HashLink>
           </div>
         </Reveal>
-      </div>
+      </div> */}
 
       {/* Heartbeat separator — full screen width */}
       <div className="mt-14 h-10 w-full text-primary md:h-14">
@@ -131,9 +131,9 @@ const Footer = () => {
           <div>
             <h3 className="mb-5 text-sm font-semibold uppercase tracking-wide text-faint">Pages</h3>
             <div className="flex flex-col space-y-3 text-muted">
-              <Link href="/profile" className="inline-block transition-all duration-200 hover:translate-x-1 hover:text-primary">Profile</Link>
-              <Link href="/hospitallogin" className="inline-block transition-all duration-200 hover:translate-x-1 hover:text-primary">Hospital</Link>
-              <Link href="/adminlogin" className="inline-block transition-all duration-200 hover:translate-x-1 hover:text-primary">Admin</Link>
+              {/* <Link href="/profile" className="inline-block transition-all duration-200 hover:translate-x-1 hover:text-primary">Profile</Link> */}
+              <Link to="/hospitallogin" className="inline-block transition-all duration-200 hover:translate-x-1 hover:text-primary">Hospital</Link>
+              <Link to="/adminlogin" className="inline-block transition-all duration-200 hover:translate-x-1 hover:text-primary">Admin</Link>
             </div>
           </div>
         </Reveal>

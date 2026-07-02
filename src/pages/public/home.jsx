@@ -44,12 +44,7 @@ const home = () => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, ease }}
                     >
-                        <span className="inline-flex items-center gap-2 rounded-full border border-line bg-surface/70 px-4 py-1.5 text-sm font-medium text-ink-soft shadow-soft">
-                            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary-50 text-primary">
-                                <Droplet className="h-3 w-3 animate-heartbeat" fill="currentColor" />
-                            </span>
-                            Real-time blood donor network
-                        </span>
+                       
 
                         <h1 className="mt-7 font-display text-6xl font-normal leading-[0.98] tracking-tight text-ink md:text-7xl xl:text-[5.5rem]">
                             Save lives,
