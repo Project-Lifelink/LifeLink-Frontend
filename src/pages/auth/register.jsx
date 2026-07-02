@@ -165,7 +165,7 @@ export default function RegisterPage() {
                   <label className="mb-1.5 block text-sm font-medium text-ink-soft">Full Name</label>
                   <div className="relative">
                     <User className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
-                    <input type="text" placeholder="Enter your full name" onChange={(e) => { setName(e.target.value) }} className={inputClass} />
+                    <input type="text" required placeholder="Enter your full name" onChange={(e) => { setName(e.target.value) }} className={inputClass} />
                   </div>
                 </div>
 
@@ -173,7 +173,7 @@ export default function RegisterPage() {
                   <label className="mb-1.5 block text-sm font-medium text-ink-soft">Email Address</label>
                   <div className="relative">
                     <Mail className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
-                    <input type="email" onChange={(e) => { setEmail(e.target.value) }} placeholder="Enter your email address" className={inputClass} />
+                    <input type="email" required onChange={(e) => { setEmail(e.target.value) }} placeholder="Enter your email address" className={inputClass} />
                   </div>
                 </div>
 
@@ -181,7 +181,7 @@ export default function RegisterPage() {
                   <label className="mb-1.5 block text-sm font-medium text-ink-soft">Phone Number</label>
                   <div className="relative">
                     <Phone className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
-                    <input type="string" onChange={(e) => { setPhone(e.target.value) }} placeholder="Enter your phone number" className={inputClass} />
+                    <input type="number" required onChange={(e) => { setPhone(e.target.value) }} placeholder="Enter your phone number" className={inputClass} />
                   </div>
                 </div>
 
@@ -189,7 +189,7 @@ export default function RegisterPage() {
                   <label className="mb-1.5 block text-sm font-medium text-ink-soft">Age (Years)</label>
                   <div className="relative">
                     <FileText className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
-                    <input type="number" min="1" onChange={(e) => { setAge(e.target.value) }} placeholder="e.g. 19" className={inputClass} />
+                    <input type="number" required min="1" onChange={(e) => { setAge(e.target.value) }} placeholder="e.g. 19" className={inputClass} />
                   </div>
                 </div>
 
@@ -197,7 +197,7 @@ export default function RegisterPage() {
                   <label className="mb-1.5 block text-sm font-medium text-ink-soft">Blood Group</label>
                   <div className="relative">
                     <Droplet className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
-                    <select defaultValue="" onChange={(e) => { setBlood_group(e.target.value) }} className={selectClass}>
+                    <select defaultValue="" required onChange={(e) => { setBlood_group(e.target.value) }} className={selectClass}>
                       <option value="" disabled hidden>Select blood group</option>
                       <option value="A+">A+</option>
                       <option value="A-">A-</option>
@@ -216,7 +216,7 @@ export default function RegisterPage() {
                   <label className="mb-1.5 block text-sm font-medium text-ink-soft">Gender</label>
                   <div className="relative">
                     <User className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
-                    <select defaultValue="" onChange={(e) => { setSex(e.target.value) }} className={selectClass}>
+                    <select defaultValue="" required onChange={(e) => { setSex(e.target.value) }} className={selectClass}>
                       <option value="" disabled hidden>Select your gender</option>
                       <option value="male">Male</option>
                       <option value="female">Female</option>
@@ -234,6 +234,7 @@ export default function RegisterPage() {
                     <Lock className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
                     <input
                       type={showPassword ? "text" : "password"}
+                      required
                       onChange={(e) => { setPassword(e.target.value) }}
                       placeholder="Create a strong password"
                       className="w-full rounded-2xl border border-line bg-canvas py-2.5 pl-11 pr-11 text-sm text-ink transition-colors placeholder:text-faint focus:border-primary focus:bg-surface focus:outline-none focus:ring-4 focus:ring-primary-50"
@@ -251,6 +252,7 @@ export default function RegisterPage() {
                     <input
                       type={showConfirmPassword ? "text" : "password"}
                       placeholder="Confirm your password"
+                      required
                       className="w-full rounded-2xl border border-line bg-canvas py-2.5 pl-11 pr-11 text-sm text-ink transition-colors placeholder:text-faint focus:border-primary focus:bg-surface focus:outline-none focus:ring-4 focus:ring-primary-50"
                     />
                     <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-faint transition-colors hover:text-ink-soft">

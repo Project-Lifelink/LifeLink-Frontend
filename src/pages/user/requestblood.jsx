@@ -15,24 +15,24 @@ import {
   Quote
 } from 'lucide-react';
 import { motion } from 'framer-motion'
-import { useState,useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import BloodDropLoader from '../../components/motion/BloodDropLoader.jsx'
 
 export default function requestblood() {
 
-  const [patient_name , setPatient_name] = useState("");
+  const [patient_name, setPatient_name] = useState("");
   const [guardian_name, setGuardian_name] = useState("");
-  const [phone , setPhone] = useState("")
+  const [phone, setPhone] = useState("")
   const [additional_phone, setAdditional_phone] = useState("");
-  const [blood_group , setBlood_group] = useState("");
-  const [age , setAge] = useState(0);
+  const [blood_group, setBlood_group] = useState("");
+  const [age, setAge] = useState(0);
   const [sex, setSex] = useState("");
   const [quantity, setQuantity] = useState("");
-  const [longitude , setLongitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
   const [latitude, setLatitude] = useState(0);
-  const [geohash_64_bits , setGeohash_64_bits] = useState("");
+  const [geohash_64_bits, setGeohash_64_bits] = useState("");
 
-  const [makingrequest , setMakingrequest] = useState(false)
+  const [makingrequest, setMakingrequest] = useState(false)
   // console.log(patient_name)
   // console.log(guardian_name)
   // console.log(phone)
@@ -77,12 +77,14 @@ export default function requestblood() {
       if (!response.ok) {
         throw new Error(data.message);
       }
-       console.log(data)
+      console.log(data)
       alert("Request created successfully");
     } catch (error) {
       console.error(error);
-      setMakingrequest(false);
+
       alert("blood request not made due to some error");
+    } finally {
+      setMakingrequest(false);
     }
   };
 
@@ -177,6 +179,7 @@ export default function requestblood() {
                   <User className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
                   <input
                     type="text"
+                    required
                     onChange={(e) => setPatient_name(e.target.value)}
                     placeholder="Enter patient's name"
                     className="w-full rounded-2xl border border-line bg-canvas py-3 pl-11 pr-4 text-sm text-ink transition-colors placeholder:text-faint focus:border-primary focus:bg-surface focus:outline-none focus:ring-4 focus:ring-primary-50"
@@ -191,8 +194,9 @@ export default function requestblood() {
                 <div className="relative">
                   <User className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
                   <input
+                    required
                     type="text"
-                    onChange = {(e) => setGuardian_name(e.target.value)}
+                    onChange={(e) => setGuardian_name(e.target.value)}
                     placeholder="Enter guardian's name"
                     className="w-full rounded-2xl border border-line bg-canvas py-3 pl-11 pr-4 text-sm text-ink transition-colors placeholder:text-faint focus:border-primary focus:bg-surface focus:outline-none focus:ring-4 focus:ring-primary-50"
                   />
@@ -218,8 +222,26 @@ export default function requestblood() {
                 <div className="relative">
                   <Phone className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
                   <input
-                    type="tel"
+                    type="number"
+                    required
+                    minLength={10}
+                    maxLength={10}
                     onChange={(e) => setPhone(e.target.value)}
+                    placeholder="Enter active phone number"
+                    className="w-full rounded-2xl border border-line bg-canvas py-3 pl-11 pr-4 text-sm text-ink transition-colors placeholder:text-faint focus:border-primary focus:bg-surface focus:outline-none focus:ring-4 focus:ring-primary-50"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="mb-1.5 block text-sm font-medium text-ink-soft">Additional Phone Number</label>
+                <div className="relative">
+                  <Phone className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
+                  <input
+                    type="number"
+                    minLength={10}
+                    maxLength={10}
+                    onChange={(e) => setAdditional_phone(e.target.value)}
                     placeholder="Enter active phone number"
                     className="w-full rounded-2xl border border-line bg-canvas py-3 pl-11 pr-4 text-sm text-ink transition-colors placeholder:text-faint focus:border-primary focus:bg-surface focus:outline-none focus:ring-4 focus:ring-primary-50"
                   />
@@ -235,6 +257,7 @@ export default function requestblood() {
                   <Droplet className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
                   <select
                     defaultValue=""
+                    required
                     onChange={(e) => setBlood_group(e.target.value)}
                     className="w-full appearance-none rounded-2xl border border-line bg-canvas py-3 pl-11 pr-10 text-sm text-ink-soft transition-colors focus:border-primary focus:bg-surface focus:outline-none focus:ring-4 focus:ring-primary-50"
                   >
@@ -260,6 +283,7 @@ export default function requestblood() {
                   <input
                     type="number"
                     min="1"
+                    required
                     onChange={(e) => setQuantity(e.target.value)}
                     placeholder="e.g. 2"
                     className="w-full rounded-2xl border border-line bg-canvas py-3 pl-11 pr-4 text-sm text-ink transition-colors placeholder:text-faint focus:border-primary focus:bg-surface focus:outline-none focus:ring-4 focus:ring-primary-50"
@@ -275,6 +299,8 @@ export default function requestblood() {
                   <input
                     type="number"
                     min="1"
+                    max={150}
+                    required
                     onChange={(e) => setAge(e.target.value)}
                     placeholder="e.g. 19"
                     className="w-full rounded-2xl border border-line bg-canvas py-3 pl-11 pr-4 text-sm text-ink transition-colors placeholder:text-faint focus:border-primary focus:bg-surface focus:outline-none focus:ring-4 focus:ring-primary-50"
@@ -287,6 +313,7 @@ export default function requestblood() {
                 <div className="relative">
                   <Droplet className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
                   <select
+                    required
                     defaultValue=""
                     onChange={(e) => setSex(e.target.value)}
                     className="w-full appearance-none rounded-2xl border border-line bg-canvas py-3 pl-11 pr-10 text-sm text-ink-soft transition-colors focus:border-primary focus:bg-surface focus:outline-none focus:ring-4 focus:ring-primary-50"
@@ -317,14 +344,14 @@ export default function requestblood() {
               className="press flex w-full items-center justify-center gap-2 rounded-2xl bg-brand-gradient py-3.5 font-semibold text-white shadow-glow"
             >
               {(makingrequest) ? <BloodDropLoader size={9} className="text-white" /> : null}
-              <span>{(makingrequest)?"Creating new Blood Request.....":"Make Blood Request "}</span>
-             {(makingrequest)?"": <ArrowRight className="h-4 w-4" />}
+              <span>{(makingrequest) ? "Creating new Blood Request....." : "Make Blood Request "}</span>
+              {(makingrequest) ? "" : <ArrowRight className="h-4 w-4" />}
             </button>
 
           </form>
         </motion.div>
 
       </div>
-    </div>
+    </div >
   );
 }
