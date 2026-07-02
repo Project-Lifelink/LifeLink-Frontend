@@ -29,7 +29,9 @@ export default function RegisterPage() {
   const [blood_group, setBlood_group] = useState("");
   const [sex, setSex] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmpassword , setConfirmpassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [registering,setRegistering] = useState(false);
@@ -85,6 +87,10 @@ export default function RegisterPage() {
 
   function handleSubmit(e){
     e.preventDefault();
+    if(password !== confirmpassword){
+      alert("password and confirm password are not same");
+      return;
+    }
     registerUser();
   }
 
@@ -253,6 +259,7 @@ export default function RegisterPage() {
                       type={showConfirmPassword ? "text" : "password"}
                       placeholder="Confirm your password"
                       required
+                      onChange={(e) => setConfirmpassword(e.target.value)}
                       className="w-full rounded-2xl border border-line bg-canvas py-2.5 pl-11 pr-11 text-sm text-ink transition-colors placeholder:text-faint focus:border-primary focus:bg-surface focus:outline-none focus:ring-4 focus:ring-primary-50"
                     />
                     <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-faint transition-colors hover:text-ink-soft">
@@ -261,6 +268,9 @@ export default function RegisterPage() {
                   </div>
                 </div>
               </div>
+              <div className = "text-xs w-full bold flex text-center">{(password === confirmpassword)?"":
+              "Password and confirm password is not same "
+                }</div>
 
               {/* Info Notice */}
               <div className="flex items-start gap-3 rounded-2xl border border-line bg-canvas p-3.5">
